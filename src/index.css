@@ -1,0 +1,25 @@
+/* SCSS HEX
+$rich-black-fogra-39: #0f0f13ff;
+$silver: #c6c7c4ff;
+$spanish-gray: #a2999eff;
+$deep-taupe: #846a6aff;
+$onyx: #353b3cff;
+$rich-black-fogra-29: #0f1725ff;
+$han-blue: #6071cdff;
+$orange-red-crayola: #ff5f52ff;
+$rich-black-fogra-29-2: #0f1725ff;
+$mango: #ffbe05ff; */
+
+
+body {
+  margin: 0;
+  font-family: 'Lexend Deca', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+code {
+  font-family: 'Lexend Deca', sans-serif;
+}
