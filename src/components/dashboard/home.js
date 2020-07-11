@@ -24,7 +24,6 @@ const Home = () => {
                     </p>
                 </div>
             </div>
-
             {/* parallax effect */}
 
             <div id="index-banner" className="parallax-container">
@@ -42,7 +41,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="parallax">
-                    <img src={Cover} alt="Features Cover Picture" />
+                    <img src={Cover} alt="Features Cover" />
                 </div>
             </div>
 

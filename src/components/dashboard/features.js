@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Fonty from './Fonty';
 
-const features=()=> {
+
+const Features=()=> {
     return (
         <div>
             <h4>lil features section</h4>
+            <Fonty />
         </div>
     )
 }
 
-export default features
+export default Features
