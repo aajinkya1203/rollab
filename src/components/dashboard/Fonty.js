@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react'
-import { useTransition, animated } from 'react-spring'
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useTransition, animated } from 'react-spring';
 
 
 const Fonty = () =>{
@@ -31,7 +31,7 @@ const Fonty = () =>{
     <div id="anims">
       <div id="headache">
         {transitions.map(({ item, props: { innerHeight, ...rest }, key }) => (
-          <animated.div className="transitions-item" key={key} style={rest} onClick={reset}>
+          <animated.div className="transitions-item center" key={key} style={rest} onClick={reset}>
             <animated.div style={{ overflow: 'hidden', height: innerHeight }}>{item}</animated.div>
           </animated.div>
         ))}

@@ -1,12 +1,12 @@
 /* SCSS HEX
-$rich-black-fogra-39: #0f0f13ff;
+$rich-black-fogra-39: #0f0f13ff; -- like for black
 $silver: #c6c7c4ff;
 $spanish-gray: #a2999eff;
 $deep-taupe: #846a6aff;
 $onyx: #353b3cff;
 $rich-black-fogra-29: #0f1725ff;
-$han-blue: #6071cdff;
-$orange-red-crayola: #ff5f52ff;
+$han-blue: #6071cdff; -- like
+$orange-red-crayola: #ff5f52ff; -- like
 $rich-black-fogra-29-2: #0f1725ff;
 $mango: #ffbe05ff; */
 
@@ -33,7 +33,7 @@ code {
 /* for the special effect thingy */
 #anims {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
-    segoe ui, arial, sans-serif;
+    segoe ui, arial, sans-serif !important;
   background: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -42,6 +42,7 @@ code {
   -ms-user-select: none;
   user-select: none;
   cursor: default;
+  height: 300px;
 }
 
 #root > div#headache {
@@ -64,3 +65,51 @@ code {
   line-height: 80px;
 }
 
+.hovered1{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/feature2.svg);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered2{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/features1.svg);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered3{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/feature3.png);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered1:hover, .hovered2:hover, .hovered3:hover{
+  box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
+}
+
+.attribute{
+  color: yellow;
+}
+@media only screen and (max-width:400px){
+  #github-embed{
+    display: none;
+  }
+}
