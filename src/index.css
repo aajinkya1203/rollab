@@ -113,3 +113,40 @@ code {
     display: none;
   }
 }
+
+nav{
+  padding: 20px 30px;
+  height: 110px;
+}
+.brand-logo{
+  font-size: 2.5em !important;
+  font-weight: bolder;
+}
+.rollabTitle{
+  color: white;
+  font-weight: bolder;
+  margin-top: 80px;
+}
+
+#tagline i{
+  color: white;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}
+
+@media only screen and (max-width:992px){
+  .rollabTitle{
+    margin-top: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 370px){
+  #anims{
+    height: 180px;
+    margin: 20px auto;
+  }
+  #headache .transitions-item{
+    font-size: 3.5em;
+    height: 50px !important;
+  }
+}

@@ -28,7 +28,10 @@ const Fonty = () =>{
   useEffect(() => void reset(), [])
 
   return (
-    <div id="anims">
+    <div id="anims" style={{
+      margin:"10px auto",
+      width:"max-content"
+    }}>
       <div id="headache">
         {transitions.map(({ item, props: { innerHeight, ...rest }, key }) => (
           <animated.div className="transitions-item center" key={key} style={rest} onClick={reset}>
