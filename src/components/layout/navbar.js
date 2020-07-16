@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const Navbar=()=> {
     useEffect(()=>{
@@ -11,26 +11,25 @@ const Navbar=()=> {
         <>
             <nav>
                 <div className="nav-wrapper">
-                <Link to="/" className="brand-logo">rollab</Link>
-                <Link to="#!" data-target="mobile-demo" className="sidenav-trigger">
+                <NavLink to="/" className="brand-logo">rollab</NavLink>
+                <NavLink to="#!" data-target="mobile-demo" className="sidenav-trigger">
                     <i className="material-icons">menu</i>
-                </Link>
-                <ul className="right hide-on-med-and-down">
-                    <li><Link to="/login">Sign In</Link></li>
-                    <li><Link to="/sign-up">Sign Up</Link></li>
-                    <li><Link to="/">Log out</Link></li>
-                    <li><Link to="/home/contacts">Contacts</Link></li>
-                    <li><Link to="/home/arena">Arena</Link></li>
+                </NavLink>
+                <ul className="right hide-on-med-and-down nnv">
+                    <li><NavLink to="/login" activeClassName="activeLink">Sign In</NavLink></li>
+                    <li><NavLink to="/sign-up" activeClassName="activeLink">Sign Up</NavLink></li>
+                    <li><NavLink to="/logout" activeClassName="activeLink">Log out</NavLink></li>
+                    <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>
+                    <li><NavLink to="/arena" activeClassName="activeLink">Arena</NavLink></li>
                 </ul>
                 </div>
             </nav>
-
-            <ul className="sidenav" id="mobile-demo">
-                <li><Link to="/sign-in">Sign In</Link></li>
-                <li><Link to="/sign-up">Sign Up</Link></li>
-                <li><Link to="/">Log out</Link></li>
-                <li><Link to="/home/contacts">Contacts</Link></li>
-                <li><Link to="/home/arena">Arena</Link></li>
+            <ul className="sidenav nnv" id="mobile-demo">
+                <li><NavLink to="/sign-in" activeClassName="activeLink">Sign In</NavLink></li>
+                <li><NavLink to="/sign-up" activeClassName="activeLink">Sign Up</NavLink></li>
+                <li><NavLink to="/logout" activeClassName="activeLink">Log out</NavLink></li>
+                <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>
+                <li><NavLink to="/arena" activeClassName="activeLink">Arena</NavLink></li>
             </ul>
         </>
     )

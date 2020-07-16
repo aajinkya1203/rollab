@@ -25,7 +25,7 @@ const Fonty = () =>{
     ref.current.push(setTimeout(() => set(['a new','era of', 'chattin', 'gamin']), 8000))
   }, [])
 
-  useEffect(() => void reset(), [])
+  useEffect(() => void reset(), [reset]);
 
   return (
     <div id="anims" style={{

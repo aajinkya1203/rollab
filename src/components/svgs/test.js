@@ -5,7 +5,7 @@ function Test() {
 
     const levitate_1= {
         visible:{
-            y:[0, -15],
+            y:[0, -30],
             transition: { 
                 duration: 2,
                 delay: 1,
@@ -16,7 +16,7 @@ function Test() {
     }
     const levitate_2= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 0.6,
@@ -27,7 +27,7 @@ function Test() {
     }
     const levitate_3= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 0.85,
@@ -38,7 +38,7 @@ function Test() {
     }
     const levitate_4= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1,
@@ -49,7 +49,7 @@ function Test() {
     }
     const levitate_5= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.15,
@@ -60,7 +60,7 @@ function Test() {
     }
     const levitate_6= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.3,
@@ -71,7 +71,7 @@ function Test() {
     }
     const levitate_7= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.45,
@@ -82,7 +82,7 @@ function Test() {
     }
     const levitate_8= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.6,
@@ -93,7 +93,7 @@ function Test() {
     }
     const levitate_9= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.75,
@@ -104,7 +104,7 @@ function Test() {
     }
     const levitate_10= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 1.9,
@@ -115,7 +115,7 @@ function Test() {
     }
     const levitate_11= {
         visible:{
-            y:[0, -25],
+            y:[0, -45],
             transition: { 
                 duration: 2,
                 delay: 2.05,
