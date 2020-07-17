@@ -358,6 +358,12 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
   background-color: #259ee9;
   height: 2px;
 }
+.searchCont{
+  padding: 5px 10px !important;
+  border: 1px solid #373a3d !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important;
+}
 
 #contactList ul li{
   padding: 10px;
@@ -398,6 +404,7 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
 .editor{
   position: fixed;
   bottom: 0;
+  margin-bottom: 5px;
   padding: 5px 10px !important;
   border: 1px solid grey !important;
   border-radius: 12px !important;
@@ -407,17 +414,30 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
   box-shadow: 0 1px 0 0 #000 !important;
 }
 .editor .inline #message{
-  /* border: 1px solid grey !important;
-  border-radius: 12px !important;
-  padding: 5px 10px !important; */
   color: white;
 }
 .editor .inline{
-  width: 85%;
+  width: 90%;
   padding: 0 10px;
+  margin-bottom: 3px;
+  margin-top: 3px;
 }
 
 /* 
 black -> 000000
 and blue -> 259ee9
 */
+
+@media only screen and (max-width:850px){
+  .editor .inline{
+    width: 85%;
+    padding: 0 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+} 
+@media only screen and (max-width: 370px){
+  .editor .inline{
+    width: 80%;
+  }
+}

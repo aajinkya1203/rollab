@@ -20,6 +20,9 @@ class Arena extends Component {
                 <div className="info">
                     <span 
                     className="btn btn-large btn-floating waves-effect waves-light"
+                        style={{
+                            backgroundColor:"#259ee9"
+                        }}
                     >
                         AS
                     </span>
@@ -28,15 +31,18 @@ class Arena extends Component {
                 <div className="divider"></div>
 
 
-                <div className="editor col s12 m7 l8">
+                <div className="editor col s11 m7 l8">
                     <div className="input-field inline" onSubmit={this.handleSubmit}>
                         <input type="text" name="message" id="message" 
                         placeholder="Type something..."
                         onChange={this.handleChange}
                         />
                     </div>
-                    <a className="btn-floating prefix waves-effect waves-light red"
+                    <a className="btn-floating prefix waves-effect waves-light"
                         onClick={this.handleSubmit}
+                        style={{
+                            backgroundColor:"#259ee9",
+                        }}
                     >
                         <i className="material-icons">send</i>
                     </a>

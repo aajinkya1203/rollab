@@ -17,11 +17,14 @@ class ChatList extends Component {
                 <div className="input-field searchCont" style={{
                     color:"#259ee9"
                 }}>
-                    <i className="material-icons prefix">search</i>
+                    <i className="material-icons prefix" style={{
+                        paddingTop:"5px"
+                    }}>search</i>
                     <input type="text" name="searchList" id="searchList"
                         style={{
                             color:"white"
                         }}
+                        placeholder="Search amongst your contacts..."
                         onChange={this.handleChange}
                     />
                 </div>
