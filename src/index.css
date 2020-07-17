@@ -304,7 +304,7 @@ nav li a{
 }
 
 /* chat page */
-html, body,#root, #chatting, #root>div>.sidebar {
+html, body,#root, #chatting, #root>div>.sidebar, .arena {
   height: 100% !important;
   box-sizing: border-box !important;
 }
@@ -321,10 +321,16 @@ html, body,#root, #chatting, #root>div>.sidebar {
   padding: 20px 10px;
   height: 100%;
   color: white;
-  overflow-y: scroll;
 }
+#contactList:hover{
+  overflow-y: scroll;
+  
+}
+
+
 #chatting{
   margin-bottom: 0;
+  background-color: #23272a;
 }
 .sidebar *{
   color: white;
@@ -372,6 +378,43 @@ html, body,#root, #chatting, #root>div>.sidebar {
 #contactList ul li{
   padding: 15px;
   border-bottom: 1px solid grey;
+}
+
+.arena{
+  background-color: #23272a !important;
+  height: 100%;
+}
+
+.info{
+  padding: 20px 30px;
+  color: white;
+}
+
+.person{
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.editor{
+  position: fixed;
+  bottom: 0;
+  padding: 5px 10px !important;
+  border: 1px solid grey !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important;
+}
+.editor:focus{
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+.editor .inline #message{
+  /* border: 1px solid grey !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important; */
+  color: white;
+}
+.editor .inline{
+  width: 85%;
+  padding: 0 10px;
 }
 
 /* 

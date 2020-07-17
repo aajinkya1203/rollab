@@ -13,7 +13,7 @@ class ChatList extends Component {
     }
     render() {
         return (
-            <div id="contactList" className="col l3 hide-on-small-only">
+            <div id="contactList" className="col m3 l3 hide-on-small-only">
                 <div className="input-field searchCont" style={{
                     color:"#259ee9"
                 }}>
@@ -22,13 +22,14 @@ class ChatList extends Component {
                         style={{
                             color:"white"
                         }}
+                        onChange={this.handleChange}
                     />
                 </div>
                 <div className="divider"></div>
                 <ul className="listing">
-                    <li className="collection-item avatar">
+                    <li className="collection-item avatar truncate">
                         <span 
-                        className="btn btn-large btn-floating waves-effect waves-light"
+                        className="btn btn-floating waves-effect waves-light"
                         >
                             AS
                         </span>

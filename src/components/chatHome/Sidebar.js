@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Sidebar=()=> {
     return (
-        <div className="sidebar col l1 hide-on-small-only">
+        <div className="sidebar col m1 l1 hide-on-small-only">
             <ul>
                 <li>
                     <NavLink to="/" activeClassName="roundy" 
