@@ -391,9 +391,13 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
   height: 100%;
 }
 
-.info{
+.info, .chats{
   padding: 20px 30px;
   color: white;
+}
+.chats{
+  width: 100% !important;
+  height: 60%;
 }
 
 .person{
@@ -409,6 +413,7 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
   border: 1px solid grey !important;
   border-radius: 12px !important;
   padding: 5px 10px !important;
+  background-color: #292b2c !important;
 }
 .editor:focus{
   box-shadow: 0 1px 0 0 #000 !important;
@@ -440,4 +445,29 @@ and blue -> 259ee9
   .editor .inline{
     width: 80%;
   }
+}
+
+/* chats */
+.chats ul{
+  height: 100%;
+  overflow: auto;
+}
+.chats ul:hover{
+  overflow-y: scroll;
+}
+.chats ul div.container{
+  margin: 10px 0;
+}
+
+.chats .message{
+  margin-left: 20px;
+}
+
+.time{
+  color: grey;
+}
+fieldset{
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
 }

@@ -29,20 +29,24 @@ class ChatList extends Component {
                     />
                 </div>
                 <div className="divider"></div>
-                <ul className="listing">
-                    <li className="collection-item avatar truncate">
-                        <span 
-                        className="btn btn-floating waves-effect waves-light"
-                        >
-                            AS
-                        </span>
-                        <Link to="#!" className="title center-align">Aajinkya</Link>
-                        <div className="center-align chip">
-                            Online 
-                        </div>
-                    </li>
-                
-                </ul>
+                <fieldset>
+                    <legend>{
+                        this.props.props.location.pathname == "/chat/groups" ? "GROUPS" : "CONTACTS"
+                    }</legend>
+                    <ul className="listing">
+                        <li className="collection-item avatar truncate">
+                            <span 
+                            className="btn btn-floating waves-effect waves-light"
+                            >
+                                AS
+                            </span>
+                            <Link to="#!" className="title center-align">Aajinkya</Link>
+                            <div className="center-align chip">
+                                Online 
+                            </div>
+                        </li>
+                    </ul>
+                </fieldset>
             </div>
         )
     }

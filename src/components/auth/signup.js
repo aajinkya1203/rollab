@@ -8,6 +8,7 @@ class SignUp extends Component {
         email:"",
         password:"",
         cnfPassword:"",
+        username:""
     }
     handleChange=(e)=>{
         e.preventDefault();
@@ -46,6 +47,13 @@ class SignUp extends Component {
                             <div className="input-field">
                                 <label htmlFor="name">Name</label>
                                 <input type="text" id="name" name="name" 
+                                onChange = { this.handleChange } required
+                                />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="username">Username</label>
+                                <input type="text" id="username" name="username" 
                                 onChange = { this.handleChange } required
                                 />
                             </div>

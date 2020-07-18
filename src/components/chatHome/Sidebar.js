@@ -20,14 +20,14 @@ const Sidebar=()=> {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="#!" activeClassName="roundy"
+                    <NavLink to="/chat/contacts" activeClassName="roundy"
                         className="btn btn-floating waves-effect waves-light z-depth-0 btn-large"
                     >
                         <i className="material-icons">chat_bubble_outline</i>
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="#!" activeClassName="roundy"
+                    <NavLink to="/chat/groups" activeClassName="roundy"
                         className="btn btn-floating waves-effect waves-light z-depth-0 btn-large"
                     >
                         <i className="material-icons">group</i>

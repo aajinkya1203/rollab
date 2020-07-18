@@ -26,7 +26,11 @@ class Arena extends Component {
                     >
                         AS
                     </span>
-                    <h5 className="person center-align">Aajinkya</h5>
+                    <h5 className="person center-align">
+                        {
+                            this.props.props.location.pathname == "/chat/groups" ? "VAMS" : "Aajinkya"
+                        }
+                    </h5>
                 </div>
                 <div className="divider"></div>
 
@@ -47,6 +51,26 @@ class Arena extends Component {
                         <i className="material-icons">send</i>
                     </a>
                 </div>
+
+                <div className="chats col s11 m7 l8">
+                    <ul id="chatListWrapper">
+                        <div className="container">
+                            <div className="left-align chip User">
+                                Aajinkya 
+                            </div>
+                            <div className="message">
+                                Hello, what you upto?
+                            </div>
+                            <div className="time right-align">
+                                <i>11:09 PM</i>
+                            </div>
+                        </div>
+                        
+                        
+                    </ul>
+                </div>
+
+
             </div>
         )
     }

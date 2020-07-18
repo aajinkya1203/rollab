@@ -3,12 +3,12 @@ import Sidebar from './Sidebar';
 import ChatList from './ChatList';
 import Arena from './Arena';
 
-const ChatHome = () => {
+const ChatHome = (props) => {
     return (
         <div id="chatting" className="row">
             <Sidebar/>
-            <ChatList />
-            <Arena />
+            <ChatList props={props}/>
+            <Arena props={props}/>
         </div>
     )
 }
