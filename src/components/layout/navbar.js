@@ -25,7 +25,7 @@ const Navbar=()=> {
                 </div>
             </nav>
             <ul className="sidenav nnv" id="mobile-demo">
-                <li><NavLink to="/sign-in" activeClassName="activeLink">Sign In</NavLink></li>
+                <li><NavLink to="/login" activeClassName="activeLink">Sign In</NavLink></li>
                 <li><NavLink to="/sign-up" activeClassName="activeLink">Sign Up</NavLink></li>
                 <li><NavLink to="/logout" activeClassName="activeLink">Log out</NavLink></li>
                 <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>

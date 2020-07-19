@@ -22,21 +22,27 @@ class SignUp extends Component {
     }
     render() {
         return (
-            <div>
+            <div style={{
+                backgroundColor:"#292b2c"
+            }}>
                 <Cover />
                 <div className="row signing">
-                    <div className="col s12 l5 offset-l6">
-                        <div className="card-panel" style={{
+                    <div className="col s12 m10 offset-m1 l5 offset-l6" style={{
                             borderRadius:"24px 0 0 0",
                             zIndex: 8,
-                        }}            
+                            display:"grid",
+                            opacity: 1,
+                        }} >
+                        <div className="card panel" style={{
+                                borderRadius:"24px 0 0 0",
+                            }}   
                         >
                         <h4>
-                            Sign In to join the party!
+                            Create an account now!
                         </h4>
                         </div>
                     </div>
-                    <div className="col s12 l5 offset-l6">
+                    <div className="col s12 m10 offset-m1 l5 offset-l6">
                         <div className="card" style={{
                         borderRadius:"0 0 0 24px"
                         }}>

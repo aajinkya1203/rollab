@@ -23,18 +23,22 @@ class signin extends Component {
       <div>
         <Carding />
         <div className="row signing">
-          <div className="col s12 l5 offset-l6">
-            <div className="card-panel" style={{
-                borderRadius:"24px 0 0 0",
-                zIndex: 8,
-            }}            
+          <div className="col s12 m10 offset-m1 l5 offset-l6" style={{
+            borderRadius:"24px 0 0 0",
+            zIndex: 8,
+            display:"grid",
+            opacity: 1,
+          }} >
+            <div className="card panel" style={{
+              borderRadius:"24px 0 0 0",
+            }}       
             >
               <h4>
                 Sign In to join the party!
               </h4>
             </div>
           </div>
-          <div className="col s12 l5 offset-l6">
+          <div className="col s12 m10 offset-m1 l5 offset-l6">
             <div className="card" style={{
               borderRadius:"0 0 0 24px"
             }}>

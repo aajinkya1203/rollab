@@ -28,7 +28,7 @@ class ChatList extends Component {
                         onChange={this.handleChange}
                     />
                 </div>
-                <div className="divider"></div>
+                {/* <div className="divider"></div> */}
                 <fieldset>
                     <legend>{
                         this.props.props.location.pathname == "/chat/groups" ? "GROUPS" : "CONTACTS"

@@ -227,11 +227,12 @@ nav li a{
 }
 
 .signing{
-  margin-top: 50px;
+  padding-top: 50px;
   background: rgba(255, 255, 255, 0.1);
+  margin-bottom:0;
 }
 .signing .card{
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
 }
 
 /* signup */
@@ -298,9 +299,11 @@ nav li a{
   overflow: hidden;
 }
 
-.card-panel{
-  background-color: #14ed8e;
+.panel{
+  background-color: #ee6e73 !important;
   color: white;
+  padding: 24px !important;
+  margin: .5rem 0 1rem 0 !important;
 }
 
 /* chat page */
@@ -470,4 +473,5 @@ fieldset{
   border-bottom: none;
   border-right: none;
   border-left: none;
+  border-color: #259ee9;
 }
