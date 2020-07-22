@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import Cover from './CoverSignup';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { graphql } from 'react-apollo';
+import { flowRight as compose } from 'lodash';
+import { signupQuery } from '../../query/queries';
+import M from 'materialize-css';
+
 
 class SignUp extends Component {
     state={
@@ -8,7 +13,6 @@ class SignUp extends Component {
         email:"",
         password:"",
         cnfPassword:"",
-        username:""
     }
     handleChange=(e)=>{
         e.preventDefault();
@@ -16,11 +20,32 @@ class SignUp extends Component {
             [e.target.id]:e.target.value,
         })
     }
-    handleSubmit=(e)=>{
+    handleSubmit = async (e)=>{
         e.preventDefault();
-        console.log(this.state);
+        if(this.state.password != this.state.cnfPassword){
+            M.toast({html: "Oh! Hold your horses. Those passwords don't match!"})
+            return;
+        }
+        let res = await this.props.signupQuery({
+            variables: {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
+        });
+        console.log(res);
+        if(res.data.addUser){
+            M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"})
+            this.props.history.push('/login');
+        }
+        else{
+            M.toast({html: "Oopsie! Something went wrong!"})
+        }
     }
     render() {
+        if(localStorage.getItem('token')){
+            this.props.history.push('/chat');
+        };
         return (
             <div style={{
                 backgroundColor:"#292b2c"
@@ -57,13 +82,6 @@ class SignUp extends Component {
                                 />
                             </div>
 
-                            <div className="input-field">
-                                <label htmlFor="username">Username</label>
-                                <input type="text" id="username" name="username" 
-                                onChange = { this.handleChange } required
-                                />
-                            </div>
-                           
                             <div className="input-field">
                                 <label htmlFor="email">Email</label>
                                 <input type="email" id="email" name="email" 
@@ -108,4 +126,6 @@ class SignUp extends Component {
     }
 }
 
-export default SignUp
+export default compose(
+    graphql(signupQuery, { name: 'signupQuery' }),
+)(SignUp)

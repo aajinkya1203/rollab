@@ -1,24 +1,46 @@
 import React, { Component } from 'react'
 import Carding from './CoverSignin';
 import { Link } from 'react-router-dom';
+import { graphql } from 'react-apollo';
+import { flowRight as compose } from 'lodash';
+import { loginQuery } from '../../query/queries';
+import M from 'materialize-css';
+
 
 class signin extends Component {
   state = {
     email : "",
     password : "",
   }
+
   handleChange=(e)=>{
     e.preventDefault();
     this.setState({
       [e.target.id]: e.target.value,
     })
   }
-  handleSubmit=(e)=>{
+  handleSubmit = async (e)=>{
     e.preventDefault();
-    console.log(this.state);
+    let res = await this.props.loginQuery({
+      variables: {
+        email: this.state.email,
+        password: this.state.password
+      }
+    });
+    if(res.data){
+      M.toast({html: "Ayy! You're in. (~˘▾˘)~"})
+      localStorage.setItem('token', res.data.login.token);
+      localStorage.setItem('user', JSON.stringify(res.data.login));
+      this.props.history.push('/chat');
+    }else{
+      M.toast({html: "Oopsie! Something went wrong!"})
+    }
   }
 
   render() {
+    if(localStorage.getItem('token')){
+      this.props.history.push('/chat');
+    };
     return (
       <div>
         <Carding />
@@ -84,5 +106,7 @@ class signin extends Component {
   }
 }
 
-export default signin
+export default compose(
+  graphql(loginQuery, { name: 'loginQuery' }),
+)(signin);
 

@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from './Sidebar';
 import ChatList from './ChatList';
 import Arena from './Arena';
 
 const ChatHome = (props) => {
+    useEffect(()=>{
+        if(!localStorage.getItem('token')){
+            props.history.push('/');
+        }
+    },[]);
     return (
         <div id="chatting" className="row">
             <Sidebar/>

@@ -18,7 +18,12 @@ const Navbar=()=> {
                 <ul className="right hide-on-med-and-down nnv">
                     <li><NavLink to="/login" activeClassName="activeLink">Sign In</NavLink></li>
                     <li><NavLink to="/sign-up" activeClassName="activeLink">Sign Up</NavLink></li>
-                    <li><NavLink to="/logout" activeClassName="activeLink">Log out</NavLink></li>
+                    <li><NavLink to="/" 
+                        onClick={()=>{
+                            localStorage.clear();
+                            console.log("hello")
+                        }}
+                    activeClassName="activeLink">Log out</NavLink></li>
                     <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>
                     <li><NavLink to="/arena" activeClassName="activeLink">Arena</NavLink></li>
                 </ul>
@@ -27,7 +32,11 @@ const Navbar=()=> {
             <ul className="sidenav nnv" id="mobile-demo">
                 <li><NavLink to="/login" activeClassName="activeLink">Sign In</NavLink></li>
                 <li><NavLink to="/sign-up" activeClassName="activeLink">Sign Up</NavLink></li>
-                <li><NavLink to="/logout" activeClassName="activeLink">Log out</NavLink></li>
+                <li><NavLink to="/" 
+                    onClick={()=>{
+                        localStorage.clear()
+                    }}
+                activeClassName="activeLink">Log out</NavLink></li>
                 <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>
                 <li><NavLink to="/arena" activeClassName="activeLink">Arena</NavLink></li>
             </ul>

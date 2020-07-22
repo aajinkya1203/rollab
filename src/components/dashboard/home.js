@@ -6,12 +6,15 @@ import Floating from '../svgs/test';
 import Footer from './Footer';
 import { motion } from 'framer-motion';
 
-const Home = () => {
+const Home = (props) => {
 
     useEffect(()=>{
         window.$(document).ready(function(){
             window.$('.parallax').parallax();
-          });
+        });
+        if(localStorage.getItem('token')){
+            props.history.push('/chat');
+        }
     },[]);
     
     return (
