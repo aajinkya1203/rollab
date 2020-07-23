@@ -8,14 +8,20 @@ import Navbar from './components/layout/navbar'
 import ChatHome from './components/chatHome/ChatHome';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
+import M from 'materialize-css';
 
 // setting up an apollo client
 const client = new ApolloClient({
   uri: 'http://localhost:1000/graphql',
-  onError:({ response, operation }) => {
-    console.log(operation)
+  onError:({ response, operation,graphQLErrors,networkError }) => {
     if (operation.operationName === "IgnoreErrorsQuery") {
       response.errors = null;
+    }
+    if(graphQLErrors[0] && graphQLErrors[0].message){
+      M.toast({ html: graphQLErrors[0].message })
+    }
+    if(networkError){
+      M.toast({ html: "There seems to be an internet issue!"})
     }
     response.errors = null;
 

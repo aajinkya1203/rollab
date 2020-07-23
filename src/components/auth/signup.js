@@ -21,6 +21,7 @@ class SignUp extends Component {
         })
     }
     handleSubmit = async (e)=>{
+        document.querySelector('.progress').style.display = "block";
         e.preventDefault();
         if(this.state.password != this.state.cnfPassword){
             M.toast({html: "Oh! Hold your horses. Those passwords don't match!"})
@@ -102,10 +103,18 @@ class SignUp extends Component {
                                 />
                             </div>
                             <div className="input-field">
-                                <button className="btn waves-effect waves-light" 
+                                <button className="btn" 
                                 type="submit" name="action">Register
                                 <i className="material-icons right">person</i>
                                 </button> 
+                                <div className="progress" style={{
+                                    width:"90%",
+                                    margin:"0 auto",
+                                    marginTop:"20px",
+                                    display:"none"
+                                }}>
+                                    <div className="indeterminate" style={{backgroundColor: "#ee6e73"}}></div>
+                                </div>
                             </div>
                             </form>
                         </div>
@@ -113,7 +122,9 @@ class SignUp extends Component {
                             borderRadius:"0 0 0 24px"
                         }}>
                             <div className="switcher">
-                            <Link to='/login'>
+                            <Link to='/login' style={{
+                                color:"#373a3d"
+                            }}>
                                 Already have an account?
                             </Link>
                             </div>

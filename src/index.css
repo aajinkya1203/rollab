@@ -344,8 +344,11 @@ html, body,#root, #chatting, #root>div>.sidebar, .arena {
 }
 .sidebar li a{
   background-color: #373a3d !important;
+  transition: 0.2s ease-in !important;
+
 }
 .sidebar li a:hover{
+  transition: 0.2s ease-in !important;
   border-radius: 12px !important;
   background-color: #7289da !important;
 }
