@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { graphql } from 'react-apollo';
+import { allUsers } from '../../query/queries';
 
 class ChatList extends Component {
     state={
@@ -12,6 +14,7 @@ class ChatList extends Component {
         });
     }
     render() {
+        console.log(this.props);
         return (
             <div id="contactList" className="col m3 l3 hide-on-small-only">
                 <div className="input-field searchCont" style={{
@@ -31,7 +34,7 @@ class ChatList extends Component {
                 {/* <div className="divider"></div> */}
                 <fieldset>
                     <legend>{
-                        this.props.props.location.pathname == "/chat/groups" ? "GROUPS" : "CONTACTS"
+                        this.props.props.location.pathname === "/chat/groups" ? "GROUPS" : "CONTACTS"
                     }</legend>
                     <ul className="listing">
                         <li className="collection-item avatar truncate">
@@ -52,4 +55,4 @@ class ChatList extends Component {
     }
 }
 
-export default ChatList
+export default graphql(allUsers)(ChatList)

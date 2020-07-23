@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Cover from '../../images/testCover.jpg';
 import Floating from '../svgs/test';
 import Footer from './Footer';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 const Home = (props) => {
 
@@ -15,7 +15,8 @@ const Home = (props) => {
         if(localStorage.getItem('token')){
             props.history.push('/chat');
         }
-    },[]);
+        
+    });
     
     return (
         <div>

@@ -23,7 +23,9 @@ const client = new ApolloClient({
     if(networkError){
       M.toast({ html: "There seems to be an internet issue!"})
     }
-    response.errors = null;
+    if(response?.errors){
+      response.errors = null;
+    }
 
   }
 })

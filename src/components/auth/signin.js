@@ -33,6 +33,8 @@ class signin extends Component {
       M.toast({html: "Ayy! You're in. (~˘▾˘)~"})
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
+      localStorage.setItem('id', res.data.login.id);
+      console.log(this.props)
       this.props.history.push('/chat');
     }else{
       document.querySelector('.progress').style.display = "none";
@@ -44,6 +46,7 @@ class signin extends Component {
     if(localStorage.getItem('token')){
       this.props.history.push('/chat');
     };
+    console.log(this.props)
     return (
       <div>
         <Carding />

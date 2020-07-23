@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import SignedOutLinks from './SignedOutLinks';
 import SignedInLinks from './SignedInLinks';
 
 const Navbar=(props)=> {
     useEffect(()=>{
+        console.log(props);
         window.$(document).ready(function(){
             window.$('.sidenav').sidenav();
           });

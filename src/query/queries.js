@@ -7,7 +7,30 @@ const loginQuery = gql`
       name
       id
       token
-      email    
+      email 
+      contacts{
+        id
+        people{
+          name
+          id
+        }
+      }
+      groups{
+        id
+        name
+        members{
+          name
+          id
+        }
+      }
+      messages{
+        id
+        convos{
+          person{
+            id
+          }
+        }
+      }   
     }
   }
 `;
@@ -18,8 +41,60 @@ const signupQuery = gql`
         name
         id
         email
+        
       }
+  }
+`;
+
+const userDetails = gql`
+query($id:ID){
+  user(id: $id){
+    name
+    id
+    email
+    contacts{
+      id
+      people{
+        name
+        id
+      }
+    }
+    groups{
+      id
+      name
+      members{
+        name
+        id
+      }
+    }
+    messages{
+      id
+      convos{
+        person{
+          id
+        }
+      }
+    }
+  
+  }
+}
+`
+
+const allUsers = gql`
+  {
+    allUsers{
+      name
+      id
+      email
+      contacts{
+        id
+        people{
+          name
+          id
+        }
+      }
+    }
   }
 `
 
-export { loginQuery, signupQuery }
+export { loginQuery, signupQuery, userDetails, allUsers };

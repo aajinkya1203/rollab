@@ -478,3 +478,31 @@ fieldset{
   border-left: none;
   border-color: #259ee9;
 }
+
+/* modal changes */
+.modal{
+  border-radius: 18px !important;
+  background: #23272a !important;
+  color: white !important;
+}
+.modal-footer{
+  background: #3a3c3e !important;
+  color: white !important;
+}
+.modal-footer > a{
+  color: white !important;
+  margin: 5px 20px !important;
+}
+.collection-item{
+  color: #141414;
+}
+
+.searched li{
+  padding: 10px !important;
+  cursor: pointer;
+  color: white;
+  background-color: #2b2d2f !important;
+}
+.searched li > * {
+  margin: 5px 8px;
+}

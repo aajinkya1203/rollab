@@ -23,7 +23,7 @@ class SignUp extends Component {
     handleSubmit = async (e)=>{
         document.querySelector('.progress').style.display = "block";
         e.preventDefault();
-        if(this.state.password != this.state.cnfPassword){
+        if(this.state.password !== this.state.cnfPassword){
             M.toast({html: "Oh! Hold your horses. Those passwords don't match!"})
             return;
         }

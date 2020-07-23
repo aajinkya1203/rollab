@@ -28,7 +28,7 @@ class Arena extends Component {
                     </span>
                     <h5 className="person center-align">
                         {
-                            this.props.props.location.pathname == "/chat/groups" ? "VAMS" : "Aajinkya"
+                            this.props.props.location.pathname === "/chat/groups" ? "VAMS" : "Aajinkya"
                         }
                     </h5>
                 </div>
@@ -42,7 +42,7 @@ class Arena extends Component {
                         onChange={this.handleChange}
                         />
                     </div>
-                    <a className="btn-floating prefix waves-effect waves-light"
+                    <a className="btn-floating prefix waves-effect waves-light" href="#!"
                         onClick={this.handleSubmit}
                         style={{
                             backgroundColor:"#259ee9",
