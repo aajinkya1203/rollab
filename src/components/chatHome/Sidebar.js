@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
-import { userDetails, allUsers } from '../../query/queries';
+import { flowRight as compose } from 'lodash';
+import { addContact, allUsers } from '../../query/queries';
+import M from 'materialize-css';
 
 const Sidebar=(props)=> {
     useEffect(()=>{
@@ -10,12 +12,23 @@ const Sidebar=(props)=> {
             window.$('.modal').modal();
         });
     });
-    const addContact=(to, toCont)=>{
+    const addContact= async (to, toCont)=>{
         let from = localStorage.getItem("id");
-        let fromCont = JSON.parse(localStorage.getItem("user")).contacts.id;
-        
+        let fromCont = localStorage.getItem("user");
+        fromCont = JSON.parse(fromCont).contacts.id;
+        let data = await props.addContact({
+            variables:{
+                from,
+                toCont,
+                to,
+                fromCont
+            },
+            refetchQueries: [ { query: allUsers } ]
+        });
+        if(!data.data.addContact){
+            M.toast({ html: "You've already added them to your contacts!" });
+        }
     }
-    console.log(props)
     return (
         <>
         <div className="sidebar col m1 l1 hide-on-small-only">
@@ -38,7 +51,7 @@ const Sidebar=(props)=> {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to="/chat/contacts" activeClassName="roundy"
+                    <NavLink to="/chat" activeClassName="roundy"
                         className="btn btn-floating  z-depth-0 btn-large tooltipped"
                         data-position="right" data-tooltip="Chats"
                     >
@@ -78,6 +91,9 @@ const Sidebar=(props)=> {
             <ul className="collection searched">
                 { props.data.allUsers ? (
                     props.data.allUsers.map(user=>{
+                        if(user.id === localStorage.getItem("id")){
+                            return;
+                        }
                         return(
                             <li 
                             onClick={()=>addContact(user.id, user.contacts.id)}
@@ -110,4 +126,7 @@ const Sidebar=(props)=> {
         </>    )
 }
 
-export default graphql(allUsers)(Sidebar);
+export default compose(
+    graphql(allUsers),
+    graphql(addContact, { name: "addContact" })
+)(Sidebar);

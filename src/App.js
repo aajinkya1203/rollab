@@ -39,6 +39,8 @@ function App() {
         <Route path='/logout' component={ Home } />
         <Route path='/login' component={ Signin } />
         <Route path='/sign-up' component={ SignUp } />
+        <Route path='/chat/groups' component={ ChatHome } />
+        <Route path='/chat/:id' component={ ChatHome } />
         <Route path='/chat' component={ ChatHome } />
       </Switch>
     </ApolloProvider>

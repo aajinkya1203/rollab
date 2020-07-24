@@ -307,7 +307,7 @@ nav li a{
 }
 
 /* chat page */
-html, body,#root, #chatting, #root>div>.sidebar, .arena {
+html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena {
   height: 100% !important;
   box-sizing: border-box !important;
 }
@@ -505,4 +505,7 @@ fieldset{
 }
 .searched li > * {
   margin: 5px 8px;
+}
+.collection-item.avatar.truncate{
+  cursor: pointer;
 }

@@ -49,7 +49,8 @@ class SignUp extends Component {
         };
         return (
             <div style={{
-                backgroundColor:"#292b2c"
+                backgroundColor:"#292b2c",
+                height: "100vh"
             }}>
                 <Cover />
                 <div className="row signing">

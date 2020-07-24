@@ -95,6 +95,33 @@ const allUsers = gql`
       }
     }
   }
+`;
+
+const allContacts = gql`
+query($id:ID!){
+  allContacts(id:$id){
+  	id
+    people{
+      name
+      id
+      email
+    }
+  }
+}
 `
 
-export { loginQuery, signupQuery, userDetails, allUsers };
+
+const addContact = gql`
+  mutation($to:String!, $toCont:String!, $from: String!, $fromCont:String!){
+    addContact(to: $to, toCont:$toCont, from:$from, fromCont:$fromCont){
+      id
+      people{
+        name
+        id
+        email
+      }
+    }
+  }
+`
+
+export { loginQuery, signupQuery, userDetails, allUsers, addContact, allContacts };
