@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
-import { addContact, allUsers } from '../../query/queries';
+import { addContact, allUsers, userDetails } from '../../query/queries';
 import M from 'materialize-css';
 
 const Sidebar=(props)=> {
@@ -23,7 +23,7 @@ const Sidebar=(props)=> {
                 to,
                 fromCont
             },
-            refetchQueries: [ { query: allUsers } ]
+            refetchQueries: [ { query: allUsers }, { query: userDetails } ]
         });
         if(!data.data.addContact){
             M.toast({ html: "You've already added them to your contacts!" });
@@ -128,5 +128,6 @@ const Sidebar=(props)=> {
 
 export default compose(
     graphql(allUsers),
+    graphql(userDetails),
     graphql(addContact, { name: "addContact" })
 )(Sidebar);

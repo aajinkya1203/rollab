@@ -507,5 +507,5 @@ fieldset{
   margin: 5px 8px;
 }
 .collection-item.avatar.truncate{
-  cursor: pointer;
+  /* cursor: pointer; */
 }
