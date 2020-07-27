@@ -7,6 +7,7 @@ const SignedInLinks=(props)=> {
             <li><NavLink to="/" 
                 onClick={()=>{
                     localStorage.clear();
+                    props.rerender();
                 }}
             activeClassName="activeLink">Log out</NavLink></li>
             <li><NavLink to="/contacts" activeClassName="activeLink">Contacts</NavLink></li>

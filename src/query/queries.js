@@ -80,7 +80,7 @@ query($id:ID){
 }
 `
 const userDetailWithMessages = gql`
-query($id:ID!, $profileId: ID!){
+query($id:ID, $profileId: ID!){
   user(id: $id){
     name
     id
@@ -155,6 +155,20 @@ const addContact = gql`
       }
     }
   }
+`;
+
+
+const sendMessage = gql`
+  mutation($text:String!,$sender:String!, $id:String!, $person:String!, $personId: String!, $userId: String!){
+    sendMessage(text:$text, sender:$sender, id:$id, person:$person, personId: $personId, userId:$userId){
+      id
+      convos{
+        person{
+          name
+        }
+      }
+    }
+  }
 `
 
-export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts };
+export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, sendMessage };

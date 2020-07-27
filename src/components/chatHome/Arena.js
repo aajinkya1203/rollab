@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo';
-import { userDetailWithMessages, userDetails } from '../../query/queries';
+import { userDetailWithMessages, sendMessage } from '../../query/queries';
+import M from 'materialize-css';
+import { flowRight as compose } from 'lodash';
+import { animateScroll } from 'react-scroll';
+import moment from 'moment';
+
 
 class Arena extends Component {
     state={
@@ -11,10 +16,44 @@ class Arena extends Component {
         this.setState({
             [e.target.id]:e.target.value
         });
+    };
+
+    componentDidMount() {
+        this.scrollToBottom();
     }
-    handleSubmit=(e)=>{
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+    scrollToBottom() {
+        animateScroll.scrollToBottom({
+          containerId: "chatListWrapper"
+        });
+    }
+
+    handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state);
+        if(this.state.message === ""){
+            M.toast({html:"Slow down, partner. Write a message first."})   
+        }else{
+            let messageId = JSON.parse(localStorage.getItem('user')).messages.id
+            await this.props.sendMessage({
+                variables:{
+                    text: this.state.message,
+                    sender: localStorage.getItem('id'),
+                    id: messageId,
+                    person: this.props.data.user.id,
+                    personId: this.props.data.user.message.id,
+                    userId: localStorage.getItem('id')
+                },
+                refetchQueries: [ { query: userDetailWithMessages, variables: {
+                    id: this.props.props.match.params.id,
+                    profileId: localStorage.getItem("id")
+                } } ]
+            })
+            this.setState({
+                message: ""
+            })
+        }
     }
     render() {
         console.log(this.props  )
@@ -50,11 +89,12 @@ class Arena extends Component {
                             <div className="editor col s11 m7 l8">
                                 <div className="input-field inline" onSubmit={this.handleSubmit}>
                                     <input type="text" name="message" id="message" 
+                                    value={this.state.message}
                                     placeholder="Type something..."
                                     onChange={this.handleChange}
                                     />
                                 </div>
-                                <a className="btn-floating prefix waves-effect waves-light" href="#!"
+                                <a className="btn-floating prefix" href="#!"
                                     onClick={this.handleSubmit}
                                     style={{
                                         backgroundColor:"#259ee9",
@@ -71,7 +111,7 @@ class Arena extends Component {
                                          (
                                             this.props.data.user.message.convos.messages.map(ele=>{
                                                 return(
-                                                    <div className="container" key={ele.sender.id}>
+                                                    <div className="container" key={Math.random()}>
                                                         <div className="left-align chip User">
                                                             {ele.sender.name}
                                                         </div>
@@ -79,7 +119,9 @@ class Arena extends Component {
                                                             {ele.text}
                                                         </div>
                                                         <div className="time right-align">
-                                                            <i>{ele.time}</i>
+                                                            <i>
+                                                                { moment(parseInt(ele.time)).fromNow() }
+                                                            </i>
                                                         </div>
                                                     </div>
                                                 )
@@ -90,8 +132,6 @@ class Arena extends Component {
                                             </div>
                                         )
                                     }
-                                    
-                                    
                                 </ul>
                             </div>
 
@@ -108,13 +148,16 @@ class Arena extends Component {
     }
 }
 
-export default graphql(userDetailWithMessages,{
-    options: (props)=>{
-        return{
-            variables:{
-                id: props.props.match.params.id,
-                profileId: localStorage.getItem("id")
+export default compose(
+    graphql(userDetailWithMessages,{
+        options: (props)=>{
+            return{
+                variables:{
+                    id: props.props.match.params.id,
+                    profileId: localStorage.getItem("id")
+                }
             }
         }
-    }
-})(Arena)
+    }),
+    graphql(sendMessage, { name: "sendMessage" })
+)(Arena)

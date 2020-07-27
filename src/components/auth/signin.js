@@ -34,8 +34,8 @@ class signin extends Component {
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
-      console.log(this.props)
       this.props.history.push('/chat');
+      window.location.reload();
     }else{
       document.querySelector('.progress').style.display = "none";
       M.toast({html: "Oopsie! Something went wrong!"})
@@ -46,7 +46,6 @@ class signin extends Component {
     if(localStorage.getItem('token')){
       this.props.history.push('/chat');
     };
-    console.log(this.props)
     return (
       <div>
         <Carding />

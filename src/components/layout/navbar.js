@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import SignedOutLinks from './SignedOutLinks';
 import SignedInLinks from './SignedInLinks';
 
 const Navbar=(props)=> {
+    const [test, setTest] = useState(0);
     useEffect(()=>{
-        console.log(props);
         window.$(document).ready(function(){
             window.$('.sidenav').sidenav();
-          });
+        });
     });
+    const rerender =()=>{
+        setTest("");
+    }
     
     return (
         <>
@@ -22,9 +25,9 @@ const Navbar=(props)=> {
                 <ul className="right hide-on-med-and-down nnv">
                     {
                         localStorage.getItem('token') ? (
-                            <SignedInLinks />
+                            <SignedInLinks rerender={rerender}/>
                         ) : (
-                            <SignedOutLinks />
+                            <SignedOutLinks rerender={rerender}/>
                         )
                     }
                 </ul>
@@ -33,9 +36,9 @@ const Navbar=(props)=> {
             <ul className="sidenav nnv" id="mobile-demo">
                 {
                     localStorage.getItem('token') ? (
-                        <SignedInLinks />
+                        <SignedInLinks rerender={rerender}/>
                     ) : (
-                        <SignedOutLinks />
+                        <SignedOutLinks rerender={rerender}/>
                     )
                 }
             </ul>
