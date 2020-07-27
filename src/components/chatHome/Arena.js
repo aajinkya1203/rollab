@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo';
-import { userDetails } from '../../query/queries';
+import { userDetailWithMessages, userDetails } from '../../query/queries';
 
 class Arena extends Component {
     state={
@@ -67,10 +67,11 @@ class Arena extends Component {
                             <div className="chats col s11 m7 l8">
                                 <ul id="chatListWrapper">
                                     {
-                                        (this.props.data.user.messages.convos).length !== 0 ? (
-                                            this.props.data.user.messages.convos.map(ele=>{
+                                        (this.props.data.loading) === false &&  this.props.data.user.message.convos ? 
+                                         (
+                                            this.props.data.user.message.convos.messages.map(ele=>{
                                                 return(
-                                                    <div className="container">
+                                                    <div className="container" key={ele.sender.id}>
                                                         <div className="left-align chip User">
                                                             {ele.sender.name}
                                                         </div>
@@ -85,7 +86,7 @@ class Arena extends Component {
                                             })
                                         ) : (
                                             <div>
-                                                No messages yet
+                                                No message yet
                                             </div>
                                         )
                                     }
@@ -107,11 +108,12 @@ class Arena extends Component {
     }
 }
 
-export default graphql(userDetails,{
+export default graphql(userDetailWithMessages,{
     options: (props)=>{
         return{
             variables:{
-                id: props.props.match.params.id
+                id: props.props.match.params.id,
+                profileId: localStorage.getItem("id")
             }
         }
     }

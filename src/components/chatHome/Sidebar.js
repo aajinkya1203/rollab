@@ -89,8 +89,8 @@ const Sidebar=(props)=> {
                 <label htmlFor="first_name">Search</label>
             </div>
             <ul className="collection searched">
-                { props.data.allUsers ? (
-                    props.data.allUsers.map(user=>{
+                { props.allUsers && props.allUsers.allUsers ? (
+                    props.allUsers.allUsers.map(user=>{
                         if(user.id === localStorage.getItem("id")){
                             return;
                         }
@@ -127,7 +127,7 @@ const Sidebar=(props)=> {
 }
 
 export default compose(
-    graphql(allUsers),
-    graphql(userDetails),
+    graphql(allUsers, { name: "allUsers" }),
+    graphql(userDetails, { name: "userDetails" }),
     graphql(addContact, { name: "addContact" })
 )(Sidebar);

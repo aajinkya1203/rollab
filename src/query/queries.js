@@ -54,24 +54,57 @@ query($id:ID){
     email
     contacts{
       id
-      people{
-        name
-        id
-      }
     }
     groups{
       id
-      name
-      members{
-        name
-        id
-      }
     }
     messages{
       id
       convos{
         person{
+          name
           id
+        }
+        messages{
+          text
+          sender{
+            name
+            id
+          }
+          time
+        }
+      }
+    }
+  
+  }
+}
+`
+const userDetailWithMessages = gql`
+query($id:ID!, $profileId: ID!){
+  user(id: $id){
+    name
+    id
+    email
+    contacts{
+      id
+    }
+    groups{
+      id
+    }
+    message{
+      id
+      convos(id: $profileId){
+        person{
+          name
+          id
+        }
+        messages{
+          text
+          sender{
+            name
+            id
+          }
+          time
         }
       }
     }
@@ -124,4 +157,4 @@ const addContact = gql`
   }
 `
 
-export { loginQuery, signupQuery, userDetails, allUsers, addContact, allContacts };
+export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts };

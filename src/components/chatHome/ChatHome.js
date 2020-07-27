@@ -17,7 +17,7 @@ const ChatHome = (props) => {
         socket.once('connect',()=>{
             console.log(socket.id);
         })
-        // console.log(props)
+        console.log(props)
     });
     return (
         <div id="chatting" className="row">
@@ -32,7 +32,7 @@ export default graphql(userDetails,{
     options: (props) =>{
         return{
             variables:{
-                id: localStorage.getItem('id')
+                id: localStorage.getItem('id'),
             }
         }
     }
