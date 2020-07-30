@@ -1,151 +1,182 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import { graphql } from 'react-apollo';
 import { userDetailWithMessages, sendMessage } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';
 import { animateScroll } from 'react-scroll';
 import moment from 'moment';
+import socketIOClient from 'socket.io-client';
 
+var socket;
 
-class Arena extends Component {
-    state={
-        message:""
-    }
-    handleChange=(e)=>{
-        e.preventDefault();
-        this.setState({
-            [e.target.id]:e.target.value
-        });
-    };
+const Arena = (props) => {
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([]);
+    const ENDPOINT = "http://localhost:1000";
+    // console.log(props)
+    useEffect(()=>{
+        if(props.props.match.params){
+            socket = socketIOClient(ENDPOINT);
+            // on connection
+            socket.once('connect',()=>{
+                console.log(socket.id);
+            });
+    
+            if(!props.data.loading){
+                socket.emit('join', { name: props.data.user.name }, ()=>{
+        
+                });
+    
+            }
+    
+    
+            // on message
+            // socket.on('message', message=>{
+            //     console.log(message)
+            // });
+    
+            return ()=>{
+                // disconnecting this when it unmounts
+                console.log("Dismounting")
+                socket.emit('disconnect');
+                // disposing instance of the socket var
+                socket.off();
+            }
 
-    componentDidMount() {
-        this.scrollToBottom();
-    }
-    componentDidUpdate() {
-        this.scrollToBottom();
-    }
-    scrollToBottom() {
+        }
+    }, [ENDPOINT, props.props.match.params, props.data.loading]);
+
+    useEffect(()=>{
+        socket.on('message', (message)=>{
+            console.log(message)
+            setMessages([...messages, message]);
+        })
+    }, [messages])
+
+    useEffect(() => {
         animateScroll.scrollToBottom({
-          containerId: "chatListWrapper"
+            containerId: "chatListWrapper"
         });
-    }
+    },[])
+    useEffect(() => {
+        animateScroll.scrollToBottom({
+            containerId: "chatListWrapper"
+        });
+    })
 
-    handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if(this.state.message === ""){
+        if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
             let messageId = JSON.parse(localStorage.getItem('user')).messages.id
-            await this.props.sendMessage({
+            await props.sendMessage({
                 variables:{
-                    text: this.state.message,
+                    text: message,
                     sender: localStorage.getItem('id'),
                     id: messageId,
-                    person: this.props.data.user.id,
-                    personId: this.props.data.user.message.id,
+                    person: props.data.user.id,
+                    personId: props.data.user.message.id,
                     userId: localStorage.getItem('id')
                 },
                 refetchQueries: [ { query: userDetailWithMessages, variables: {
-                    id: this.props.props.match.params.id,
+                    id: props.props.match.params.id,
                     profileId: localStorage.getItem("id")
                 } } ]
             })
-            this.setState({
-                message: ""
-            })
+            socket.emit('sendMessage', message, () => setMessage(''));
         }
     }
-    render() {
-        console.log(this.props  )
-        return(
-            <>
-            {
-                this.props.props.location.pathname === '/chat' || 
-                this.props.props.location.pathname === '/chat/groups'
-                ? (
+    console.log("Data:",message, messages);
+    return(
+        <>
+        {
+            props.props.location.pathname === '/chat' || 
+            props.props.location.pathname === '/chat/groups'
+            ? (
+                <div>
+                    Click any contact to start chatting...
+                </div>
+            ) : (
+                props.data.user ? (
+                    <div className="arena col s12 m7 l8" key={props.data.user.id}>
+                        <div className="info">
+                            <span 
+                            className="btn btn-large btn-floating waves-effect waves-light"
+                                style={{
+                                    backgroundColor:"#259ee9"
+                                }}
+                            >
+                                {props.data.user.name[0]}
+                            </span>
+                            <h5 className="person center-align">
+                                {
+                                    props.props.location.pathname === "/chat/groups" ? "VAMS" : props.data.user.name
+                                }
+                            </h5>
+                        </div>
+                        <div className="divider"></div>
+            
+                        <div className="editor col s11 m7 l8">
+                            <div className="input-field inline" onSubmit={handleSubmit}>
+                                <input type="text" name="message" id="message" 
+                                value={message}
+                                placeholder="Type something..."
+                                onChange={e => setMessage(e.target.value)}
+                                onKeyPress={e => e.key === 'Enter' ? handleSubmit(e) : null }
+                                />
+                            </div>
+                            <a className="btn-floating prefix" href="#!"
+                                onClick={handleSubmit}
+                                style={{
+                                    backgroundColor:"#259ee9",
+                                }}
+                            >
+                                <i className="material-icons">send</i>
+                            </a>
+                        </div>
+        
+                        <div className="chats col s11 m7 l8">
+                            <ul id="chatListWrapper">
+                                {
+                                    (props.data.loading) === false &&  props.data.user.message.convos ? 
+                                    (
+                                        props.data.user.message.convos.messages.map(ele=>{
+                                            return(
+                                                <div className="container" key={Math.random()}>
+                                                    <div className="left-align chip User">
+                                                        {ele.sender.name}
+                                                    </div>
+                                                    <div className="message">
+                                                        {ele.text}
+                                                    </div>
+                                                    <div className="time right-align">
+                                                        <i>
+                                                            { moment(parseInt(ele.time)).fromNow() }
+                                                        </i>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    ) : (
+                                        <div>
+                                            No message yet
+                                        </div>
+                                    )
+                                }
+                            </ul>
+                        </div>
+
+                    </div>                    
+                ) : (
                     <div>
                         Click any contact to start chatting...
                     </div>
-                ) : (
-                    this.props.data.user ? (
-                        <div className="arena col s12 m7 l8" key={this.props.data.user.id}>
-                            <div className="info">
-                                <span 
-                                className="btn btn-large btn-floating waves-effect waves-light"
-                                    style={{
-                                        backgroundColor:"#259ee9"
-                                    }}
-                                >
-                                    {this.props.data.user.name[0]}
-                                </span>
-                                <h5 className="person center-align">
-                                    {
-                                        this.props.props.location.pathname === "/chat/groups" ? "VAMS" : this.props.data.user.name
-                                    }
-                                </h5>
-                            </div>
-                            <div className="divider"></div>
-                
-                            <div className="editor col s11 m7 l8">
-                                <div className="input-field inline" onSubmit={this.handleSubmit}>
-                                    <input type="text" name="message" id="message" 
-                                    value={this.state.message}
-                                    placeholder="Type something..."
-                                    onChange={this.handleChange}
-                                    />
-                                </div>
-                                <a className="btn-floating prefix" href="#!"
-                                    onClick={this.handleSubmit}
-                                    style={{
-                                        backgroundColor:"#259ee9",
-                                    }}
-                                >
-                                    <i className="material-icons">send</i>
-                                </a>
-                            </div>
-            
-                            <div className="chats col s11 m7 l8">
-                                <ul id="chatListWrapper">
-                                    {
-                                        (this.props.data.loading) === false &&  this.props.data.user.message.convos ? 
-                                         (
-                                            this.props.data.user.message.convos.messages.map(ele=>{
-                                                return(
-                                                    <div className="container" key={Math.random()}>
-                                                        <div className="left-align chip User">
-                                                            {ele.sender.name}
-                                                        </div>
-                                                        <div className="message">
-                                                            {ele.text}
-                                                        </div>
-                                                        <div className="time right-align">
-                                                            <i>
-                                                                { moment(parseInt(ele.time)).fromNow() }
-                                                            </i>
-                                                        </div>
-                                                    </div>
-                                                )
-                                            })
-                                        ) : (
-                                            <div>
-                                                No message yet
-                                            </div>
-                                        )
-                                    }
-                                </ul>
-                            </div>
-
-                        </div>                    
-                    ) : (
-                        <div>
-                            Click any contact to start chatting...
-                        </div>
-                    )
                 )
-            }
-            </>
-        )
-    }
+            )
+        }
+        </>
+    )
 }
 
 export default compose(
