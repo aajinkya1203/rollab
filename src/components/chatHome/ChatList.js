@@ -52,7 +52,7 @@ const ChatList = (props)=> {
                                             </span>
                                             <Link to={`/chat/${ele.id}`} className="title center-align">{ ele.name }</Link>
                                             <div className="center-align chip">
-                                                Online 
+                                                Offline 
                                             </div>
                                         </li>
                                     )

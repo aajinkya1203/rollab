@@ -15,54 +15,37 @@ const Arena = (props) => {
     const ENDPOINT = "http://localhost:1000";
     // console.log(props)
     useEffect(()=>{
-        if(props.props.match.params){
-            socket = socketIOClient(ENDPOINT);
-            // on connection
-            socket.once('connect',()=>{
-                console.log(socket.id);
-            });
-    
-            if(!props.data.loading){
-                socket.emit('join', { name: props.data.user.name }, ()=>{
-        
-                });
-    
-            }
-    
-    
-            // on message
-            // socket.on('message', message=>{
-            //     console.log(message)
-            // });
-    
-            return ()=>{
-                // disconnecting this when it unmounts
-                console.log("Dismounting")
-                socket.emit('disconnect');
-                // disposing instance of the socket var
-                socket.off();
-            }
+        socket = socketIOClient(ENDPOINT);
+        // on connection
+        socket.once('connect',()=>{
+            console.log(props);
+            socket.emit('newUser', { id: localStorage.getItem('id') }, ()=>{})
+        });            
 
+        
+        animateScroll.scrollToBottom({
+            containerId: "chatListWrapper"
+        });
+        return ()=>{
+            // disconnecting this when it unmounts
+            console.log("Dismounting");
+            socket.emit('disconnect');
+            // disposing instance of the socket var
+            socket.off();
         }
-    }, [ENDPOINT, props.props.match.params, props.data.loading]);
+
+    }, []);
 
     useEffect(()=>{
         socket.on('message', (message)=>{
             console.log(message)
             setMessages([...messages, message]);
-        })
-    }, [messages])
-
-    useEffect(() => {
-        animateScroll.scrollToBottom({
-            containerId: "chatListWrapper"
         });
-    },[])
-    useEffect(() => {
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
     })
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -84,7 +67,7 @@ const Arena = (props) => {
                     profileId: localStorage.getItem("id")
                 } } ]
             })
-            socket.emit('sendMessage', message, () => setMessage(''));
+            socket.emit('sendMessage', message, {to:props.data.user.id},() => setMessage(''));
         }
     }
     console.log("Data:",message, messages);
