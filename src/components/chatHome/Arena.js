@@ -44,7 +44,13 @@ const Arena = (props) => {
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
-    })
+    });
+
+    useEffect(()=>{
+        if(props.props.match.params.id){
+            socket.emit('privChat', { from: localStorage.getItem('id') , to: props.props.match.params.id})
+        }
+    },[props.props.match.params.id])
 
 
     const handleSubmit = async (e) => {
@@ -52,22 +58,40 @@ const Arena = (props) => {
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
-            let messageId = JSON.parse(localStorage.getItem('user')).messages.id
-            await props.sendMessage({
-                variables:{
-                    text: message,
-                    sender: localStorage.getItem('id'),
-                    id: messageId,
-                    person: props.data.user.id,
-                    personId: props.data.user.message.id,
-                    userId: localStorage.getItem('id')
-                },
-                refetchQueries: [ { query: userDetailWithMessages, variables: {
-                    id: props.props.match.params.id,
-                    profileId: localStorage.getItem("id")
-                } } ]
-            })
-            socket.emit('sendMessage', message, {to:props.data.user.id},() => setMessage(''));
+            let messageId = JSON.parse(localStorage.getItem('user')).messages.idl
+            let op = true;
+            socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id },(resp) => {
+                console.log(resp);
+                op = resp;
+            });
+            if(op){
+                await props.sendMessage({
+                    variables:{
+                        text: message,
+                        sender: localStorage.getItem('id'),
+                        id: messageId,
+                        person: props.data.user.id,
+                        personId: props.data.user.message.id,
+                        userId: localStorage.getItem('id')
+                    }
+                })
+            }else{
+                await props.sendMessage({
+                    variables:{
+                        text: message,
+                        sender: localStorage.getItem('id'),
+                        id: messageId,
+                        person: props.data.user.id,
+                        personId: props.data.user.message.id,
+                        userId: localStorage.getItem('id')
+                    },
+                    refetchQueries: [ { query: userDetailWithMessages, variables: {
+                        id: props.props.match.params.id,
+                        profileId: localStorage.getItem("id")
+                    } } ]
+                })
+
+            }
         }
     }
     console.log("Data:",message, messages);
