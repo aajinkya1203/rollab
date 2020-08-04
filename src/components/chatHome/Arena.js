@@ -22,7 +22,13 @@ const Arena = (props) => {
             socket.emit('newUser', { id: localStorage.getItem('id') }, ()=>{})
         });            
 
-        
+        socket.on('comm', (message)=>{
+            console.log("Message event triggered",message);
+            setMessages({
+                ...messages,
+                messages: [...(messages.messages), message]
+            });
+        });
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
@@ -37,10 +43,6 @@ const Arena = (props) => {
     }, []);
 
     useEffect(()=>{
-        socket.on('message', (message)=>{
-            console.log(message)
-            setMessages([...messages, message]);
-        });
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
@@ -50,17 +52,22 @@ const Arena = (props) => {
         if(props.props.match.params.id){
             socket.emit('privChat', { from: localStorage.getItem('id') , to: props.props.match.params.id})
         }
-    },[props.props.match.params.id])
+    },[props.props.match.params.id]);
 
-
+    // useEffect(()=>{
+        
+    // },[message]);
+    console.log("Heaven:")
+    console.log({...messages})
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
-            let messageId = JSON.parse(localStorage.getItem('user')).messages.idl
+            let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
+            let name = JSON.parse(localStorage.getItem('user')).name;
             let op = true;
-            socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id },(resp) => {
+            socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id, name, time: new Date() },(resp) => {
                 console.log(resp);
                 op = resp;
             });
@@ -75,6 +82,7 @@ const Arena = (props) => {
                         userId: localStorage.getItem('id')
                     }
                 })
+                setMessage('');
             }else{
                 await props.sendMessage({
                     variables:{
@@ -89,12 +97,17 @@ const Arena = (props) => {
                         id: props.props.match.params.id,
                         profileId: localStorage.getItem("id")
                     } } ]
-                })
-
+                });
+                setMessages(props.data.user.message.convos);
             }
+            
         }
     }
-    console.log("Data:",message, messages);
+    useEffect(() => {
+        if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
+            setMessages(props.data.user.message.convos);
+        }
+    }, [props.data.user]);
     return(
         <>
         {
@@ -146,9 +159,9 @@ const Arena = (props) => {
                         <div className="chats col s11 m7 l8">
                             <ul id="chatListWrapper">
                                 {
-                                    (props.data.loading) === false &&  props.data.user.message.convos ? 
+                                    messages && messages.messages ? 
                                     (
-                                        props.data.user.message.convos.messages.map(ele=>{
+                                        messages.messages.map(ele=>{
                                             return(
                                                 <div className="container" key={Math.random()}>
                                                     <div className="left-align chip User">
