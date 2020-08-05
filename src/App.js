@@ -4,7 +4,8 @@ import Home from './components/dashboard/home';
 import Signin from './components/auth/signin';
 import SignUp from './components/auth/signup';
 import { Route, Switch } from 'react-router-dom';
-import Navbar from './components/layout/navbar'
+// import Navbar from './components/layout/navbar';
+import Navbar from './components/layout/Header';
 import ChatHome from './components/chatHome/ChatHome';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';

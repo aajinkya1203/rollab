@@ -10,6 +10,11 @@ $orange-red-crayola: #ff5f52ff; -- like
 $rich-black-fogra-29-2: #0f1725ff;
 $mango: #ffbe05ff; */
 
+header{
+  background: #ee6e6e !important;
+}
+
+
 html,
 body {
   width: 100%;

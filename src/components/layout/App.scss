@@ -1,0 +1,200 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,600,800&display=swap");
+
+$red: #e20001;
+$black: #191919;
+
+.headerC.container *, .headerC.inner-header{
+  color: white !important;
+}
+
+.headerC.container {
+  width: 90%;
+  min-width: 90%;
+  color: white !important;
+  margin: 0 auto;
+  .headerC.wrapper {
+    padding: 0 48px;
+    .home {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      p {
+        font-size: 0.75rem;
+        letter-spacing: 0.3rem;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      h5 {
+        margin-top: 260px;
+        font-size: 24px;
+        font-weight: 600;
+        padding-right: 360px;
+      }
+    }
+  }
+}
+
+header {
+  height: 100px;
+  .headerC.inner-header {
+    position: relative;
+    z-index: 10;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .headerC.logo a {
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      color: $black;
+    }
+    .headerC.menu {
+      button {
+        border: none;
+        background: none;
+        outline: none;
+        cursor: pointer;
+        font-size: 0.8rem;
+        mix-blend-mode: difference;
+      }
+    }
+  }
+  .headerC.hamburger-menu {
+    display: none;
+    z-index: 9;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    .headerC.menu-secondary-background-color {
+      background: $black;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: fixed;
+      height: 100%;
+      width: 100%;
+      z-index: -1;
+    }
+    .headerC.menu-layer {
+      position: relative;
+      background: $red;
+      height: 100%;
+      overflow: hidden;
+      .headerC.menu-city-background {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+        animation-name: backgroundEffect;
+        animation-duration: 30s;
+        animation-iteration-count: infinite;
+      }
+      .headerC.wrapper {
+        position: relative;
+        .headerC.menu-links {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+          top: 200px;
+          nav {
+            display: block;
+            ul {
+              margin: 0;
+              padding: 0;
+              li {
+                list-style: none;
+                font-size: 6rem;
+                font-weight: 700;
+                cursor: pointer;
+                height: 135px;
+                overflow: hidden;
+                position: relative;
+                width: 700px;
+                a {
+                  position: absolute;
+                  color: #fff;
+                  text-decoration: none;
+                  &:hover {
+                    color: $black;
+                  }
+                }
+              }
+            }
+          }
+          .headerC.info {
+            color: #fff;
+            width: 300px;
+            h3 {
+              font-size: 1.2rem;
+              margin: 8px auto;
+            }
+            p {
+              margin: 0 auto;
+              font-size: 0.8rem;
+            }
+          }
+        }
+        .headerC.locations {
+          position: absolute;
+          bottom: -80px;
+          color: #fff;
+          margin-top: 16px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          span {
+            cursor: pointer;
+            &:first-child {
+              margin-left: 64px;
+            }
+            font-weight: 400;
+            margin: 0 32px;
+            transition: 0.3s ease-in-out;
+            &:hover {
+              color: #fff;
+              background: $black;
+              padding: 8px 24px;
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes backgroundEffect {
+  0% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 40% 10%;
+  }
+  50% {
+    background-position: 0 10%;
+  }
+  75% {
+    background-position: 10% 40%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+
+.headerC.logo a{
+  font-size: 30px !important;
+}
