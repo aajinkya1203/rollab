@@ -11,7 +11,7 @@ var socket;
 
 const Arena = (props) => {
     const [message, setMessage] = useState('')
-    const [messages, setMessages] = useState([]);
+    const [chats, setMessages] = useState([]);
     const ENDPOINT = "http://localhost:1000";
     // console.log(props)
     useEffect(()=>{
@@ -24,9 +24,12 @@ const Arena = (props) => {
 
         socket.on('comm', (message)=>{
             console.log("Message event triggered",message);
+            console.log(chats)
+            let tempRec = {...chats}
+            console.log(tempRec)
             setMessages({
-                ...messages,
-                messages: [...(messages.messages), message]
+                ...chats,
+                messages: (tempRec.messages).push(message)
             });
         });
         animateScroll.scrollToBottom({
@@ -46,6 +49,9 @@ const Arena = (props) => {
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
+        if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
+            setMessages(props.data.user.message.convos);
+        }
     });
 
     useEffect(()=>{
@@ -58,7 +64,7 @@ const Arena = (props) => {
         
     // },[message]);
     console.log("Heaven:")
-    console.log({...messages})
+    console.log({...chats})
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(message === ""){
@@ -66,41 +72,44 @@ const Arena = (props) => {
         }else{
             let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
             let name = JSON.parse(localStorage.getItem('user')).name;
-            let op = true;
-            socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id, name, time: new Date() },(resp) => {
+            let op = false;
+            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id, name, time: new Date() }, async (resp) => {
                 console.log(resp);
                 op = resp;
-            });
-            if(op){
-                await props.sendMessage({
-                    variables:{
-                        text: message,
-                        sender: localStorage.getItem('id'),
-                        id: messageId,
-                        person: props.data.user.id,
-                        personId: props.data.user.message.id,
-                        userId: localStorage.getItem('id')
-                    }
-                })
-                setMessage('');
-            }else{
-                await props.sendMessage({
-                    variables:{
-                        text: message,
-                        sender: localStorage.getItem('id'),
-                        id: messageId,
-                        person: props.data.user.id,
-                        personId: props.data.user.message.id,
-                        userId: localStorage.getItem('id')
-                    },
-                    refetchQueries: [ { query: userDetailWithMessages, variables: {
-                        id: props.props.match.params.id,
-                        profileId: localStorage.getItem("id")
-                    } } ]
-                });
-                setMessages(props.data.user.message.convos);
-            }
-            
+                console.log("OP:",op);
+                if(op===true){
+                    console.log("socketed")
+                    await props.sendMessage({
+                        variables:{
+                            text: message,
+                            sender: localStorage.getItem('id'),
+                            id: messageId,
+                            person: props.data.user.id,
+                            personId: props.data.user.message.id,
+                            userId: localStorage.getItem('id')
+                        }
+                    })
+                }else{
+                    console.log("db")
+                    await props.sendMessage({
+                        variables:{
+                            text: message,
+                            sender: localStorage.getItem('id'),
+                            id: messageId,
+                            person: props.data.user.id,
+                            personId: props.data.user.message.id,
+                            userId: localStorage.getItem('id')
+                        },
+                        refetchQueries: [ { query: userDetailWithMessages, variables: {
+                            id: props.props.match.params.id,
+                            profileId: localStorage.getItem("id")
+                        } } ]
+                    });
+                    setMessages(props.data.user.message.convos);
+                }
+            })
+            setMessage('');
+           
         }
     }
     useEffect(() => {
@@ -159,9 +168,9 @@ const Arena = (props) => {
                         <div className="chats col s11 m7 l8">
                             <ul id="chatListWrapper">
                                 {
-                                    messages && messages.messages ? 
+                                    chats && chats.messages ? 
                                     (
-                                        messages.messages.map(ele=>{
+                                        chats.messages.map(ele=>{
                                             return(
                                                 <div className="container" key={Math.random()}>
                                                     <div className="left-align chip User">
