@@ -140,9 +140,9 @@ io.on('connection',(socket)=>{
         console.log("ID:",id);
         // console.log("Name:",name, room)
         // const existingUser = users.find(user => user.room === room && user.name === name);
-        if(id in users){
-            return { error: "Username is already in the room!" }
-        }
+        // if(id in users){
+        //     return { error: "Username is already in the room!" }
+        // }
         socket.nick = id;
         users[socket.nick] = socket;
         return;
