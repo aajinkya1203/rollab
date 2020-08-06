@@ -113,7 +113,7 @@ code {
 }
 
 .attribute{
-  color: yellow;
+  color: yellow !important;
 }
 @media only screen and (max-width:400px){
   #github-embed{
@@ -136,6 +136,12 @@ nav li a{
   color: white;
   font-weight: bolder;
   margin-top: 80px;
+}
+
+@media only screen and (max-width: 350px){
+  .rollabTitle{
+    font-size: 2.5rem !important;
+  }
 }
 
 #tagline i{
@@ -513,4 +519,16 @@ fieldset{
 }
 .collection-item.avatar.truncate{
   /* cursor: pointer; */
+}
+#hoverBoi::after{
+  content: '';
+  height: 2px;
+  width: 0;
+  display: block;
+  background: yellow;
+  transition: all 0.6s ease-in-out;
+}
+#hoverBoi:hover:after{
+  transition: all 0.6s ease-in-out;
+  width: 90%;
 }

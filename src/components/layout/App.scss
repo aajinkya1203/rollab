@@ -2,6 +2,7 @@
 
 $red: #e20001;
 $black: #191919;
+$custom: #ee6e6e;
 
 .headerC.container *, .headerC.inner-header{
   color: white !important;
@@ -84,7 +85,7 @@ header {
     }
     .headerC.menu-layer {
       position: relative;
-      background: $red;
+      background: $custom;
       height: 100%;
       overflow: hidden;
       .headerC.menu-city-background {
@@ -112,6 +113,7 @@ header {
           top: 200px;
           nav {
             display: block;
+            box-shadow: none;
             ul {
               margin: 0;
               padding: 0;
@@ -126,10 +128,13 @@ header {
                 width: 700px;
                 a {
                   position: absolute;
-                  color: #fff;
+                  color: #323232 !important;
+                  font-size: 5.2rem;
                   text-decoration: none;
                   &:hover {
-                    color: $black;
+                    color: white !important;
+                    box-shadow: none;
+                    background: transparent;
                   }
                 }
               }
@@ -145,6 +150,15 @@ header {
             p {
               margin: 0 auto;
               font-size: 0.8rem;
+              a{
+                color: yellow !important;
+                &:after{
+                  content: '';
+                  width: 2px;
+                  height: 100px;
+                  display: block;
+                }
+              }
             }
           }
         }
@@ -175,6 +189,24 @@ header {
     }
   }
 }
+
+@media only screen and (max-width:992px){
+  .headerC.info{
+    display: none !important;
+  }
+}
+@media only screen and (max-width:600px){
+  .headerC.menu-links{
+    left: -65px !important;
+  }
+  li{
+    height: 90px !important;
+    a{
+      font-size: 3rem !important;
+    }
+  }
+}
+
 
 @keyframes backgroundEffect {
   0% {

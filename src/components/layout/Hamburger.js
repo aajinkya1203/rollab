@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 import './App.scss';
+import '../../index.css';
 
 import {
   staggerText,
@@ -65,7 +66,7 @@ const Hamburger = ({ state }) => {
             <div className='headerC menu-links'>
               <nav>
                 <ul>
-                  <li>
+                  <li className="options">
                     <Link
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
@@ -74,7 +75,7 @@ const Hamburger = ({ state }) => {
                       Home Page
                     </Link>
                   </li>
-                  <li>
+                  <li className="options">
                     <Link
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
@@ -83,24 +84,23 @@ const Hamburger = ({ state }) => {
                       Log In
                     </Link>
                   </li>
-                  <li>
+                  <li className="options">
                     <Link
                       onMouseEnter={e => handleHover(e)}
                       onMouseOut={e => handleHoverExit(e)}
                       ref={el => (line3 = el)}
                       to='/sign-up'>
-                      Aign Up
+                      Sign Up
                     </Link>
                   </li>
                 </ul>
               </nav>
-              <div ref={el => (info = el)} className='headerC info'>
-                <h3>Our Promise</h3>
+              <div ref={el => (info = el)} className='headerC info .hide-on-med-and-down'>
+                <h3>rollab</h3>
                 <p>
-                  The passage experienced a surge in popularity during the 1960s
-                  when Letraset used it on their dry-transfer sheets, and again
-                  during the 90s as desktop publishers bundled the text with
-                  their software.
+                  A project by <a href="https://github.com/aajinkya1203" target="__blank" className="attribute" id="hoverBoi" style={{color:"yellow"}}>
+                       Aajinkya Singh
+                  </a>                
                 </p>
               </div>
             </div>
