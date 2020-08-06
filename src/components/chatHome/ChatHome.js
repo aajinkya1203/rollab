@@ -5,6 +5,8 @@ import Arena from './Arena';
 import { userDetails } from '../../query/queries';
 import { flowRight as compose } from 'lodash';
 import { graphql } from 'react-apollo';
+import Navbar from '../layout/Header';
+
 
 const ChatHome = (props) => {
 
@@ -16,11 +18,14 @@ const ChatHome = (props) => {
 
     });
     return (
-        <div id="chatting" className="row">
-            <Sidebar/>
-            <ChatList props={props}/>
-            <Arena props={props}/>
-        </div>
+        <>
+            <Navbar props={props}/>
+            <div id="chatting" className="row">
+                <Sidebar/>
+                <ChatList props={props}/>
+                <Arena props={props}/>
+            </div>
+        </>
     )
 }
 

@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
 import { loginQuery } from '../../query/queries';
 import M from 'materialize-css';
+import Navbar from '../layout/Header';
 
 
 class signin extends Component {
@@ -35,7 +36,6 @@ class signin extends Component {
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
       this.props.history.push('/chat');
-      window.location.reload();
     }else{
       document.querySelector('.progress').style.display = "none";
       M.toast({html: "Oopsie! Something went wrong!"})
@@ -47,6 +47,8 @@ class signin extends Component {
       this.props.history.push('/chat');
     };
     return (
+      <>
+      <Navbar />
       <div>
         <Carding />
         <div className="row signing">
@@ -118,6 +120,7 @@ class signin extends Component {
           </div>
         </div>
       </div>
+      </>
     )
   }
 }

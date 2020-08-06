@@ -5,6 +5,7 @@ import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
 import { signupQuery } from '../../query/queries';
 import M from 'materialize-css';
+import Navbar from '../layout/Header';
 
 
 class SignUp extends Component {
@@ -48,6 +49,8 @@ class SignUp extends Component {
             this.props.history.push('/chat');
         };
         return (
+            <>
+            <Navbar />
             <div style={{
                 backgroundColor:"#292b2c",
                 height: "100vh"
@@ -134,6 +137,7 @@ class SignUp extends Component {
                     </div>
                     </div>
             </div>
+            </>
         )
     }
 }

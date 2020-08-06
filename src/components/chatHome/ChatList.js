@@ -9,6 +9,12 @@ import _ from 'lodash';
 const ChatList = (props)=> {
     const [cont, setCont] = useState([]);
     useEffect(()=>{
+        console.log(props)
+        if(!localStorage.getItem('token')){
+            props.props.history.push('/');
+        }
+    })
+    useEffect(()=>{
         if(props.data && props.data.allContacts){
             setCont(props.data.allContacts.people)
         }

@@ -15,7 +15,8 @@ import {
   staggerRevealClose
 } from "./Animations";
 
-const Hamburger = ({ state }) => {
+const Hamburger = ({ state, props }) => {
+  console.log(props)
   // Create varibles of our dom nodes
   let menuLayer = useRef(null);
   let reveal1 = useRef(null);
@@ -75,24 +76,57 @@ const Hamburger = ({ state }) => {
                       Home Page
                     </Link>
                   </li>
-                  <li className="options">
-                    <Link
-                      onMouseEnter={e => handleHover(e)}
-                      onMouseOut={e => handleHoverExit(e)}
-                      ref={el => (line2 = el)}
-                      to='/login'>
-                      Log In
-                    </Link>
-                  </li>
-                  <li className="options">
-                    <Link
-                      onMouseEnter={e => handleHover(e)}
-                      onMouseOut={e => handleHoverExit(e)}
-                      ref={el => (line3 = el)}
-                      to='/sign-up'>
-                      Sign Up
-                    </Link>
-                  </li>
+                  {
+                    localStorage.getItem('token') ? (
+                      <>
+                        <li className="options">
+                        <Link
+                          onMouseEnter={e => handleHover(e)}
+                          onMouseOut={e => handleHoverExit(e)}
+                          ref={el => (line2 = el)}
+                          to='/'>
+                          Arena
+                        </Link>
+                      </li>
+                      <li className="options">
+                        <Link
+                          onMouseEnter={e => handleHover(e)}
+                          onMouseOut={e => handleHoverExit(e)}
+                          ref={el => (line3 = el)}
+                          onClick={()=>{
+                            localStorage.clear();
+                            props.history.push('/');
+                            window.location.reload();
+                          }}
+                          to='/'>
+                          Log Out
+                        </Link>
+                      </li>
+                      </>
+                    ) : (
+                      <>
+                        <li className="options">
+                        <Link
+                          onMouseEnter={e => handleHover(e)}
+                          onMouseOut={e => handleHoverExit(e)}
+                          ref={el => (line2 = el)}
+                          to='/login'>
+                          Log In
+                        </Link>
+                      </li>
+                      <li className="options">
+                        <Link
+                          onMouseEnter={e => handleHover(e)}
+                          onMouseOut={e => handleHoverExit(e)}
+                          ref={el => (line3 = el)}
+                          to='/sign-up'>
+                          Sign Up
+                        </Link>
+                      </li>
+                      </>
+                    )
+                  }
+                  
                 </ul>
               </nav>
               <div ref={el => (info = el)} className='headerC info .hide-on-med-and-down'>

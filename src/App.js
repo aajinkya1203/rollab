@@ -34,7 +34,7 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Navbar />
+      {/* <Navbar /> */}
       <Switch>
         <Route exact path='/' component={ Home } />
         <Route path='/logout' component={ Home } />

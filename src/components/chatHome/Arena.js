@@ -18,20 +18,21 @@ const Arena = (props) => {
         socket = socketIOClient(ENDPOINT);
         // on connection
         socket.once('connect',()=>{
-            console.log(props);
+            // console.log(props);
             socket.emit('newUser', { id: localStorage.getItem('id') }, ()=>{})
-        });            
-
-        socket.on('comm', (message)=>{
-            console.log("Message event triggered",message);
-            console.log(chats)
-            let tempRec = {...chats}
-            console.log(tempRec)
-            setMessages({
-                ...chats,
-                messages: (tempRec.messages).push(message)
-            });
         });
+
+        const getDets = async ()=>{
+            let status = await props.data.loading;
+            let again = await props.data.user;
+            // let oneMore = await props.data.user.message.convos;
+            if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
+                setMessages(props.data.user.message.convos);
+            }
+        }
+
+        getDets();
+        
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
@@ -45,17 +46,30 @@ const Arena = (props) => {
 
     }, []);
 
+    if(socket){
+        socket.on('comm', (message)=>{
+            console.log("Message event triggered",message);
+            console.log(chats)
+            let tempRec = {...chats}
+            tempRec.messages.push(message)
+            console.log(tempRec)
+            setMessages({
+                ...chats,
+                // messages: (tempRec.messages).push(message)
+            });
+        });
+    }
+
     useEffect(()=>{
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
         });
-        if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
-            setMessages(props.data.user.message.convos);
-        }
+        
     });
 
     useEffect(()=>{
         if(props.props.match.params.id){
+            console.log("priv chat emitted")
             socket.emit('privChat', { from: localStorage.getItem('id') , to: props.props.match.params.id})
         }
     },[props.props.match.params.id]);
@@ -108,8 +122,7 @@ const Arena = (props) => {
                     setMessages(props.data.user.message.convos);
                 }
             })
-            setMessage('');
-           
+            // setMessage('');
         }
     }
     useEffect(() => {

@@ -5,6 +5,7 @@ import Cover from '../../images/testCover.jpg';
 import Floating from '../svgs/test';
 import Footer from './Footer';
 // import { motion } from 'framer-motion';
+import Navbar from '../layout/Header';
 
 const Home = (props) => {
 
@@ -19,6 +20,8 @@ const Home = (props) => {
     });
     
     return (
+        <>
+        <Navbar />
         <div>
             <div className="section row" style={{
                     "backgroundColor":"#ee6e6e",
@@ -69,6 +72,7 @@ const Home = (props) => {
             <Footer />
 
         </div>
+        </>
     )
 }
 

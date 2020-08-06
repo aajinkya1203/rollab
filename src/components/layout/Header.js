@@ -3,7 +3,7 @@ import { withRouter, Link } from "react-router-dom";
 import Hamburger from "./Hamburger";
 import './App.scss';
 
-const Header = ({ history }) => {
+const Header = ({ history, props }) => {
   // State of our Menu
   const [state, setState] = useState({
     initial: false,
@@ -50,7 +50,6 @@ const Header = ({ history }) => {
       setDisabled(false);
     }, 1200);
   };
-
   return (
     <header>
       <div className="headerC container">
@@ -67,7 +66,7 @@ const Header = ({ history }) => {
           </div>
         </div>
       </div>
-      <Hamburger state={state} />
+      <Hamburger state={state} props={props}/>
     </header>
   );
 };

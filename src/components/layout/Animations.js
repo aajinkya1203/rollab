@@ -2,6 +2,7 @@ import gsap from "gsap";
 
 // OPEN MENU
 export const staggerReveal = (node1, node2) => {
+  console.log("1")
   gsap.from([node1, node2], {
     duration: 0.8,
     height: 0,
