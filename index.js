@@ -7,6 +7,7 @@ const cors = require('cors');
 const { URI } = require('./keys/keys');
 var socket = require('socket.io');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -92,10 +93,6 @@ io.on('connection',(socket)=>{
     socket.on('privChat', (data)=>{
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
-        if(roomId in priv){
-            console.log("Room already exists");
-            return;
-        }
         if(users[tempto[0]] && users[tempto[1]]){
             priv[roomId] = [tempto[0], tempto[1]];
             console.log("Room made!",priv);
@@ -116,9 +113,8 @@ io.on('connection',(socket)=>{
         const result = addUser({ id });
         console.log("Result:",result)
         if(result && result.error) return callback(result.error);
-        console.log("Users:",users);
+        // console.log("Users:",users);
         console.log("No:", (Object.keys(users)).length);
-        console.log("Handshake:",socket.handshake)
         callback();
     });
 
@@ -137,12 +133,6 @@ io.on('connection',(socket)=>{
     // helper functions
     const addUser = ({ id }) => {
         id = id.trim();
-        console.log("ID:",id);
-        // console.log("Name:",name, room)
-        // const existingUser = users.find(user => user.room === room && user.name === name);
-        // if(id in users){
-        //     return { error: "Username is already in the room!" }
-        // }
         socket.nick = id;
         users[socket.nick] = socket;
         return;
@@ -157,6 +147,13 @@ io.on('connection',(socket)=>{
     
     const removeUser = (id) => {
         if(id in users){
+            for (var key of Object.keys(priv)){
+                let temp = _.find(priv[key], id)
+                if(temp){
+                    console.log("Room",temp)
+                    delete priv[key]
+                }
+            }
             delete users[id];
             return true;
         }else{
