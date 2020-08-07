@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { graphql } from 'react-apollo';
+import { graphql, useQuery } from 'react-apollo';
 import { userDetailWithMessages, sendMessage } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';
@@ -10,15 +10,15 @@ import socketIOClient from 'socket.io-client';
 var socket;
 
 const Arena = (props) => {
-    const [message, setMessage] = useState('')
     const [chats, setMessages] = useState([]);
     const ENDPOINT = "http://localhost:1000";
+
     // console.log(props)
     useEffect(()=>{
         socket = socketIOClient(ENDPOINT);
         // on connection
         socket.once('connect',()=>{
-            // console.log(props);
+            console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id') }, ()=>{})
         });
 
@@ -46,17 +46,35 @@ const Arena = (props) => {
 
     }, []);
 
+
     if(socket){
-        socket.on('comm', (message)=>{
-            console.log("Message event triggered",message);
-            console.log(chats)
-            let tempRec = {...chats}
-            tempRec.messages.push(message)
-            console.log(tempRec)
-            setMessages({
-                ...chats,
-                // messages: (tempRec.messages).push(message)
+        socket.on('comm', async (data)=>{
+            console.log("Message event triggered",data);
+            let div = document.createElement('div');
+            div.className="container"
+            div.setAttribute('key', Math.random());
+            let div2 = document.createElement('div');
+            div2.className="left-align chip User";
+            div2.innerText = data.sender.name
+            let div22 = document.createElement('div');
+            div22.className="message";
+            div22.innerText = data.text;
+            let div23 = document.createElement('div');
+            div23.className="time right-align";
+            let i = document.createElement('i');
+            i.innerText = moment(parseInt(data.time)).fromNow()
+            div23.appendChild(i);
+
+            // structuring the whole thing
+            div.append(div2)
+            div.append(div22)
+            div.append(div23)
+
+            document.querySelector("#chatListWrapper").appendChild(div) 
+            animateScroll.scrollToBottom({
+                containerId: "chatListWrapper"
             });
+            return;
         });
     }
 
@@ -65,7 +83,7 @@ const Arena = (props) => {
             containerId: "chatListWrapper"
         });
         
-    });
+    },[chats]);
 
     useEffect(()=>{
         if(props.props.match.params.id){
@@ -74,16 +92,13 @@ const Arena = (props) => {
         }
     },[props.props.match.params.id]);
 
-    // useEffect(()=>{
-        
-    // },[message]);
-    console.log("Heaven:")
-    console.log({...chats})
     const handleSubmit = async (e) => {
+        let message = document.querySelector('#message').value;
         e.preventDefault();
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
+            document.querySelector('#message').value = ''
             let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
             let name = JSON.parse(localStorage.getItem('user')).name;
             let op = false;
@@ -119,10 +134,9 @@ const Arena = (props) => {
                             profileId: localStorage.getItem("id")
                         } } ]
                     });
-                    setMessages(props.data.user.message.convos);
+                    // setMessages(props.data.user.message.convos);
                 }
             })
-            // setMessage('');
         }
     }
     useEffect(() => {
@@ -130,6 +144,9 @@ const Arena = (props) => {
             setMessages(props.data.user.message.convos);
         }
     }, [props.data.user]);
+
+
+    console.log("Data hai:", chats)
     return(
         <>
         {
@@ -162,9 +179,7 @@ const Arena = (props) => {
                         <div className="editor col s11 m7 l8">
                             <div className="input-field inline" onSubmit={handleSubmit}>
                                 <input type="text" name="message" id="message" 
-                                value={message}
                                 placeholder="Type something..."
-                                onChange={e => setMessage(e.target.value)}
                                 onKeyPress={e => e.key === 'Enter' ? handleSubmit(e) : null }
                                 />
                             </div>
@@ -234,3 +249,5 @@ export default compose(
     }),
     graphql(sendMessage, { name: "sendMessage" })
 )(Arena)
+
+// export default Arena;
