@@ -11,6 +11,8 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import M from 'materialize-css';
 
+
+
 // setting up an apollo client
 const client = new ApolloClient({
   uri: 'http://localhost:1000/graphql',

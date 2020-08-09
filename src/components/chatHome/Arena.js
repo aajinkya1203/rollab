@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { graphql, useQuery } from 'react-apollo';
+import { graphql, useQuery, useLazyQuery } from 'react-apollo';
 import { userDetailWithMessages, sendMessage } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';
@@ -11,6 +11,9 @@ var socket;
 
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
+    const [userDetsWithMsg, {loading, data}] = useLazyQuery(userDetailWithMessages,{
+        fetchPolicy: 'network-only'
+    });
     const ENDPOINT = "http://localhost:1000";
 
     // console.log(props)
@@ -32,6 +35,46 @@ const Arena = (props) => {
         }
 
         getDets();
+
+        if(socket){
+            socket.on('comm', async (data)=>{
+                console.log("Message event triggered",data);
+                console.log(!(props.props.match.params.id))
+                console.log(!(data.bonus).includes(props.props.match.params.id))
+                
+                if((!(props.props.match.params.id)) || (!(data.bonus).includes(props.props.match.params.id))){
+                    console.log("Not on your screen!")
+                }else{
+                    let div = document.createElement('div');
+                    div.className="container"
+                    div.setAttribute('key', Math.random());
+                    let div2 = document.createElement('div');
+                    div2.className="left-align chip User";
+                    div2.innerText = data.sender.name
+                    let div22 = document.createElement('div');
+                    div22.className="message";
+                    div22.innerText = data.text;
+                    let div23 = document.createElement('div');
+                    div23.className="time right-align";
+                    let i = document.createElement('i');
+                    i.innerText = moment(parseInt(data.time)).fromNow()
+                    div23.appendChild(i);
+        
+                    // structuring the whole thing
+                    div.append(div2)
+                    div.append(div22)
+                    div.append(div23)
+        
+                    document.querySelector("#chatListWrapper").appendChild(div);
+                }
+                console.log(props)
+
+                animateScroll.scrollToBottom({
+                    containerId: "chatListWrapper"
+                });
+                return;
+            });
+        }
         
         animateScroll.scrollToBottom({
             containerId: "chatListWrapper"
@@ -47,36 +90,7 @@ const Arena = (props) => {
     }, []);
 
 
-    if(socket){
-        socket.on('comm', async (data)=>{
-            console.log("Message event triggered",data);
-            let div = document.createElement('div');
-            div.className="container"
-            div.setAttribute('key', Math.random());
-            let div2 = document.createElement('div');
-            div2.className="left-align chip User";
-            div2.innerText = data.sender.name
-            let div22 = document.createElement('div');
-            div22.className="message";
-            div22.innerText = data.text;
-            let div23 = document.createElement('div');
-            div23.className="time right-align";
-            let i = document.createElement('i');
-            i.innerText = moment(parseInt(data.time)).fromNow()
-            div23.appendChild(i);
-
-            // structuring the whole thing
-            div.append(div2)
-            div.append(div22)
-            div.append(div23)
-
-            document.querySelector("#chatListWrapper").appendChild(div) 
-            animateScroll.scrollToBottom({
-                containerId: "chatListWrapper"
-            });
-            return;
-        });
-    }
+    
 
     useEffect(()=>{
         animateScroll.scrollToBottom({
@@ -140,13 +154,22 @@ const Arena = (props) => {
         }
     }
     useEffect(() => {
+        if(chats.length !== 0){
+            userDetsWithMsg({ variables: {
+                id: props.props.match.params.id,
+                profileId: localStorage.getItem("id")
+            }})
+            if(!loading && data){
+                // console.log(data)
+            }
+        }
         if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
             setMessages(props.data.user.message.convos);
         }
     }, [props.data.user]);
 
 
-    console.log("Data hai:", chats)
+    // console.log("Data hai:", chats)
     return(
         <>
         {
@@ -243,7 +266,8 @@ export default compose(
                 variables:{
                     id: props.props.match.params.id,
                     profileId: localStorage.getItem("id")
-                }
+                },
+                // pollInterval: 2000
             }
         }
     }),
