@@ -80,7 +80,8 @@ io.on('connection',(socket)=>{
                     "__typename": "User"
                 },
                 "time": data.time,
-                "text": data.message 
+                "text": data.message,
+                "bonus": [tempto[0], tempto[1]]
             }
             io.in(roomId).emit('comm', msgFormat);
             callback(true);
@@ -99,9 +100,8 @@ io.on('connection',(socket)=>{
             users[tempto[0]].join(roomId);
             users[tempto[1]].join(roomId);
             console.log("\nAll users are in!");
-            console.log(roomId)
-            console.log("Priv",priv)
-            io.sockets.in(roomId).emit('intro',{data: "Welcome to the room bois"})
+            console.log(roomId);
+            console.log("PrivRoom",priv[roomId]);
         }else{
             console.log("One of the user isn't online!");
         }
@@ -109,13 +109,13 @@ io.on('connection',(socket)=>{
 
     // custom ting
     socket.on('newUser', ({ id }, callback)=>{
-        console.log(id)
-        const result = addUser({ id });
-        console.log("Result:",result)
-        if(result && result.error) return callback(result.error);
+        // console.log(id)
+        addUser({ id });
+        // console.log("Result:",result)
+        // if(result && result.error) return callback(result.error);
         // console.log("Users:",users);
         console.log("No:", (Object.keys(users)).length);
-        callback();
+        callback(true);
     });
 
     socket.on('sendMessage', (message, to, callback)=>{
@@ -127,15 +127,11 @@ io.on('connection',(socket)=>{
         callback();
     })
 
-    // When a user connects to the room
-    // socket.broadcast.emit('message', 'A user has joined the chat!');
-
     // helper functions
     const addUser = ({ id }) => {
         id = id.trim();
         socket.nick = id;
         users[socket.nick] = socket;
-        return;
     };
 
     const roomExist = (room) => {
