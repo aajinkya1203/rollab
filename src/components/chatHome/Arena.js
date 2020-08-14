@@ -39,33 +39,44 @@ const Arena = (props) => {
         if(socket){
             socket.on('comm', async (data)=>{
                 console.log("Message event triggered",data);
-                console.log(!(props.props.match.params.id))
-                console.log(!(data.bonus).includes(props.props.match.params.id))
-                
-                if((!(props.props.match.params.id)) || (!(data.bonus).includes(props.props.match.params.id))){
+
+                if((!(props.props.match.params.id))){
                     console.log("Not on your screen!")
                 }else{
-                    let div = document.createElement('div');
-                    div.className="container"
-                    div.setAttribute('key', Math.random());
-                    let div2 = document.createElement('div');
-                    div2.className="left-align chip User";
-                    div2.innerText = data.sender.name
-                    let div22 = document.createElement('div');
-                    div22.className="message";
-                    div22.innerText = data.text;
-                    let div23 = document.createElement('div');
-                    div23.className="time right-align";
-                    let i = document.createElement('i');
-                    i.innerText = moment(parseInt(data.time)).fromNow()
-                    div23.appendChild(i);
-        
-                    // structuring the whole thing
-                    div.append(div2)
-                    div.append(div22)
-                    div.append(div23)
-        
-                    document.querySelector("#chatListWrapper").appendChild(div);
+                    // console.log(!(props.props.match.params.id))
+                    let loc = window.location.href;
+                    let re = /\/chat\/(.+)/gi
+                    let re2 = /\b(?:(?!chat)\w)+\b/gi
+                    let test = loc.match(re)
+                    test = (test[0]).match(re2)
+                    console.log("Regex:", test[0])
+                    console.log(data.bonus)
+                    console.log(!(data.bonus).includes(test[0]))
+                    if((!(data.bonus).includes(test[0]))){
+                        console.log("Not on your screen!")
+                    }else{
+                        let div = document.createElement('div');
+                        div.className="container"
+                        div.setAttribute('key', Math.random());
+                        let div2 = document.createElement('div');
+                        div2.className="left-align chip User";
+                        div2.innerText = data.sender.name
+                        let div22 = document.createElement('div');
+                        div22.className="message";
+                        div22.innerText = data.text;
+                        let div23 = document.createElement('div');
+                        div23.className="time right-align";
+                        let i = document.createElement('i');
+                        i.innerText = moment(parseInt(data.time)).fromNow()
+                        div23.appendChild(i);
+            
+                        // structuring the whole thing
+                        div.append(div2)
+                        div.append(div22)
+                        div.append(div23)
+            
+                        document.querySelector("#chatListWrapper").appendChild(div);
+                    }
                 }
                 console.log(props)
 
