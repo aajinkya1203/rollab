@@ -57,6 +57,7 @@ io.on('connection',(socket)=>{
 
     // when user disconnects
     socket.on('disconnect', (test)=>{
+        io.emit('delStat', { id: socket.nick });
         console.log("Socket:",socket.nick);
         const temp = removeUser(socket.nick);
         console.log("Temp:",temp);
@@ -70,6 +71,7 @@ io.on('connection',(socket)=>{
 
     socket.on('sendPriv', (data, callback)=>{
         console.log("Data:", data);
+        io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(roomExist(roomId)){
@@ -92,6 +94,7 @@ io.on('connection',(socket)=>{
 
 
     socket.on('privChat', (data)=>{
+        io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(users[tempto[0]] && users[tempto[1]]){
@@ -115,6 +118,7 @@ io.on('connection',(socket)=>{
         // if(result && result.error) return callback(result.error);
         // console.log("Users:",users);
         console.log("No:", (Object.keys(users)).length);
+        io.emit('updateStat', { id });
         callback(true);
     });
 
