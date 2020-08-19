@@ -57,7 +57,7 @@ const ChatList = (props)=> {
                                                 { ele.name[0] }
                                             </span>
                                             <Link to={`/chat/${ele.id}`} className="title center-align">{ ele.name }</Link>
-                                            <div className="center-align chip">
+                                            <div className="center-align chip" id={`u${ele.id}`}>
                                                 Offline 
                                             </div>
                                         </li>

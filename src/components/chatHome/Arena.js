@@ -39,21 +39,19 @@ const Arena = (props) => {
         if(socket){
             socket.on('comm', async (data)=>{
                 console.log("Message event triggered",data);
-
-                if((!(props.props.match.params.id))){
-                    console.log("Not on your screen!")
+                let loc = window.location.href;
+                let re = /\/chat\/(.+)/gi
+                let re2 = /\b(?:(?!chat)\w)+\b/gi
+                let test = loc.match(re)
+                
+                if(!test){
+                    console.log("NOYS")
                 }else{
-                    // console.log(!(props.props.match.params.id))
-                    let loc = window.location.href;
-                    let re = /\/chat\/(.+)/gi
-                    let re2 = /\b(?:(?!chat)\w)+\b/gi
-                    let test = loc.match(re)
                     test = (test[0]).match(re2)
-                    console.log("Regex:", test[0])
-                    console.log(data.bonus)
-                    console.log(!(data.bonus).includes(test[0]))
+                    // console.log("Regex:", test[0])
+                    // console.log("Len:", test[0].length)
                     if((!(data.bonus).includes(test[0]))){
-                        console.log("Not on your screen!")
+                        console.log("NOYS")
                     }else{
                         let div = document.createElement('div');
                         div.className="container"
@@ -74,8 +72,12 @@ const Arena = (props) => {
                         div.append(div2)
                         div.append(div22)
                         div.append(div23)
-            
-                        document.querySelector("#chatListWrapper").appendChild(div);
+                        
+                        if(document.querySelector("#chatListWrapper")){
+                            document.querySelector("#chatListWrapper").appendChild(div);
+                        }else{
+                            M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" })
+                        }
                     }
                 }
                 console.log(props)
@@ -85,6 +87,18 @@ const Arena = (props) => {
                 });
                 return;
             });
+
+
+            socket.on('updateStat', (data)=>{
+                if(document.querySelector(`#u${data.id}`)){
+                    document.querySelector(`#u${data.id}`).innerText = "Online"
+                }
+            })
+            socket.on('delStat', (data)=>{
+                if(document.querySelector(`#u${data.id}`)){
+                    document.querySelector(`#u${data.id}`).innerText = "Offline"
+                }
+            })
         }
         
         animateScroll.scrollToBottom({
@@ -176,6 +190,7 @@ const Arena = (props) => {
         }
         if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
             setMessages(props.data.user.message.convos);
+            M.toast({ html: "Holup! We are looking for some new changes." })
         }
     }, [props.data.user]);
 
