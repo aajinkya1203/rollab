@@ -10,6 +10,7 @@ import ChatHome from './components/chatHome/ChatHome';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import M from 'materialize-css';
+import { motion } from 'framer-motion'
 
 
 
@@ -37,6 +38,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       {/* <Navbar /> */}
+      <motion.div drag 
+        dragConstraints={{ right:0, left: -80 ,top: 80, bottom: 300}}
+      className="floating">
+        R
+      </motion.div>
       <Switch>
         <Route exact path='/' component={ Home } />
         <Route path='/logout' component={ Home } />
