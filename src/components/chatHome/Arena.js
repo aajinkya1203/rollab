@@ -88,6 +88,22 @@ const Arena = (props) => {
                 return;
             });
 
+            socket.on('type', data=>{
+                if(document.querySelector('#typingBox')){
+                    document.querySelector('#typingBox').style.display = "block"
+                }
+                if(document.querySelector('#typedStatus')){
+                    document.querySelector('#typedStatus').innerText = data
+                }
+            })
+            socket.on('stop-type', data=>{
+                if(document.querySelector('#typingBox')){
+                    document.querySelector('#typingBox').style.display = "none"
+                }
+                if(document.querySelector('#typedStatus')){
+                    document.querySelector('#typedStatus').innerText = ""
+                }
+            })
 
             socket.on('updateStat', (data)=>{
                 if(document.querySelector(`#u${data.id}`)){
@@ -141,7 +157,7 @@ const Arena = (props) => {
             let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
             let name = JSON.parse(localStorage.getItem('user')).name;
             let op = false;
-            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id, name, time: new Date() }, async (resp) => {
+            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.props.match.params.id, name, time: new Date().getTime() }, async (resp) => {
                 console.log(resp);
                 op = resp;
                 console.log("OP:",op);
@@ -194,6 +210,20 @@ const Arena = (props) => {
         }
     }, [props.data.user]);
 
+    const typing = async (e) => {
+        let name = JSON.parse(localStorage.getItem('user')).name;
+        if(e.target.value == ""){
+            await socket.emit('stop-typing', { from: localStorage.getItem('id') , to: props.props.match.params.id, name }, async (resp)=>{
+                console.log(resp)
+            });
+        }else{
+            await socket.emit('typing', { from: localStorage.getItem('id') , to: props.props.match.params.id, name }, async (resp)=>{
+                console.log(resp)
+            });
+
+        }
+    }
+
 
     // console.log("Data hai:", chats)
     return(
@@ -230,6 +260,7 @@ const Arena = (props) => {
                                 <input type="text" name="message" id="message" 
                                 placeholder="Type something..."
                                 onKeyPress={e => e.key === 'Enter' ? handleSubmit(e) : null }
+                                onKeyUp={typing}
                                 />
                             </div>
                             <a className="btn-floating prefix" href="#!"
@@ -271,6 +302,14 @@ const Arena = (props) => {
                                     )
                                 }
                             </ul>
+                            <p id="typingBox" style={{display:"none"}}>
+                                {/* typing status will be here */}
+                                <i id="typedStatus" className="grey-text">
+                                </i>
+                                <span className="grey-text">
+                                    ...
+                                </span>
+                            </p>
                         </div>
 
                     </div>                    

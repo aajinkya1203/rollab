@@ -9,7 +9,6 @@ import _ from 'lodash';
 const ChatList = (props)=> {
     const [cont, setCont] = useState([]);
     useEffect(()=>{
-        console.log(props)
         if(!localStorage.getItem('token')){
             props.props.history.push('/');
         }
