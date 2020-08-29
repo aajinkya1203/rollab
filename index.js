@@ -69,8 +69,32 @@ io.on('connection',(socket)=>{
 
     });
 
+    socket.on('typing', (data, callback) => {
+        io.emit('updateStat', { id: data.from });
+        let tempto = [data.from, data.to].sort(compareFunc);
+        let roomId = jwt.sign(tempto[0], tempto[1]);
+        if(roomExist(roomId)){
+            let msgFormat = `${data.name} is typing`
+            socket.to(roomId).emit('type', msgFormat);
+            callback(true);
+        }else{
+            callback(false);
+        }
+    });
+
+    socket.on('stop-typing', (data, callback) => {
+        io.emit('updateStat', { id: data.from });
+        let tempto = [data.from, data.to].sort(compareFunc);
+        let roomId = jwt.sign(tempto[0], tempto[1]);
+        if(roomExist(roomId)){
+            socket.to(roomId).emit('stop-type');
+            callback(true);
+        }else{
+            callback(false);
+        }
+    });
+
     socket.on('sendPriv', (data, callback)=>{
-        console.log("Data:", data);
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
