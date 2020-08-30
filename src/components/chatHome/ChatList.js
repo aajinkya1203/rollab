@@ -4,7 +4,7 @@ import { graphql } from 'react-apollo';
 import { allUsers, allContacts } from '../../query/queries';
 import { flowRight as compose } from 'lodash';
 import _ from 'lodash';
-
+import NewGroup from '../popups/NewGroup'
 
 const ChatList = (props)=> {
     const [cont, setCont] = useState([]);
@@ -39,10 +39,22 @@ const ChatList = (props)=> {
                 />
             </div>
             {/* <div className="divider"></div> */}
-            <fieldset>
-                <legend>{
-                    props.props.location.pathname === "/chat/groups" ? "GROUPS" : "CONTACTS"
-                }</legend>
+            <div>
+                <div className="grey-text">
+                    {
+                        props.props.location.pathname === "/chat/groups" ? "GROUPS" : "CONTACTS"
+                    }
+                    {
+                        props.props.location.pathname === "/chat/groups" ? (
+                            <i className="material-icons right modal-trigger"
+                                style={{cursor:"pointer"}}
+                                data-target="modal2"
+                            >add</i>
+                        ) : null
+                    }
+                    
+                </div>   
+                <NewGroup/>            
                 <ul className="listing">
                     {
                         props.props.location.pathname !== "/chat/groups" ? (
@@ -75,7 +87,7 @@ const ChatList = (props)=> {
                         )
                     }
                 </ul>
-            </fieldset>
+            </div>
         </div>
     )
 }

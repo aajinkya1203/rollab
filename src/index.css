@@ -382,9 +382,7 @@ html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test,
   padding: 5px 10px !important;
 }
 
-#contactList ul li{
-  padding: 10px;
-}
+
 #contactList a{
   color: white;
   margin: 5px;
@@ -399,8 +397,10 @@ html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test,
 }
 
 #contactList ul li{
-  padding: 15px;
-  border-bottom: 1px solid grey;
+  margin: 10px 0;
+  padding: 5px;
+  background: rgba(211,211,211,0.2);
+  border-radius: 8px;
 }
 
 .arena{
@@ -517,9 +517,7 @@ fieldset{
 .searched li > * {
   margin: 5px 8px;
 }
-.collection-item.avatar.truncate{
-  /* cursor: pointer; */
-}
+
 #hoverBoi::after{
   content: '';
   height: 2px;
@@ -549,4 +547,50 @@ fieldset{
 }
 .floating:active{
   cursor: grabbing;
+}
+
+
+/* modal styles */
+#modal2{
+  max-height:90% !important;
+}
+
+#modal2 > .modal-content{
+  padding: 0;
+}
+
+.BannerWrapper{
+  background-image: url(./images/GroupPopup/PopupBanner.gif);
+  height: 20rem !important;
+  background-position: center;
+  background-origin: content-box;
+  background-size: cover;
+}
+
+#popMoto{
+  color: white;
+  border: 2px solid white;
+  border-radius: 6px;
+  padding: 5px;
+  position: fixed;
+  top: 5px;
+  left: 22%;
+}
+
+input.select-dropdown.dropdown-trigger{
+  color: white !important;
+}
+
+.makeGroup{
+  border: 2px solid white;
+  font-weight: bold;
+  color: white;
+  border-radius: 7px;
+  transition: all 1s;
+}
+
+.makeGroup:hover{
+  background: white;
+  color: black !important;
+  transition: all 1s;
 }

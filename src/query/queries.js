@@ -171,4 +171,25 @@ const sendMessage = gql`
   }
 `
 
-export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, sendMessage };
+const myAllContacts = gql`
+  query($id:ID!){
+      user(id:$id){
+        id
+        name
+        contacts{
+          id
+          people{
+            name
+            id
+            email 
+          }
+        }
+        groups{
+          id
+          name
+        }
+      }
+  }
+`
+
+export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };
