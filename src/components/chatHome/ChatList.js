@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
-import { allUsers, allContacts } from '../../query/queries';
+import { allUsers, allContacts, allMyGroups } from '../../query/queries';
 import { flowRight as compose } from 'lodash';
 import _ from 'lodash';
 import NewGroup from '../popups/NewGroup'
 
 const ChatList = (props)=> {
     const [cont, setCont] = useState([]);
+    const [groups, setGroups] = useState([]);
     useEffect(()=>{
         if(!localStorage.getItem('token')){
             props.props.history.push('/');
         }
     })
     useEffect(()=>{
-        if(props.data && props.data.allContacts){
-            setCont(props.data.allContacts.people)
+        if(props.allContacts && props.allContacts.allContacts){
+            setCont(props.allContacts.allContacts.people)
+        }
+        if(props.allMyGroups && props.allMyGroups.allMyGroups){
+            setGroups(props.allMyGroups.allMyGroups)
         }
     }, [props])
     const handleChange=(e)=>{
         e.preventDefault();
         setCont(props.data.allContacts.people.filter(ele=>ele.email.startsWith(e.target.value)));
     }
+    console.log(props)
     return (
         <div id="contactList" className="col m3 l3 hide-on-small-only">
             <div className="input-field searchCont" style={{
@@ -81,9 +86,28 @@ const ChatList = (props)=> {
                             )
 
                         ) : (
-                            <div>
-                                No groups :(
-                            </div>
+                            groups.length !== 0 ? (
+                                groups.map(ele => {
+                                    return (
+                                        <li className="collection-item avatar truncate" key={ ele.id }>
+                                            <span className="grey-text" >
+                                                <strong style={{
+                                                    fontSize: "20px",
+                                                    margin: "0 5px"
+                                                }}>#</strong>
+                                            </span>
+                                            <Link to={`/groups/${ele.id}`} className="title center-align">{ ele.name }</Link>
+                                            {/* <div className="center-align chip" id={`u${ele.id}`}>
+                                                { ele.members.length } 
+                                            </div> */}
+                                        </li>
+                                    )
+                                })
+                            ) : (
+                                <div>
+                                    No groups :(
+                                </div>
+                            )
                         )
                     }
                 </ul>
@@ -94,7 +118,18 @@ const ChatList = (props)=> {
 
 export default compose(
     graphql(allUsers),
-    graphql(allContacts, { 
+    graphql(allMyGroups, { 
+        name: "allMyGroups",
+        options: (props) =>{
+            return{
+                variables:{
+                    id: localStorage.getItem("id"),
+                }
+            }
+        }
+    }),
+    graphql(allContacts, {
+        name: "allContacts",
         options: (props) =>{
             return{
                 variables:{
@@ -102,5 +137,5 @@ export default compose(
                 }
             }
         }
-     })
+    }),
 )(ChatList)

@@ -190,6 +190,35 @@ const myAllContacts = gql`
         }
       }
   }
+`;
+
+const createGroup = gql`
+mutation($name: String!, $admin: String!, $members: [String]){
+  createGroup(name:$name, admin:$admin, members:$members){
+    name
+    id
+    admin{
+      name
+    }
+    members{
+      name
+    }
+  }
+}
+`;
+
+const allMyGroups = gql`
+query($id: ID!){
+  allMyGroups(id:$id){
+    name
+    id
+    members{
+      name
+      id
+      email
+    }
+  }
+}
 `
 
-export { loginQuery, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };
+export { loginQuery, allMyGroups, createGroup, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };
