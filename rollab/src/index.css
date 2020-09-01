@@ -1,0 +1,596 @@
+/* SCSS HEX
+$rich-black-fogra-39: #0f0f13ff; -- like for black
+$silver: #c6c7c4ff;
+$spanish-gray: #a2999eff;
+$deep-taupe: #846a6aff;
+$onyx: #353b3cff;
+$rich-black-fogra-29: #0f1725ff;
+$han-blue: #6071cdff; -- like
+$orange-red-crayola: #ff5f52ff; -- like
+$rich-black-fogra-29-2: #0f1725ff;
+$mango: #ffbe05ff; */
+
+header{
+  background: #ee6e6e !important;
+}
+
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0;
+  height: 100%;
+  font-family: 'Lexend Deca', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+code {
+  font-family: 'Lexend Deca', sans-serif;
+}
+
+/* for the special effect thingy */
+#anims {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
+    segoe ui, arial, sans-serif !important;
+  background: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor: default;
+  height: 300px;
+}
+
+#root > div#headache {
+  width: 400px;
+}
+
+
+#headache .transitions-item {
+  overflow: hidden;
+  width: 100%;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 5em;
+  font-weight: 800;
+  text-transform: uppercase;
+  will-change: transform, opacity, height;
+  white-space: nowrap;
+  cursor: pointer;
+  line-height: 80px;
+}
+
+.hovered1{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/feature2.svg);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered2{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/features1.svg);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered3{
+  height: 40vw;
+  background: grey;
+  border-radius: 5px;
+  background-image: url(./images/home/feature3.png);
+  background-size: cover;
+  background-position: center center;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s;
+  will-change: transform;
+  border: 15px solid white;
+}
+.hovered1:hover, .hovered2:hover, .hovered3:hover{
+  box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
+}
+
+.attribute{
+  color: yellow !important;
+}
+@media only screen and (max-width:400px){
+  #github-embed{
+    display: none;
+  }
+}
+
+nav{
+  padding: 6px 30px;
+  height: 80px;
+}
+nav li a{
+  border-radius: 24px;
+}
+.brand-logo{
+  font-size: 2.5em !important;
+  font-weight: bolder;
+}
+.rollabTitle{
+  color: white;
+  font-weight: bolder;
+  margin-top: 80px;
+}
+
+@media only screen and (max-width: 350px){
+  .rollabTitle{
+    font-size: 2.5rem !important;
+  }
+}
+
+#tagline i{
+  color: white;
+  letter-spacing: 0.1em;
+  font-size: 16px;
+}
+
+.activeLink{
+}
+
+@media only screen and (max-width:992px){
+  .rollabTitle{
+    margin-top: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 370px){
+  #anims{
+    height: 180px;
+    margin: 20px auto;
+  }
+  #headache .transitions-item{
+    font-size: 3.5em;
+    height: 50px !important;
+  }
+}
+
+/* singin methods */
+.carding1,
+.carding2,
+.carding3,
+.carding4 {
+  position: absolute;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  will-change: transform;
+  margin-top: 130px !important;
+}
+
+.carding1 {
+  min-width: 60ch;
+  min-height: 60ch;
+  width: 100vw;
+  top: 5%;
+  left: 0%;
+  height: 100vh;
+  max-width: 100ch;
+  max-height: 100ch;
+  background-image: url(./images/auth/bg.svg);
+}
+
+.carding2 {
+  min-width: 37ch;
+  min-height: 45ch;
+  top: 25%;
+  left: 25%;
+  width: 25ch;
+  height: 25ch;
+  background-image: url(./images/auth/bulb.svg);
+}
+
+.carding3 {
+  opacity: 0.9;
+  left: 20%;
+  top: 35%;
+  min-width: 60ch;
+  min-height: 60ch;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100ch;
+  max-height: 100ch;
+  background-image: url(./images/auth/docs.svg);
+}
+
+.carding4 {
+  min-width: 60ch;
+  min-height: 60ch;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100ch;
+  max-height: 100ch;
+  background-image: url(./images/auth/people.svg);
+}
+
+#root > .containering {
+  width: 100% !important;
+  height: 100% !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.signing{
+  padding-top: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom:0;
+}
+.signing .card{
+  background: rgba(255, 255, 255, 1);
+}
+
+/* signup */
+.hooks-main > svg {
+  display: none;
+}
+
+.hooks-main > div {
+  position: absolute;
+  will-change: transform;
+  border-radius: 50%;
+  background: lightsalmon;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  opacity: 0.6;
+}
+
+.hooks-main > div:nth-child(1) {
+  width:  150px;
+  height: 150px;
+}
+
+.hooks-main > div:nth-child(2) {
+  width: 300px;
+  height: 300px;
+}
+
+.hooks-main > div:nth-child(3) {
+  width: 200px;
+  height: 200px;
+
+}
+
+.hooks-main > div::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.hooks-main > div:nth-child(2)::after {
+  top: 70px;
+  left: 70px;
+  width: 70px;
+  height: 70px;
+}
+
+.hooks-main > div:nth-child(3)::after {
+  top: 50px;
+  left: 50px;
+  width: 50px;
+  height: 50px;
+}
+
+.hooks-main {
+  margin-top: 20px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: url('#goo');
+  overflow: hidden;
+}
+
+.panel{
+  background-color: #ee6e73 !important;
+  color: white;
+  padding: 24px !important;
+  margin: .5rem 0 1rem 0 !important;
+}
+
+/* chat page */
+html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena {
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+.sidebar{
+  background-color: #2c2f33;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  margin-bottom: 0;
+  width: 80px !important;
+}
+#contactList{
+  background-color: #141414;
+  padding: 20px 10px;
+  height: 100%;
+  color: white;
+}
+#contactList:hover{
+  overflow-y: scroll;
+  
+}
+
+
+#chatting{
+  margin-bottom: 0;
+  background-color: #23272a;
+}
+.sidebar *{
+  color: white;
+}
+.sidebar li{
+  width: 100%;
+  margin: 10px 0;
+}
+.sidebar li a{
+  background-color: #373a3d !important;
+  transition: 0.2s ease-in !important;
+
+}
+.sidebar li a:hover{
+  transition: 0.2s ease-in !important;
+  border-radius: 12px !important;
+  background-color: #7289da !important;
+}
+.sidebar li a:focus {
+  border-radius: 12px !important;
+  background-color: #7289da !important;
+}
+.down{
+  position: fixed;
+  bottom: 0;
+}
+.divider{
+  background-color: #259ee9;
+  height: 2px;
+}
+.searchCont{
+  padding: 5px 10px !important;
+  border: 1px solid #373a3d !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important;
+}
+
+
+#contactList a{
+  color: white;
+  margin: 5px;
+}
+#contactList .btn{
+  border-radius: 100%;
+  background-color: #259ee9;
+}
+
+#contactList .chip{
+  margin: 5px 10px;
+}
+
+#contactList ul li{
+  margin: 10px 0;
+  padding: 5px;
+  background: rgba(211,211,211,0.2);
+  border-radius: 8px;
+}
+
+.arena{
+  background-color: #23272a !important;
+  height: 100%;
+}
+
+.info, .chats{
+  padding: 20px 30px;
+  color: white;
+}
+.chats{
+  width: 100% !important;
+  height: 60%;
+}
+
+.person{
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.editor{
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 5px;
+  padding: 5px 10px !important;
+  border: 1px solid grey !important;
+  border-radius: 12px !important;
+  padding: 5px 10px !important;
+  background-color: #292b2c !important;
+}
+.editor:focus{
+  box-shadow: 0 1px 0 0 #000 !important;
+}
+.editor .inline #message{
+  color: white;
+}
+.editor .inline{
+  width: 90%;
+  padding: 0 10px;
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+
+/* 
+black -> 000000
+and blue -> 259ee9
+*/
+
+@media only screen and (max-width:850px){
+  .editor .inline{
+    width: 85%;
+    padding: 0 5px;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+} 
+@media only screen and (max-width: 370px){
+  .editor .inline{
+    width: 80%;
+  }
+}
+
+/* chats */
+.chats ul{
+  height: 100%;
+  overflow: auto;
+}
+.chats ul:hover{
+  overflow-y: scroll;
+}
+.chats ul div.container{
+  margin: 10px 0;
+}
+
+.chats .message{
+  margin-left: 20px;
+}
+
+.time{
+  color: grey;
+}
+fieldset{
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+  border-color: #259ee9;
+}
+
+/* modal changes */
+.modal{
+  border-radius: 18px !important;
+  background: #23272a !important;
+  color: white !important;
+}
+.modal-footer{
+  background: #3a3c3e !important;
+  color: white !important;
+}
+.modal-footer > a{
+  color: white !important;
+  margin: 5px 20px !important;
+}
+.collection-item{
+  color: #141414;
+}
+
+.searched li{
+  padding: 10px !important;
+  cursor: pointer;
+  color: white;
+  background-color: #2b2d2f !important;
+}
+.searched li > * {
+  margin: 5px 8px;
+}
+
+#hoverBoi::after{
+  content: '';
+  height: 2px;
+  width: 0;
+  display: block;
+  background: yellow;
+  transition: all 0.6s ease-in-out;
+}
+#hoverBoi:hover:after{
+  transition: all 0.6s ease-in-out;
+  width: 90%;
+}
+
+
+.floating{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: white;
+  top: 100px;
+  right: 20px;
+  text-align: center;
+  text-justify: center;
+  padding: 15px;
+  border-radius: 12px;
+  cursor: grab;
+}
+.floating:active{
+  cursor: grabbing;
+}
+
+
+/* modal styles */
+#modal2{
+  max-height:90% !important;
+}
+
+#modal2 > .modal-content{
+  padding: 0;
+}
+
+.BannerWrapper{
+  background-image: url(./images/GroupPopup/PopupBanner.gif);
+  height: 20rem !important;
+  background-position: center;
+  background-origin: content-box;
+  background-size: cover;
+}
+
+#popMoto{
+  color: white;
+  border: 2px solid white;
+  border-radius: 6px;
+  padding: 5px;
+  position: fixed;
+  top: 5px;
+  left: 22%;
+}
+
+input.select-dropdown.dropdown-trigger{
+  color: white !important;
+}
+
+.makeGroup{
+  border: 2px solid white;
+  font-weight: bold;
+  color: white;
+  border-radius: 7px;
+  transition: all 1s;
+}
+
+.makeGroup:hover{
+  background: white;
+  color: black !important;
+  transition: all 1s;
+}
