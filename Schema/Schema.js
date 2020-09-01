@@ -130,12 +130,6 @@ const UserType = new GraphQLObjectType({
         groups: {
             type: new GraphQLList(GroupType),
             resolve(parent,args){
-                // var temp = []
-                // parent.groups.forEach(element => {
-                //     let res = _.find(groupTest, {id: element});
-                //     temp.push(res);
-                // });
-                // return temp
                 return Group.find().where('_id').in(parent.groups);
             }
         },
@@ -162,12 +156,6 @@ const ContactsType = new GraphQLObjectType({
         people : {
             type: new GraphQLList(UserType),
             resolve(parent, args){
-                // var temp = []
-                // parent.contacts.forEach(element => {
-                //     let res = _.find(test, {id: element});
-                //     temp.push(res);
-                // });
-                // return temp
                 return User.find().where('_id').in(parent.contacts);
             }
         }
@@ -180,15 +168,15 @@ const GroupType = new GraphQLObjectType({
     fields: ()=>({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
+        admin: { 
+            type: UserType,
+            resolve(parent,args){
+                return User.findById(parent.admin)
+            }
+        },
         members: {
             type: new GraphQLList(UserType),
             resolve(parent, args){
-                // var temp = []
-                // parent.members.forEach(element => {
-                //     let res = _.find(test, {id: element});
-                //     temp.push(res);
-                // });
-                // return temp
                 return User.find().where('_id').in(parent.members);
             }
         }
@@ -306,6 +294,16 @@ const RootQuery = new GraphQLObjectType({
                 // return _.find(messages, { id: args.id })
                 return Message.findById(args.id);
             }
+        },
+        allMyGroups: {
+            type: new GraphQLList(GroupType),
+            args: { id: { type: GraphQLID } },
+            async resolve(parent, args){
+                let list = await Group.find({ "members": {
+                    $in: [args.id]
+                } })
+                return list
+            }
         }
 
     }
@@ -317,6 +315,7 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
+        // too add a new User -- sign up
         addUser: {
             type: UserType,
             args: {
@@ -378,6 +377,8 @@ const Mutation = new GraphQLObjectType({
 
             }
         }, //add user mutation
+
+        // this is for login
         login: {
             type: UserType,
             args:{
@@ -452,6 +453,7 @@ const Mutation = new GraphQLObjectType({
             }
         }, //add contact mutation done
 
+        // mutation for sending a message
         sendMessage: {
             type: messageType,
             args: {
@@ -523,8 +525,43 @@ const Mutation = new GraphQLObjectType({
                 });
                 return test;
             }
-        }
+        }, // sendMessage mutation ends here
+        createGroup: {
+            type: GroupType,
+            args: {
+                name: { type: new GraphQLNonNull(GraphQLString) },
+                admin: { type: new GraphQLNonNull(GraphQLString) },
+                members: { type: new GraphQLList(GraphQLString) }
+            },
+            async resolve(parent, args) {
+                if( !args.name || !args.members){
+                    throw new Error("Kindly provide all details");
+                }
+                const newGroup = new Group({
+                    name: args.name,
+                    admin: args.admin,
+                    members: args.members
+                });
+                const results = await newGroup.save();
+                // checking if its done
+                if(!results){
+                    throw new Error("Oopsie Doopsie! That wasn't supposed to happen. Try our techy solution: REFRESH!")
+                }
+                args.members.forEach(async (person) => {
+                    let tempo = await User.findByIdAndUpdate(person,{
+                        $push: {
+                            groups: results._id
+                        }
+                    });
+                    if(!tempo){
+                        throw new Error("Uh-oh! Everyone hates network issues :/")
+                    }
+                });
+                return results
+            }
+        }, // create Group ends here
     }  // fields
+
 })
 
 
