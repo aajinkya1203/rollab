@@ -219,6 +219,25 @@ query($id: ID!){
     }
   }
 }
+`;
+
+const getAGroup = gql`
+query($id: ID){
+  group(id: $id){
+    name
+    id
+    members{
+      name
+			id
+      email
+    }
+    admin{
+      name
+      id
+      email
+    }
+  }
+}
 `
 
-export { loginQuery, allMyGroups, createGroup, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };
+export { loginQuery, getAGroup, allMyGroups, createGroup, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };

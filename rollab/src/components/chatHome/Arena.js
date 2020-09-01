@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { graphql, useQuery, useLazyQuery } from 'react-apollo';
-import { userDetailWithMessages, sendMessage } from '../../query/queries';
+import { userDetailWithMessages, sendMessage, getAGroup } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';
 import { animateScroll } from 'react-scroll';
@@ -225,19 +225,19 @@ const Arena = (props) => {
     }
 
 
-    // console.log("Data hai:", chats)
+    console.log("Data hai:", props)
     return(
         <>
         {
-            props.props.location.pathname === '/chat' || 
-            props.props.location.pathname === '/chat/groups'
+            (props.props.location.pathname === '/chat' || 
+            props.props.location.pathname === '/chat/groups') && props.props.match.isExact === true
             ? (
                 <div>
                     Click any contact to start chatting...
                 </div>
             ) : (
-                props.data.user ? (
-                    <div className="arena col s12 m7 l8" key={props.data.user.id}>
+                props.data.user || props.getAGroup.group ? (
+                    <div className="arena col s12 m7 l8" key={Math.random()}>
                         <div className="info">
                             <span 
                             className="btn btn-large btn-floating waves-effect waves-light"
@@ -245,11 +245,13 @@ const Arena = (props) => {
                                     backgroundColor:"#259ee9"
                                 }}
                             >
-                                {props.data.user.name[0]}
+                                {
+                                    props.props.match.path === "/chat/groups" ? <strong>{"#"}</strong> : props.data.user.name[0]
+                                }
                             </span>
                             <h5 className="person center-align">
                                 {
-                                    props.props.location.pathname === "/chat/groups" ? "VAMS" : props.data.user.name
+                                    props.props.match.path === "/chat/groups" ? props.getAGroup.group.name : props.data.user.name
                                 }
                             </h5>
                         </div>
@@ -333,6 +335,25 @@ export default compose(
                     profileId: localStorage.getItem("id")
                 },
                 // pollInterval: 2000
+            }
+        }
+    }),
+    graphql(getAGroup,{
+        name: "getAGroup",
+        options: (props) => {
+            let loc = window.location.href;
+            let re2 = /\b(?:(?!chat)\w)+\b/gi
+            let test = loc.match(re2)
+            if(test.length >= 5){
+                test = test[4]
+            }else{
+                test = null
+            }
+            
+            return{
+                variables: {
+                    id: test
+                }
             }
         }
     }),

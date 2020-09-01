@@ -26,7 +26,6 @@ const ChatList = (props)=> {
         e.preventDefault();
         setCont(props.data.allContacts.people.filter(ele=>ele.email.startsWith(e.target.value)));
     }
-    console.log(props)
     return (
         <div id="contactList" className="col m3 l3 hide-on-small-only">
             <div className="input-field searchCont" style={{
@@ -47,10 +46,10 @@ const ChatList = (props)=> {
             <div>
                 <div className="grey-text">
                     {
-                        props.props.location.pathname === "/chat/groups" ? "GROUPS" : "CONTACTS"
+                        props.props.match.path === "/chat/groups" ? "GROUPS" : "CONTACTS"
                     }
                     {
-                        props.props.location.pathname === "/chat/groups" ? (
+                        props.props.match.path === "/chat/groups" ? (
                             <i className="material-icons right modal-trigger"
                                 style={{cursor:"pointer"}}
                                 data-target="modal2"
@@ -62,7 +61,7 @@ const ChatList = (props)=> {
                 <NewGroup/>            
                 <ul className="listing">
                     {
-                        props.props.location.pathname !== "/chat/groups" ? (
+                        props.props.match.path !== "/chat/groups" ? (
                             cont.length !== 0 ? (
                                 cont.map(ele=>{
                                     return (
@@ -96,10 +95,7 @@ const ChatList = (props)=> {
                                                     margin: "0 5px"
                                                 }}>#</strong>
                                             </span>
-                                            <Link to={`/groups/${ele.id}`} className="title center-align">{ ele.name }</Link>
-                                            {/* <div className="center-align chip" id={`u${ele.id}`}>
-                                                { ele.members.length } 
-                                            </div> */}
+                                            <Link to={`/chat/groups/${ele.id}`} className="title center-align">{ ele.name }</Link>
                                         </li>
                                     )
                                 })
