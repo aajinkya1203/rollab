@@ -104,7 +104,7 @@ io.on('connection',(socket)=>{
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
-        if(roomExist(roomId)){
+        if(roomExist(roomId,data.from, data.to)){
             let msgFormat = {
                 "sender": {
                     "name": data.name,
@@ -165,9 +165,25 @@ io.on('connection',(socket)=>{
         users[socket.nick] = socket;
     };
 
-    const roomExist = (room) => {
+    const roomExist = (room, from=null, to=null) => {
         if(room in priv){
             return true;
+        }else if(from && to){
+            let tempto = [from, to].sort(compareFunc);
+            let roomId = jwt.sign(tempto[0], tempto[1]);
+            if(users[tempto[0]] && users[tempto[1]]){
+                priv[roomId] = [tempto[0], tempto[1]];
+                console.log("Room made!",priv);
+                users[tempto[0]].join(roomId);
+                users[tempto[1]].join(roomId);
+                console.log("\nAll users are in!");
+                console.log(roomId);
+                console.log("PrivRoom",priv[roomId]);
+                return true
+            }else{
+                console.log("One of the user isn't online!");
+                return false;
+            }
         }
         return false;
     }
@@ -175,11 +191,7 @@ io.on('connection',(socket)=>{
     const removeUser = (id) => {
         if(id in users){
             for (var key of Object.keys(priv)){
-                console.log("Key:",key)
                 let temp = priv[key].includes(id)
-                console.log("Calc:", temp)
-                console.log("Val:", priv[key])
-                console.log("ID:", id)
                 if(temp){
                     console.log("Room",temp)
                     delete priv[key]
