@@ -116,6 +116,7 @@ io.on('connection',(socket)=>{
                 "bonus": [tempto[0], tempto[1]]
             }
             io.in(roomId).emit('comm', msgFormat);
+            console.log("Room exiists")
             callback(true);
         }else{
             callback(false);
@@ -174,7 +175,11 @@ io.on('connection',(socket)=>{
     const removeUser = (id) => {
         if(id in users){
             for (var key of Object.keys(priv)){
-                let temp = _.find(priv[key], id)
+                console.log("Key:",key)
+                let temp = priv[key].includes(id)
+                console.log("Calc:", temp)
+                console.log("Val:", priv[key])
+                console.log("ID:", id)
                 if(temp){
                     console.log("Room",temp)
                     delete priv[key]
