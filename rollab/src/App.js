@@ -50,7 +50,7 @@ function App() {
         <Route path='/sign-up' component={ SignUp } />
         <Route path='/chat/groups' component={ ChatHome } />
         <Route path='/chat/:id' component={ Arena } />
-        <Route path='/chat' component={ ChatHome } />
+        <Route exact path='/chat' component={ Arena } />
       </Switch>
     </ApolloProvider>
   );

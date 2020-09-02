@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { graphql, useQuery, useLazyQuery } from 'react-apollo';
+import { graphql, useLazyQuery } from 'react-apollo';
 import { userDetailWithMessages, sendMessage, getAGroup } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';
@@ -127,6 +127,12 @@ const Arena = (props) => {
             containerId: "chatListWrapper"
         });
     },[chats]);
+
+    useEffect(()=>{
+        animateScroll.scrollToBottom({
+            containerId: "chatListWrapper"
+        });
+    })
 
     useEffect(()=>{
         if(socket && props.match.params.id){

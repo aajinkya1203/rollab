@@ -4,18 +4,20 @@ import ChatList from './ChatList';
 import { userDetails } from '../../query/queries';
 import { graphql } from 'react-apollo';
 import Navbar from '../layout/Header';
-
+import { animateScroll } from 'react-scroll';
 
 
 const ChatHome = (props) => {
 
     useEffect(()=>{
-        console.log(props)
         if(!localStorage.getItem('token')){
             props.history.push('/');
         }
-
+        animateScroll.scrollToBottom();
     });
+    useEffect(()=>{
+        animateScroll.scrollToBottom();
+    },[]);
     return (
         <>
             <Navbar props={props}/>
