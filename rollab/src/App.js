@@ -10,6 +10,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import M from 'materialize-css';
 import { motion } from 'framer-motion'
+import Arena from './components/chatHome/Arena';
 
 
 
@@ -48,7 +49,7 @@ function App() {
         <Route path='/login' component={ Signin } />
         <Route path='/sign-up' component={ SignUp } />
         <Route path='/chat/groups' component={ ChatHome } />
-        <Route path='/chat/:id' component={ ChatHome } />
+        <Route path='/chat/:id' component={ Arena } />
         <Route path='/chat' component={ ChatHome } />
       </Switch>
     </ApolloProvider>
