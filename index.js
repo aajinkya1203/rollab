@@ -50,8 +50,11 @@ const server = app.listen(PORT, ()=>{
 })
 
 var io = socket(server);
+
+// server db for keeping a record of users and sockets
 const users = {};
 const priv = {};
+const groups = {};
 
 io.on('connection',(socket)=>{
 
@@ -69,6 +72,7 @@ io.on('connection',(socket)=>{
 
     });
 
+    // typing feature here
     socket.on('typing', (data, callback) => {
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
@@ -82,6 +86,7 @@ io.on('connection',(socket)=>{
         }
     });
 
+    // stop typing feature here
     socket.on('stop-typing', (data, callback) => {
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
@@ -94,6 +99,7 @@ io.on('connection',(socket)=>{
         }
     });
 
+    // added private chat logic here
     socket.on('sendPriv', (data, callback)=>{
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
@@ -117,6 +123,9 @@ io.on('connection',(socket)=>{
     });
 
 
+    // join priv chat room for personal DM
+    // needs refactoring
+    // TIP: Connect with all contacts rather connecting to specific people
     socket.on('privChat', (data)=>{
         io.emit('updateStat', { id: data.from });
         let tempto = [data.from, data.to].sort(compareFunc);
@@ -134,24 +143,17 @@ io.on('connection',(socket)=>{
         }
     })
 
-    // custom ting
+    // custom ting for adding a new user / updating his socket
     socket.on('newUser', ({ id }, callback)=>{
-        // console.log(id)
         addUser({ id });
-        // console.log("Result:",result)
-        // if(result && result.error) return callback(result.error);
-        // console.log("Users:",users);
         console.log("No:", (Object.keys(users)).length);
         io.emit('updateStat', { id });
         callback(true);
     });
 
+    // think this is useless
     socket.on('sendMessage', (message, to, callback)=>{
         console.log("Message:",message,"to:",to);
-        // const user = getUser(socket.id);
-
-        // io.to(user.room).emit('message',{ user: user.name, text: message });
-
         callback();
     })
 
@@ -185,7 +187,4 @@ io.on('connection',(socket)=>{
         }
     }
     
-    // const getUser = (id) => users.find(user => user.id === id);
-    // const getUsersInRoom = (room) => users.filter(user => user.room === room);
-
 })
