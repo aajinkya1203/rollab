@@ -78,8 +78,11 @@ io.on('connection',(socket)=>{
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(roomExist(roomId)){
-            let msgFormat = `${data.name} is typing`
-            socket.to(roomId).emit('type', msgFormat);
+            let result = {
+                msgFormat: `${data.name} is typing`,
+                source: data.from,
+            }
+            socket.to(roomId).emit('type', result);
             callback(true);
         }else{
             callback(false);
