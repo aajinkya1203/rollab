@@ -143,7 +143,7 @@ io.on('connection',(socket)=>{
             console.log(roomId);
             console.log("PrivRoom",priv[roomId]);
         }else{
-            console.log("One of the user isn't online!");
+            console.log("Try One of the user isn't online!");
         }
     })
 
@@ -174,6 +174,8 @@ io.on('connection',(socket)=>{
         }else if(from && to){
             let tempto = [from, to].sort(compareFunc);
             let roomId = jwt.sign(tempto[0], tempto[1]);
+            console.log(users[tempto[0]])
+            console.log(users[tempto[1]])
             if(users[tempto[0]] && users[tempto[1]]){
                 priv[roomId] = [tempto[0], tempto[1]];
                 console.log("Room made!",priv);
