@@ -171,38 +171,58 @@ const Arena = (props) => {
             let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
             let name = JSON.parse(localStorage.getItem('user')).name;
             let op = false;
-            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: new Date().getTime() }, async (resp) => {
+            let actualTime = new Date().getTime();
+            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: actualTime }, async (resp) => {
                 op = resp;
                 console.log("OP:",op);
+                
                 if(op===true){
                     console.log("socketed")
-                    await props.sendMessage({
-                        variables:{
-                            text: message,
-                            sender: localStorage.getItem('id'),
-                            id: messageId,
-                            person: props.data.user.id,
-                            personId: props.data.user.message.id,
-                            userId: localStorage.getItem('id')
-                        }
-                    })
                 }else{
                     console.log("db")
-                    await props.sendMessage({
-                        variables:{
-                            text: message,
-                            sender: localStorage.getItem('id'),
-                            id: messageId,
-                            person: props.data.user.id,
-                            personId: props.data.user.message.id,
-                            userId: localStorage.getItem('id')
-                        },
-                        refetchQueries: [ { query: userDetailWithMessages, variables: {
-                            id: props.match.params.id,
-                            profileId: localStorage.getItem("id")
-                        } } ]
-                    });
+                    let div = document.createElement('div');
+                    div.className="container"
+                    div.setAttribute('key', Math.random());
+                    let div2 = document.createElement('div');
+                    div2.className="left-align chip User";
+
+                    // for getting the name of sender
+                    let name = JSON.parse(localStorage.getItem("user")).name;
+                    div2.innerText = name;
+                    let div22 = document.createElement('div');
+                    div22.className="message";
+                    div22.innerText = message;
+                    let div23 = document.createElement('div');
+                    div23.className="time right-align";
+                    let i = document.createElement('i');
+                    i.innerText = moment(parseInt(actualTime)).fromNow()
+                    div23.appendChild(i);
+        
+                    // structuring the whole thing
+                    div.append(div2)
+                    div.append(div22)
+                    div.append(div23)
+                    
+                    if(document.querySelector("#chatListWrapper")){
+                        document.querySelector("#chatListWrapper").appendChild(div);
+                        animateScroll.scrollToBottom({
+                            containerId: "chatListWrapper"
+                        });
+                    }else{
+                        M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" })
+                    }
                 }
+                await props.sendMessage({
+                    variables:{
+                        text: message,
+                        sender: localStorage.getItem('id'),
+                        id: messageId,
+                        person: props.data.user.id,
+                        personId: props.data.user.message.id,
+                        userId: localStorage.getItem('id')
+                    }
+                })
+
             })
             animateScroll.scrollToBottom({
                 containerId: "chatListWrapper"
