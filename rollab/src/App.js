@@ -3,9 +3,7 @@ import './index.css';
 import Home from './components/dashboard/home';
 import Signin from './components/auth/signin';
 import SignUp from './components/auth/signup';
-import GroupHome from './components/chatHome/Groups/Main';
 import { Route, Switch } from 'react-router-dom';
-import ChatHome from './components/chatHome/ChatHome';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import M from 'materialize-css';
@@ -48,7 +46,8 @@ function App() {
         <Route path='/logout' component={ Home } />
         <Route path='/login' component={ Signin } />
         <Route path='/sign-up' component={ SignUp } />
-        <Route path='/chat/groups' component={ ChatHome } />
+        <Route path='/chat/groups' component={ Arena } />
+        <Route path='/chat/groups/:gid' component={ Arena } />
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
       </Switch>
