@@ -9,14 +9,12 @@ import socketIOClient from 'socket.io-client';
 import Sidebar from './Sidebar';
 import ChatList from './ChatList';
 import Navbar from '../layout/Header';
+import InfoImage from '../../images/Groups/Convo.png';
 
 var socket;
 
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
-    const [userDetsWithMsg, {loading, data}] = useLazyQuery(userDetailWithMessages,{
-        fetchPolicy: 'network-only'
-    });
     console.log(props)
     const ENDPOINT = "http://localhost:1000";
 
@@ -230,12 +228,6 @@ const Arena = (props) => {
         }
     }
     useEffect(() => {
-        if(chats.length !== 0){
-            userDetsWithMsg({ variables: {
-                id: props.match.params.id,
-                profileId: localStorage.getItem("id")
-            }})
-        }
         if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
             setMessages(props.data.user.message.convos);
             M.toast({ html: "Holup! We are looking for some new changes." })           
@@ -279,12 +271,12 @@ const Arena = (props) => {
                                         }}
                                     >
                                         {
-                                            props.match.path === "/chat/groups" ? <strong>{"#"}</strong> : props.data.user.name[0]
+                                            props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? <strong>{"#"}</strong> : props.data.user.name[0]
                                         }
                                     </span>
                                     <h5 className="person center-align">
                                         {
-                                            props.match.path === "/chat/groups" ? props.getAGroup.group.name : props.data.user.name
+                                            props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? props.getAGroup.group.name : props.data.user.name
                                         }
                                     </h5>
                                 </div>
@@ -311,29 +303,46 @@ const Arena = (props) => {
                                 <div className="chats col s11 m7 l8">
                                     <ul id="chatListWrapper">
                                         {
-                                            chats && chats.messages ? 
-                                            (
-                                                chats.messages.map(ele=>{
-                                                    return(
-                                                        <div className="container" key={Math.random()}>
-                                                            <div className="left-align chip User">
-                                                                {ele.sender.name}
-                                                            </div>
-                                                            <div className="message">
-                                                                {ele.text}
-                                                            </div>
-                                                            <div className="time right-align">
-                                                                <i>
-                                                                    { moment(parseInt(ele.time)).fromNow() }
-                                                                </i>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                })
-                                            ) : (
-                                                <div>
-                                                    No message yet
+                                            props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? (
+                                                <div className="container info-brac row" key={Math.random()}>
+                                                    <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
+                                                    <div className="col s12 l7">
+                                                        <h6 style={{padding:"10px 0"}}>
+                                                            Talk without your data getting stored
+                                                        </h6>
+                                                        <div className="divider white"></div>
+                                                        <p>
+                                                            Yes! Group chats gives you the flexibility of writing anything without it ever getting stored!
+                                                        </p>
+                                                    </div>
                                                 </div>
+                                        
+                                            ) : (
+
+                                                chats && chats.messages ? 
+                                                (
+                                                    chats.messages.map(ele=>{
+                                                        return(
+                                                            <div className="container" key={Math.random()}>
+                                                                <div className="left-align chip User">
+                                                                    {ele.sender.name}
+                                                                </div>
+                                                                <div className="message">
+                                                                    {ele.text}
+                                                                </div>
+                                                                <div className="time right-align">
+                                                                    <i>
+                                                                        { moment(parseInt(ele.time)).fromNow() }
+                                                                    </i>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })
+                                                ) : (
+                                                    <div>
+                                                        No message yet
+                                                    </div>
+                                                )
                                             )
                                         }
                                     </ul>

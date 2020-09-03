@@ -594,3 +594,23 @@ input.select-dropdown.dropdown-trigger{
   color: black !important;
   transition: all 1s;
 }
+
+
+/* groups */
+
+.info-brac{
+  border: 1px solid #ffca76;
+  max-width: 90%;
+  width: 90%;
+  margin: 0 auto !important;
+  box-sizing: border-box;
+  border-radius: 16px;
+  background-color: #ffca76;
+}
+.info-brac > img{
+  width: 222px !important;
+  height: 150px !important;
+  margin: 0 auto !important;
+  padding: 2px;
+  border-radius: 16px;
+}

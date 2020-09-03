@@ -46,8 +46,8 @@ function App() {
         <Route path='/logout' component={ Home } />
         <Route path='/login' component={ Signin } />
         <Route path='/sign-up' component={ SignUp } />
-        <Route path='/chat/groups' component={ Arena } />
         <Route path='/chat/groups/:gid' component={ Arena } />
+        <Route path='/chat/groups' component={ Arena } />
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
       </Switch>

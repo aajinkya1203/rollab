@@ -24,7 +24,11 @@ const ChatList = (props)=> {
     }, [props])
     const handleChange=(e)=>{
         e.preventDefault();
-        setCont(props.data.allContacts.people.filter(ele=>ele.email.startsWith(e.target.value)));
+        if(props.props.match.path ==="/chat/groups/:gid" || props.props.match.path ==="/chat/groups"){
+            setGroups(props.allMyGroups.allMyGroups.filter(ele=>(ele.name.toLowerCase()).startsWith(e.target.value.toLowerCase())));
+        }else{
+            setCont(props.allContacts.allContacts.people.filter(ele=>(ele.email.toLowerCase()).startsWith(e.target.value.toLowerCase())));
+        }
     }
     return (
         <div id="contactList" className="col m3 l3 hide-on-small-only">
@@ -46,10 +50,12 @@ const ChatList = (props)=> {
             <div>
                 <div className="grey-text">
                     {
-                        props.props.match.path === "/chat/groups" ? "GROUPS" : "CONTACTS"
+                        props.props.match.path === "/chat/groups" || props.props.match.path ==="/chat/groups/:gid"
+                        ? "GROUPS" : "CONTACTS"
                     }
                     {
-                        props.props.match.path === "/chat/groups" ? (
+                        props.props.match.path === "/chat/groups" || props.props.match.path ==="/chat/groups/:gid"
+                        ? (
                             <i className="material-icons right modal-trigger"
                                 style={{cursor:"pointer"}}
                                 data-target="modal2"
@@ -61,7 +67,8 @@ const ChatList = (props)=> {
                 <NewGroup/>            
                 <ul className="listing">
                     {
-                        props.props.match.path !== "/chat/groups" ? (
+                        props.props.match.path !== "/chat/groups" && props.props.match.path !=="/chat/groups/:gid"
+                        ? (
                             cont.length !== 0 ? (
                                 cont.map(ele=>{
                                     return (
