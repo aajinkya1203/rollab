@@ -9,6 +9,7 @@ import { ApolloProvider } from 'react-apollo';
 import M from 'materialize-css';
 import { motion } from 'framer-motion'
 import Arena from './components/chatHome/Arena';
+import Profile from './components/svgs/profile/Profile';
 
 
 
@@ -50,6 +51,7 @@ function App() {
         <Route path='/chat/groups' component={ Arena } />
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
+        <Route exact path='/profile' component={ Profile } />
       </Switch>
     </ApolloProvider>
   );
