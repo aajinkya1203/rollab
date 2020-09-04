@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import './prof.scss';
 import { TimelineMax, TweenMax } from 'gsap';
-import Navbar from '../../layout/Header'
+import Navbar from '../../layout/Header';
+import Acc from '../../../images/Profile/Acc.png'
+import Usage from '../../../images/Profile/Usage.png'
+import about from '../../../images/Profile/about.png'
+import { Link } from 'react-router-dom'
 
 const Profile = (props)=> {
     useEffect(()=>{
@@ -106,19 +110,22 @@ const Profile = (props)=> {
         
                 this.slideData = {
                     0: {
-                        image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j110.jpg',
+                        image: Acc,
                         title: 'Account',
-                        description: `Name: Aajinkya\r\nEmail: aajinkya1203@gmail.com`
+                        description: `Name: Aajinkya<br/>Email: aajinkya1203@gmail.com`
                     },
                     1: {
-                        image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104.jpg',
+                        image: Usage,
                         title: 'Usage',
-                        description: `Track your usage, activity and your favourite pals based on\r\nthe frequency! This part of the site is more of a statistical part\r\nand lets you have an overview of your whole activity on rollab.`
+                        description: `Track your usage, activity and your favourite pals based on<br/>the frequency! This part of the site is more of a statistical<br/>part and lets you have an overview of your whole activity on<br/>rollab.
+                        <br/><br/>
+                        <Link to="#" className="btn">Find a Dealer</Link>
+                        `
                     },
                     2: {
-                        image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j42.jpg',
+                        image: about,
                         title: 'rollab',
-                        description: `rollab. The very thing you're seeing right now, is an \r\nonline-web-chatting platform with a few multiplayer \r\ngames integrated into it. It has a chat-bot which \r\ncan do a lot of your fancy stuffs including hosting a\r\nlistening party. Let's vibe together, shall we?.`
+                        description: `rollab. The very thing you're seeing right now, is an <br/>online-web-chatting platform with a few multiplayer <br/>games integrated into it. It has a chat-bot which <br/>can do a lot of your fancy stuffs including hosting a<br/>listening party. Let's vibe together, shall we?.`
                     }
                 }
         
@@ -221,7 +228,7 @@ const Profile = (props)=> {
         
                 let nextSlideData = this.slideData[ this.slides.activeIndex + 1];
                 this.dom.titleNext.textContent = nextSlideData.title;
-                this.dom.descriptionNext.textContent = nextSlideData.description;
+                this.dom.descriptionNext.innerHTML = nextSlideData.description;
                 this.dom.descriptionNext.style.whiteSpace = "pre";
                 this.dom.countNext.textContent = '0' + ( this.slides.activeIndex + 2 );
         
@@ -317,7 +324,7 @@ const Profile = (props)=> {
         
                 let nextSlideData = this.slideData[ this.slides.activeIndex - 1];
                 this.dom.titleNext.textContent = nextSlideData.title;
-                this.dom.descriptionNext.textContent = nextSlideData.description;
+                this.dom.descriptionNext.innerHTML = nextSlideData.description;
                 this.dom.descriptionNext.style.whiteSpace = "pre"
                 this.dom.countNext.textContent = '0' + ( this.slides.activeIndex );
         
@@ -402,15 +409,15 @@ const Profile = (props)=> {
             }
         
             resetText() {
-        
                 this.dom.titleCurrent.textContent = this.dom.titleNext.textContent;
                 this.dom.titleCurrent.removeAttribute('style');
                 this.dom.titleNext.textContent = '';
                 this.dom.titleNext.removeAttribute('style');
-        
-                this.dom.descriptionCurrent.textContent = this.dom.descriptionNext.textContent;
+                
+                console.log(this.dom.descriptionCurrent.textContent)
+                this.dom.descriptionCurrent.innerHTML = this.dom.descriptionNext.innerHTML;
                 this.dom.descriptionCurrent.removeAttribute('style');
-                this.dom.descriptionNext.textContent = '';
+                this.dom.descriptionNext.innerHTML = '';
                 this.dom.descriptionNext.removeAttribute('style');
         
                 this.dom.countCurrent.textContent = this.dom.countNext.textContent;
@@ -543,7 +550,7 @@ const Profile = (props)=> {
     return (
         <>
             <div id="proMain">
-                <Navbar/>
+                <Navbar props={props}/>
                 <div id="loader">
                     <div className="greyy"></div>
                     <div className="whitey"></div>
@@ -601,14 +608,37 @@ const Profile = (props)=> {
                                 Name: Aajinkya<br/>Email: aajinkya1203@gmail.com    
                             </p>
                         </div>
-                        
-                        <a href="#" className="btn">Find a Dealer</a>
-
                         <div className="dots"></div>
 
                         <div className="slide-nav">
-                            <button data-direction="prev" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clipPath="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
-                            <button data-direction="next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clipPath="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
+                            <button data-direction="prev" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6">
+                                    <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" />
+                                    </clipPath></defs>
+                                        <g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10">
+                                            <g id="g12">
+                                                <g clipPath="url(#clipPath18)" id="g14">
+                                                    <g transform="translate(53,12.0086)" id="g20">
+                                                        <path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" />
+                                                    </g>
+                                                        <g transform="translate(53,12.0086)" id="g24">
+                                                            <path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" />
+                                                        </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                </svg>
+                            </button>
+                            <button data-direction="next">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6">
+                                    <clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" />
+                                    </clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10">
+                                    <g id="g12">
+                                        <g clipPath="url(#clipPath18)" id="g14">
+                                            <g transform="translate(53,12.0086)" id="g20">
+                                                <path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g>
+                                </svg>
+                            </button>
                         </div>
 
                     </article>
