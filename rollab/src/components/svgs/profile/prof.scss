@@ -22,15 +22,15 @@
     font-style: normal;
 }
 
-* {
+#proMain * {
     box-sizing: border-box;
 }
 
-p {
+#proMain p {
     margin: 0;
 }
 
-body {
+#proMain {
     background-color: #161516;
     margin: 0;
   
@@ -82,7 +82,7 @@ body {
     }
 }
 
-header {
+header.profHead {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -92,7 +92,7 @@ header {
     padding: 0 25px;
     margin: 0 auto 15px;
     position: relative;
-
+    
     .menu {
         position: relative;
         padding-left: 1.25em;
@@ -302,7 +302,7 @@ header {
     position: relative;
     max-width: 1500px;
     margin: 0 auto 40px;
-
+    margin-bottom: 0px !important;
     @media screen and (min-width: 1100px) {
         flex-direction: row;
         padding: 0 70px 0 40px;
@@ -357,7 +357,7 @@ header {
         }
 
         .slide-title {
-            font-family: 'para';
+            // font-family: 'para';
             font-size: 70px;
             font-weight: 400;
             margin: 30px 0 30px 125px;
@@ -421,7 +421,7 @@ header {
             max-width: 380px;
             height: 160px;
             font-family: 'begum';
-
+            white-space: pre;
             @media screen and (min-width: 1100px) {
                 height: 100px;
             }

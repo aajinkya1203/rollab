@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import './prof.scss';
 import { TimelineMax, TweenMax } from 'gsap';
+import Navbar from '../../layout/Header'
 
 const Profile = (props)=> {
     useEffect(()=>{
@@ -106,18 +107,18 @@ const Profile = (props)=> {
                 this.slideData = {
                     0: {
                         image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j110.jpg',
-                        title: 'J110',
-                        description: `With the comfort of a lounge chair and the functionality of a dining chair, HAY’s reproduction of Poul M. Voulter’s J110 offers equal measures of strong aesthetics and practicality. Long rods at the back and curved armrests create an inviting expression. Made in lacquered solid beech and available in a variety of colours.`
+                        title: 'Account',
+                        description: `Name: Aajinkya\r\nEmail: aajinkya1203@gmail.com`
                     },
                     1: {
                         image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104.jpg',
-                        title: 'J104',
-                        description: `Jørgen Bækmark’s J104 chair was designed as a cross between a dining chair and an easy chair, HAY’s reproduction of this classic is crafted in solid beech with a variety of soaped or lacquered finishes.`
+                        title: 'Usage',
+                        description: `Track your usage, activity and your favourite pals based on\r\nthe frequency! This part of the site is more of a statistical part\r\nand lets you have an overview of your whole activity on rollab.`
                     },
                     2: {
                         image: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j42.jpg',
-                        title: 'J42',
-                        description: `HAY’s reproduction of Børge Mogensen’s classic J42 chair clearly reflects his design philosophy. Precise proportions with simple horizontal and vertical lines are used to construct a curved spindled backrest and angular armrests. With a broad plywood seat and frame in solid oak or beech, the design has a timeless quality that is built to provide lasting comfort.`
+                        title: 'rollab',
+                        description: `rollab. The very thing you're seeing right now, is an \r\nonline-web-chatting platform with a few multiplayer \r\ngames integrated into it. It has a chat-bot which \r\ncan do a lot of your fancy stuffs including hosting a\r\nlistening party. Let's vibe together, shall we?.`
                     }
                 }
         
@@ -221,6 +222,7 @@ const Profile = (props)=> {
                 let nextSlideData = this.slideData[ this.slides.activeIndex + 1];
                 this.dom.titleNext.textContent = nextSlideData.title;
                 this.dom.descriptionNext.textContent = nextSlideData.description;
+                this.dom.descriptionNext.style.whiteSpace = "pre";
                 this.dom.countNext.textContent = '0' + ( this.slides.activeIndex + 2 );
         
                 this.updateDot( true );
@@ -316,6 +318,7 @@ const Profile = (props)=> {
                 let nextSlideData = this.slideData[ this.slides.activeIndex - 1];
                 this.dom.titleNext.textContent = nextSlideData.title;
                 this.dom.descriptionNext.textContent = nextSlideData.description;
+                this.dom.descriptionNext.style.whiteSpace = "pre"
                 this.dom.countNext.textContent = '0' + ( this.slides.activeIndex );
         
                 this.updateDot( false );
@@ -533,86 +536,87 @@ const Profile = (props)=> {
         let loader = new Loader();
         let slider = new Slider( document.getElementById('slider-canvas'), loader )
         
-        
+        return ()=>{
+            window.PIXI.loader.reset();
+        }
     },[])
     return (
         <>
-            <div id="loader">
-                <div className="greyy"></div>
-                <div className="whitey"></div>
-                <div className="text-wrap">
-                    <div className="text">r<span>.</span></div>
-                </div>
-            </div>
-
-            <header>
-                <div className="logo">rollab</div>
-                <div className="basket">profile <span>.</span></div>
-            </header>
-
-            <section id="slider">
-
-                <div id="canvas-holder">
-                    <canvas id="slider-canvas"></canvas>
-                    <div className="thumbs">
-                        <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-1.jpg"/></div>
-                        <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-2.jpg"/></div>
-                        <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-3.jpg"/></div>
-                        <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-4.jpg"/></div>
+            <div id="proMain">
+                <Navbar/>
+                <div id="loader">
+                    <div className="greyy"></div>
+                    <div className="whitey"></div>
+                    <div className="text-wrap">
+                        <div className="text">r<span>.</span></div>
                     </div>
-            <button className="expand">
-                        <span>
-                            <span className="grid">
-                                <span className="layer layer--primary">
-                                    <span></span><span></span>
+                </div>
+                <section id="slider">
+
+                    <div id="canvas-holder">
+                        <canvas id="slider-canvas"></canvas>
+                        <div className="thumbs">
+                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-1.jpg"/></div>
+                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-2.jpg"/></div>
+                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-3.jpg"/></div>
+                            {/* <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-4.jpg"/></div> */}
+                        </div>
+                <button className="expand">
+                            <span>
+                                <span className="grid">
+                                    <span className="layer layer--primary">
+                                        <span></span><span></span>
+                                    </span>
+                                    <span className="layer layer--secondary">
+                                        <span></span><span></span>
+                                    </span>
                                 </span>
-                                <span className="layer layer--secondary">
-                                    <span></span><span></span>
-                                </span>
+                                <span className="square"></span>
                             </span>
-                            <span className="square"></span>
-                        </span>
-                    </button>
-                </div>
-
-                <article>
-
-                    <div className="slide-count">
-                        <span className="index">
-                            <span className="next"></span>
-                            <span className="current">01</span>
-                        </span>
-                        <span className="line"></span>
-                        <span className="total">01</span>
+                        </button>
                     </div>
 
-                    <h1 className="slide-title">
-                        <span className="code">
-                            <span className="current">J110</span>
-                            <span className="next"></span>
-                        </span>
-                        Chair
-                    </h1>
+                    <article>
 
-                    <div className="description">
-                        <p className="next"></p>
-                        <p className="current">With the comfort of a lounge chair and the functionality of a dining chair, HAY’s reproduction of Poul M. Voulter’s J110 offers equal measures of strong aesthetics and practicality. Long rods at the back and curved armrests create an inviting expression. Made in lacquered solid beech and available in a variety of colours.</p>
-                    </div>
-                    
-                    <a href="#" className="btn">Find a Dealer</a>
+                        <div className="slide-count">
+                            <span className="index">
+                                <span className="next"></span>
+                                <span className="current">01</span>
+                            </span>
+                            <span className="line"></span>
+                            <span className="total">01</span>
+                        </div>
 
-                    <div className="dots"></div>
+                        <h1 className="slide-title">
+                            <span className="code">
+                                <span className="current">Account</span>
+                                <span className="next"></span>
+                            </span>
+                            Details
+                        </h1>
 
-                    <div className="slide-nav">
-                        <button data-direction="prev" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clip-path="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
-                        <button data-direction="next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clip-path="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
-                    </div>
+                        <div className="description">
+                            <p className="next"></p>
+                            <p className="current">
+                                Name: Aajinkya<br/>Email: aajinkya1203@gmail.com    
+                            </p>
+                        </div>
+                        
+                        <a href="#" className="btn">Find a Dealer</a>
 
-                </article>
+                        <div className="dots"></div>
 
-                <div className="category">Seating</div>
+                        <div className="slide-nav">
+                            <button data-direction="prev" disabled><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clipPath="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
+                            <button data-direction="next"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 32.023201"><defs id="defs6"><clipPath id="clipPath18" clipPathUnits="userSpaceOnUse"><path id="path16" d="M 0,24.017 H 54 V 0 H 0 Z" /></clipPath></defs><g transform="matrix(1.3333333,0,0,-1.3333333,0,32.0232)" id="g10"><g id="g12"><g clipPath="url(#clipPath18)" id="g14"><g transform="translate(53,12.0086)" id="g20"><path id="path22" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0" /></g><g transform="translate(53,12.0086)" id="g24"><path id="path26" d="m 0,0 c 0,0.267 -0.11,0.522 -0.293,0.714 l -9.899,9.999 c -0.391,0.395 -1.024,0.394 -1.414,0 -0.391,-0.394 -0.391,-1.034 0,-1.428 L -3.413,1.01 H -51 c -0.552,0 -1,-0.452 -1,-1.01 0,-0.558 0.448,-1.01 1,-1.01 h 47.586 l -8.192,-8.275 c -0.391,-0.394 -0.39,-1.034 0,-1.428 0.391,-0.394 1.024,-0.394 1.414,0 l 9.899,9.999 C -0.106,-0.525 -0.003,-0.265 0,0 Z" /></g></g></g></g></svg></button>
+                        </div>
 
-            </section>
+                    </article>
+
+                    <div className="category">Seating</div>
+
+                </section>
+            </div>
         </>
     )
 }

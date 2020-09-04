@@ -544,6 +544,7 @@ fieldset{
   padding: 15px;
   border-radius: 12px;
   cursor: grab;
+  z-index: 10000;
 }
 .floating:active{
   cursor: grabbing;

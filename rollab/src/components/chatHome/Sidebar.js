@@ -69,7 +69,7 @@ const Sidebar=(props)=> {
             </ul>
             <ul className="down">
                 <li>
-                    <NavLink to="#!" activeClassName="roundy"
+                    <NavLink to="/profile" activeClassName="roundy"
                         className="btn btn-floating  z-depth-0 btn-large tooltipped"
                         data-position="right" data-tooltip="Profile"
                     >
