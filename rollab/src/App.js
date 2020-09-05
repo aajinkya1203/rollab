@@ -3,6 +3,7 @@ import './index.css';
 import Home from './components/dashboard/home';
 import Signin from './components/auth/signin';
 import SignUp from './components/auth/signup';
+import Landing from './components/game/landing';
 import { Route, Switch } from 'react-router-dom';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -52,6 +53,7 @@ function App() {
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
         <Route exact path='/profile' component={ Profile } />
+        <Route exact path='/game' component={ Landing } />
       </Switch>
     </ApolloProvider>
   );

@@ -10,13 +10,10 @@ import {
   fadeInUp,
   handleHover,
   handleHoverExit,
-  handleCityReturn,
-  handleCity,
   staggerRevealClose
 } from "./Animations";
 
 const Hamburger = ({ state, props }) => {
-  console.log(props)
   // Create varibles of our dom nodes
   let menuLayer = useRef(null);
   let reveal1 = useRef(null);

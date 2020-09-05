@@ -5,7 +5,6 @@ import Navbar from '../../layout/Header';
 import Acc from '../../../images/Profile/Acc.png'
 import Usage from '../../../images/Profile/Usage.png'
 import about from '../../../images/Profile/about.png'
-import { Link } from 'react-router-dom'
 
 const Profile = (props)=> {
     useEffect(()=>{
@@ -112,14 +111,14 @@ const Profile = (props)=> {
                     0: {
                         image: Acc,
                         title: 'Account',
-                        description: `Name: Aajinkya<br/>Email: aajinkya1203@gmail.com`
+                        description: `Name: ${JSON.parse(localStorage.getItem("user")).name}<br/>Email: ${JSON.parse(localStorage.getItem("user")).email}`
                     },
                     1: {
                         image: Usage,
                         title: 'Usage',
                         description: `Track your usage, activity and your favourite pals based on<br/>the frequency! This part of the site is more of a statistical<br/>part and lets you have an overview of your whole activity on<br/>rollab.
                         <br/><br/>
-                        <Link to="#" className="btn">Find a Dealer</Link>
+                        <a href="/dashboard" class="btn white-text">Know More</a>
                         `
                     },
                     2: {
@@ -414,7 +413,6 @@ const Profile = (props)=> {
                 this.dom.titleNext.textContent = '';
                 this.dom.titleNext.removeAttribute('style');
                 
-                console.log(this.dom.descriptionCurrent.textContent)
                 this.dom.descriptionCurrent.innerHTML = this.dom.descriptionNext.innerHTML;
                 this.dom.descriptionCurrent.removeAttribute('style');
                 this.dom.descriptionNext.innerHTML = '';
@@ -453,10 +451,10 @@ const Profile = (props)=> {
               
               document.onkeydown = (e) => {
                 e = e || window.event;
-                if (e.keyCode == 38) {
+                if (e.keyCode === 38) {
                     this.prevSlide.call( this );
                 }
-                else if (e.keyCode == 40) {
+                else if (e.keyCode === 40) {
                     this.nextSlide.call( this );
                 }
               }
@@ -541,7 +539,7 @@ const Profile = (props)=> {
         }
         
         let loader = new Loader();
-        let slider = new Slider( document.getElementById('slider-canvas'), loader )
+        new Slider( document.getElementById('slider-canvas'), loader )
         
         return ()=>{
             window.PIXI.loader.reset();
@@ -563,10 +561,9 @@ const Profile = (props)=> {
                     <div id="canvas-holder">
                         <canvas id="slider-canvas"></canvas>
                         <div className="thumbs">
-                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-1.jpg"/></div>
-                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-2.jpg"/></div>
-                            <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-3.jpg"/></div>
-                            {/* <div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/123024/j104-4.jpg"/></div> */}
+                            <div><img alt="Cover" src={Acc}/></div>
+                            <div><img alt="Cover" src={Usage}/></div>
+                            <div><img alt="Cover" src={about}/></div>
                         </div>
                 <button className="expand">
                             <span>
@@ -605,7 +602,7 @@ const Profile = (props)=> {
                         <div className="description">
                             <p className="next"></p>
                             <p className="current">
-                                Name: Aajinkya<br/>Email: aajinkya1203@gmail.com    
+                                Name: {JSON.parse(localStorage.getItem("user")).name}<br/>Email: {JSON.parse(localStorage.getItem("user")).email}   
                             </p>
                         </div>
                         <div className="dots"></div>
@@ -643,7 +640,7 @@ const Profile = (props)=> {
 
                     </article>
 
-                    <div className="category">Seating</div>
+                    <div className="category white-text">rollab.</div>
 
                 </section>
             </div>

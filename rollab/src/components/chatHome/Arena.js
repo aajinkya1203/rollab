@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { graphql, useLazyQuery } from 'react-apollo';
+import { graphql } from 'react-apollo';
 import { userDetailWithMessages, sendMessage, getAGroup } from '../../query/queries';
 import M from 'materialize-css';
 import { flowRight as compose } from 'lodash';

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
 import { addContact, allUsers, userDetails } from '../../query/queries';
@@ -66,6 +66,14 @@ const Sidebar=(props)=> {
                         <i className="material-icons">group</i>
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink to="/game" activeClassName="roundy"
+                        className="btn btn-floating  z-depth-0 btn-large tooltipped"
+                        data-position="right" data-tooltip="Games"
+                    >
+                        <i className="material-icons">videogame_asset</i>
+                    </NavLink>
+                </li>
             </ul>
             <ul className="down">
                 <li>
@@ -73,7 +81,7 @@ const Sidebar=(props)=> {
                         className="btn btn-floating  z-depth-0 btn-large tooltipped"
                         data-position="right" data-tooltip="Profile"
                     >
-                        AS
+                        {JSON.parse(localStorage.getItem("user")).name[0]}
                     </NavLink>
                 </li>
             </ul>
@@ -92,7 +100,7 @@ const Sidebar=(props)=> {
                 { props.allUsers && props.allUsers.allUsers ? (
                     props.allUsers.allUsers.map(user=>{
                         if(user.id === localStorage.getItem("id")){
-                            return;
+                            return null;
                         }
                         return(
                             <li 

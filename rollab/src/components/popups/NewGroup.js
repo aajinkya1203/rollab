@@ -18,14 +18,14 @@ const NewGroup = (props) => {
     const handleSubmit = async (e) => {
         console.log("not happ")
         e.preventDefault();
-        if((window.$('#mySelect').val()).length == 0){
+        if((window.$('#mySelect').val()).length === 0){
             M.toast({html: "Slow down partner! Add some friends to the party!"})
         }else{
             let selected = window.$('#mySelect').val();
             let name = document.querySelector('#groupName').value;
             let admin = localStorage.getItem("id")
             let members = [...selected, admin]
-            let testRes = await props.createGroup({
+            await props.createGroup({
                 variables:{
                     name: name,
                     admin: admin,
