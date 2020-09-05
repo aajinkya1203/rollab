@@ -8,6 +8,7 @@ const { URI } = require('./keys/keys');
 var socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
+const Groups = require('./models/Group')
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -55,6 +56,7 @@ var io = socket(server);
 const users = {};
 const priv = {};
 const groups = {};
+var myGroups = {};
 
 io.on('connection',(socket)=>{
 
@@ -69,6 +71,7 @@ io.on('connection',(socket)=>{
         }else{
             console.log("User wasn't present!")
         }
+        removeFromExistingRooms(socket.nick, myGroups[socket.nick], "Test")
 
     });
 
@@ -128,10 +131,9 @@ io.on('connection',(socket)=>{
 
 
     // join priv chat room for personal DM
-    // needs refactoring
-    // TIP: Connect with all contacts rather connecting to specific people
     socket.on('privChat', (data)=>{
         io.emit('updateStat', { id: data.from });
+        
         let tempto = [data.from, data.to].sort(compareFunc);
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(users[tempto[0]] && users[tempto[1]]){
@@ -147,12 +149,76 @@ io.on('connection',(socket)=>{
         }
     })
 
+    // join a group on tapping the button
+    socket.on('group', async (data)=>{
+        console.log("Groups:",groups)
+        if(data.room in groups){
+            users[data.id].join(data.room);
+            let obj= {
+                id: data.room,
+                msg: `${data.name} has joined the chat`
+            }
+            socket.to(data.room).emit('joinedChat', obj);
+            console.log("\nRoom already present!");
+            console.log("\n\nRoom",groups[data.room]);
+        }else{
+            groups[data.room] = "Test";
+            users[data.id].join(data.room);
+            let obj= {
+                id: data.room,
+                msg: `${data.name} has joined the chat`
+            }
+            socket.to(data.room).emit('joinedChat', obj);
+            console.log("MyGroups",myGroups)
+            for(i = 0; i < myGroups.length; ++i){
+                if(data.room === myGroups[i]._id){
+                    console.log("Same!")
+                    let members = myGroups[i].members;
+                    // get all clients in this room
+                //     var clients = io.sockets.adapter.rooms[data.room].sockets;
+                //     var joinedSockets = [];
+                //     for (var clientId in clients ) {
+                //         //this is the socket of each client in the room.
+                //         var clientSocket = io.sockets.connected[clientId];
+                //         joinedSockets.append(clientSocket.nick)
+                //    }
+                //    console.log(joinedSockets)
+                    for (member of members){
+                        console.log("Mem", member);
+                        // if(users[member] && joinedSockets.includes(member) ){
+                        //     console.log("here")
+                        //     continue;
+                        // }else if(users[member] && !joinedSockets.includes(member)){
+                        //     users[member].join(data.room);
+                        //     console.log("Joined a new person!");
+                            // io.in(data.room).emit('big-announcement', 'the game will start soon');
+                            // }
+                        let obj= {
+                            id: data.room,
+                            msg: `${data.name} is online`
+                        }
+                        if(users[member]){
+                            users[member].join(data.room);
+                            io.in(data.room).emit('joinedChat', obj);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    })
+
     // custom ting for adding a new user / updating his socket
-    socket.on('newUser', ({ id }, callback)=>{
+    socket.on('newUser', async ({ id }, callback)=>{
         addUser({ id });
         console.log("No:", (Object.keys(users)).length);
         io.emit('updateStat', { id });
         callback(true);
+        myGroups[id] = await Groups.find({ "members": {
+            $in: [id]
+        } });
+        console.log("Welp",myGroups[id])
+        joinToExistingRooms(id, myGroups[id]);
     });
 
     // think this is useless
@@ -167,6 +233,44 @@ io.on('connection',(socket)=>{
         socket.nick = id;
         users[socket.nick] = socket;
     };
+
+    const joinToExistingRooms = (id, g) =>{
+        if (g.length !== 0){
+            for(i = 0; i < g.length; i++){
+                if(g[i]._id in groups){
+                    users[id].join(g[i]._id);
+                    // emitting an event that says user is online
+                    console.log("User is online")
+                    let obj= {
+                        id: g[i]._id,
+                        msg: ``
+                    }
+                    socket.to(g[i]._id).emit('joinedChat', obj);
+                }
+            }
+        }
+    }
+
+    const removeFromExistingRooms = (id, g, name) =>{
+        if (g.length !== 0){
+            for(i = 0; i < g.length; i++){
+                if(g[i]._id in groups){
+                    if(users[id]){
+                        console.log(users[id])
+                        users[id].leave(g[i]._id);
+                        // emitting an event that says user is online
+                        console.log("User has left")
+                        let obj= {
+                            id: g[i]._id,
+                            msg: `${name} has left the chat`
+                        }
+                        socket.to(data.room).emit('joinedChat', obj);
+                        
+                    }
+                }
+            }
+        }
+    }
 
     const roomExist = (room, from=null, to=null) => {
         if(room in priv){
