@@ -59,7 +59,7 @@
 
     .whitey {
         z-index: 1;
-        background-color: whitey;
+        background-color: white;
     }
 
     .text-wrap {
@@ -72,7 +72,7 @@
         left: 50%;
         transform: translate(-50%,-50%);
         font-family: 'tt-commons';
-        color: whitey;
+        color: white;
         font-size: 70px;
         z-index: 3;
 
@@ -117,13 +117,13 @@ header.profHead {
         transform: translate(-50%,-50%);
         font-family: 'tt-commons';
         font-size: 30px;
-        color: whitey;
+        color: white;
     }
 
     .basket {
         font-family: 'tt-commons';
         font-size: 13px;
-        color: whitey;
+        color: white;
         text-transform: uppercase;
 
         span {
@@ -182,7 +182,7 @@ header.profHead {
     position: absolute;
     bottom: 15px;
     right: 15px;
-    background-color: whitey;
+    background-color: white;
     border-radius: 100%;
     box-shadow: 0 0 24px rgba(0, 0, 0, 0.4);
     padding: 0;
@@ -353,7 +353,7 @@ header.profHead {
                 display: inline-block;
                 width: 30px;
                 height: 1px;
-                background-color: whitey;
+                background-color: white;
                 vertical-align: middle;
                 margin: 0 7px;
             }
@@ -444,7 +444,7 @@ header.profHead {
             position: relative;
             font-family: 'tt-commons';
             font-size: 13px;
-            color: whitey;
+            color: white;
             text-transform: uppercase;
             text-decoration: none;
 
@@ -539,7 +539,7 @@ header.profHead {
                 display: block;
                 width: 100%;
                 height: 100%;
-                background-color: whitey;
+                background-color: white;
                 opacity: 0;
                 transition: 0.8s opacity ease-in-out;
             }
@@ -557,7 +557,7 @@ header.profHead {
         font-family: 'tt-commons';
         font-size: 16px;
         text-transform: uppercase;
-        color: whitey;
+        color: white;
         transform: rotate(-90deg);
     }
 }

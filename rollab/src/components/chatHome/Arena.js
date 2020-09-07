@@ -15,6 +15,7 @@ var socket;
 
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
+    const [groups, setGroups] = useState([{type:"info"}]);
     console.log(props)
     const ENDPOINT = "http://localhost:1000";
 
@@ -88,7 +89,8 @@ const Arena = (props) => {
             });
 
             socket.on('joinedChat', data=>{
-                console.log(data);
+                console.log("Data triggered");
+                setGroups(groups => [...groups, data])
             })
 
             socket.on('stop-type', data=>{
@@ -173,66 +175,73 @@ const Arena = (props) => {
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
-            document.querySelector('#message').value = ''
-            let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
-            let name = JSON.parse(localStorage.getItem('user')).name;
-            let op = false;
-            let actualTime = new Date().getTime();
-            await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: actualTime }, async (resp) => {
-                op = resp;
-                console.log("OP:",op);
-                
-                if(op===true){
-                    console.log("socketed")
-                }else{
-                    console.log("db")
-                    let div = document.createElement('div');
-                    div.className="container"
-                    div.setAttribute('key', Math.random());
-                    let div2 = document.createElement('div');
-                    div2.className="left-align chip User";
+            if(props.match.params && props.match.params.id){
 
-                    // for getting the name of sender
-                    let name = JSON.parse(localStorage.getItem("user")).name;
-                    div2.innerText = name;
-                    let div22 = document.createElement('div');
-                    div22.className="message";
-                    div22.innerText = message;
-                    let div23 = document.createElement('div');
-                    div23.className="time right-align";
-                    let i = document.createElement('i');
-                    i.innerText = moment(parseInt(actualTime)).fromNow()
-                    div23.appendChild(i);
-        
-                    // structuring the whole thing
-                    div.append(div2)
-                    div.append(div22)
-                    div.append(div23)
+                document.querySelector('#message').value = ''
+                let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
+                let name = JSON.parse(localStorage.getItem('user')).name;
+                let op = false;
+                let actualTime = new Date().getTime();
+                await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: actualTime }, async (resp) => {
+                    op = resp;
+                    console.log("OP:",op);
                     
-                    if(document.querySelector("#chatListWrapper")){
-                        document.querySelector("#chatListWrapper").appendChild(div);
-                        animateScroll.scrollToBottom({
-                            containerId: "chatListWrapper"
-                        });
+                    if(op===true){
+                        console.log("socketed")
                     }else{
-                        M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" })
+                        console.log("db")
+                        let div = document.createElement('div');
+                        div.className="container"
+                        div.setAttribute('key', Math.random());
+                        let div2 = document.createElement('div');
+                        div2.className="left-align chip User";
+    
+                        // for getting the name of sender
+                        let name = JSON.parse(localStorage.getItem("user")).name;
+                        div2.innerText = name;
+                        let div22 = document.createElement('div');
+                        div22.className="message";
+                        div22.innerText = message;
+                        let div23 = document.createElement('div');
+                        div23.className="time right-align";
+                        let i = document.createElement('i');
+                        i.innerText = moment(parseInt(actualTime)).fromNow()
+                        div23.appendChild(i);
+            
+                        // structuring the whole thing
+                        div.append(div2)
+                        div.append(div22)
+                        div.append(div23)
+                        
+                        if(document.querySelector("#chatListWrapper")){
+                            document.querySelector("#chatListWrapper").appendChild(div);
+                            animateScroll.scrollToBottom({
+                                containerId: "chatListWrapper"
+                            });
+                        }else{
+                            M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" })
+                        }
                     }
-                }
-                await props.sendMessage({
-                    variables:{
-                        text: message,
-                        sender: localStorage.getItem('id'),
-                        id: messageId,
-                        person: props.data.user.id,
-                        personId: props.data.user.message.id,
-                        userId: localStorage.getItem('id')
-                    }
+                    await props.sendMessage({
+                        variables:{
+                            text: message,
+                            sender: localStorage.getItem('id'),
+                            id: messageId,
+                            person: props.data.user.id,
+                            personId: props.data.user.message.id,
+                            userId: localStorage.getItem('id')
+                        }
+                    })
+                
+    
                 })
-
-            })
-            animateScroll.scrollToBottom({
-                containerId: "chatListWrapper"
-            });
+                animateScroll.scrollToBottom({
+                    containerId: "chatListWrapper"
+                });
+            }else if(props.match.params && props.match.params.gid){
+                let actualTime = new Date().getTime();
+                socket.emit('sendGroup', { room: props.match.params.gid, time: actualTime, message });
+            }
         }
     }
     useEffect(() => {
@@ -244,15 +253,17 @@ const Arena = (props) => {
 
     const typing = async (e) => {
         let name = JSON.parse(localStorage.getItem('user')).name;
-        if(e.target.value == ""){
-            await socket.emit('stop-typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
-                console.log(resp)
-            });
-        }else{
-            await socket.emit('typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
-                console.log(resp)
-            });
-
+        if(props.match.params.id){
+            if(e.target.value == ""){
+                await socket.emit('stop-typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
+                    console.log(resp)
+                });
+            }else{
+                await socket.emit('typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
+                    console.log(resp)
+                });
+    
+            }
         }
     }
     return(
@@ -312,19 +323,70 @@ const Arena = (props) => {
                                     <ul id="chatListWrapper">
                                         {
                                             props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? (
-                                                <div className="container info-brac row" key={Math.random()}>
-                                                    <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
-                                                    <div className="col s12 l7">
-                                                        <h6 style={{padding:"10px 0"}}>
-                                                            Talk without your data getting stored
-                                                        </h6>
-                                                        <div className="divider white"></div>
-                                                        <p>
-                                                            Yes! Group chats gives you the flexibility of writing anything without it ever getting stored!
-                                                        </p>
+                                                groups && groups.length !== 0 ? (
+                                                    groups.map(ele => {
+                                                        console.log(ele)
+                                                        if(ele.type === "info"){
+                                                            
+                                                            return (
+                                                                <div className="container info-brac row" key={Math.random()}>
+                                                                    <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
+                                                                    <div className="col s12 l7">
+                                                                        <h6 style={{padding:"10px 0"}}>
+                                                                            Talk without your data getting stored
+                                                                        </h6>
+                                                                        <div className="divider white"></div>
+                                                                        <p>
+                                                                            Yes! Group chats gives you the flexibility of writing anything without it ever getting stored!
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        } else if (ele.type === "notif"){
+                                                            if(ele.id === props.match.params.gid){
+                                                                return (
+                                                                    <div>
+                                                                        This is a div
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            return null;
+                                                        } else {
+                                                            if(ele.room === props.match.params.gid){
+                                                                return (
+                                                                    <div className="container" key={Math.random()}>
+                                                                        <div className="left-align chip User">
+                                                                            {ele.sender.name}
+                                                                        </div>
+                                                                        <div className="message">
+                                                                            {ele.text}
+                                                                        </div>
+                                                                        <div className="time right-align">
+                                                                            <i>
+                                                                                { moment(parseInt(ele.time)).fromNow() }
+                                                                            </i>
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            return null;
+                                                        }
+                                                    })
+                                                ) : (
+
+                                                    <div className="container info-brac row" key={Math.random()}>
+                                                        <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
+                                                        <div className="col s12 l7">
+                                                            <h6 style={{padding:"10px 0"}}>
+                                                                Talk without your data getting stored
+                                                            </h6>
+                                                            <div className="divider white"></div>
+                                                            <p>
+                                                                Yes! Group chats gives you the flexibility of writing anything without it ever getting stored!
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                        
+                                                )
                                             ) : (
 
                                                 chats && chats.messages ? 
