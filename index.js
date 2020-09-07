@@ -91,6 +91,21 @@ io.on('connection',(socket)=>{
         }
     });
 
+    // typing feature for GROUPS
+    socket.on('typing-grp', (data, callback) => {
+        if(data.room in groups){
+            let result = {
+                msgFormat: `${socket.user} is typing`,
+                source: source.nick,
+                room: data.room,
+            }
+            socket.to(roomId).emit('type-g', result);
+            callback(true);
+        }else{
+            callback(false);
+        }
+    });
+
     // stop typing feature here
     socket.on('stop-typing', (data, callback) => {
         io.emit('updateStat', { id: data.from });
@@ -128,6 +143,25 @@ io.on('connection',(socket)=>{
         }
     });
 
+    // sending to a group
+    // need to take in from, room
+    socket.on('sendGroup', (data)=>{
+        // io.emit('updateStat', { id: socket.nick });
+        console.log(data);
+        let obj = {
+            "sender": {
+                "name": socket.user,
+                "_id": socket.nick,
+                "__typename": "User"
+            },
+            "text": data.message,
+            "room": data.room,
+            "time": data.time,
+            "type": "message",
+        }
+        io.in(data.room).emit('joinedChat', obj);
+    })
+
 
     // join priv chat room for personal DM
     socket.on('privChat', (data)=>{
@@ -152,14 +186,17 @@ io.on('connection',(socket)=>{
     socket.on('group', async (data)=>{
         console.log("Groups:",groups)
         if(data.room in groups){
+
             users[data.id].join(data.room);
-            let obj= {
-                id: data.room,
-                msg: `${data.name} has joined the chat`
-            }
-            socket.to(data.room).emit('joinedChat', obj);
+            // let obj= {
+            //     id: data.room,
+            //     msg: `${data.name} has joined the chat`,
+            //     type: "notif",
+            // }
+            // console.log("Roomsy:", data.room)
+            // socket.to(data.room).emit('joinedChat', obj);
             console.log("\nRoom already present!");
-            console.log("\n\nRoom",groups[data.room]);
+            // console.log("\n\nRoom",groups[data.room]);
         }else{
             groups[data.room] = "Test";
             users[data.id].join(data.room);
@@ -196,7 +233,8 @@ io.on('connection',(socket)=>{
                             }
                             let obj= {
                                 id: data.room,
-                                msg: `${data.name} has joined the chat`
+                                msg: `${data.name} has joined the chat`,
+                                type: "notif",
                             }
                             io.in(data.room).emit('joinedChat', obj);
                         break;
@@ -242,7 +280,8 @@ io.on('connection',(socket)=>{
                     console.log("User is online")
                     let obj= {
                         id: g[i]._id,
-                        msg: `${name} is online`
+                        msg: `${name} is online`,
+                        type: "notif",
                     }
                     socket.to(g[i]._id).emit('joinedChat', obj);
                 }
@@ -261,7 +300,8 @@ io.on('connection',(socket)=>{
                         console.log("User has left")
                         let obj= {
                             id: g[i]._id,
-                            msg: `${users[id].user} has left the chat`
+                            msg: `${users[id].user} has left the chat`,
+                            type: "notif",
                         }
                         io.in(g[i]._id).emit('joinedChat', obj);
                     }
