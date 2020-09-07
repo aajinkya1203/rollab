@@ -24,7 +24,7 @@ const Arena = (props) => {
         // on connection
         socket.once('connect',()=>{
             console.log("Connected");
-            socket.emit('newUser', { id: localStorage.getItem('id') }, ()=>{})
+            socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
         const getDets = async ()=>{
@@ -81,11 +81,15 @@ const Arena = (props) => {
                                 containerId: "chatListWrapper"
                             });
                         }else{
-                            M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" })
+                            M.toast({ html: "You might wanna refresh to get some fresh gossip! (ᵔᴥᵔ)" });
                         }
                     }
                 }
             });
+
+            socket.on('joinedChat', data=>{
+                console.log(data);
+            })
 
             socket.on('stop-type', data=>{
                 if(document.querySelector('#typingBox')){
@@ -157,7 +161,11 @@ const Arena = (props) => {
         if(props.match.params.id){
             socket.emit('privChat', { from: localStorage.getItem('id') , to: props.match.params.id})
         }
-    },[props.match.params.id]);
+        if(props.match.params.gid){
+            console.log(props.match.params.gid)
+            socket.emit('group', { id: localStorage.getItem('id') , room: props.match.params.gid, name: JSON.parse(localStorage.getItem("user")).name})
+        }
+    },[props.match.params.id, props.match.params.gid]);
 
     const handleSubmit = async (e) => {
         let message = document.querySelector('#message').value;
