@@ -62,7 +62,6 @@ io.on('connection',(socket)=>{
 
     // when user disconnects
     socket.on('disconnect', (test)=>{
-        console.log("Dis", myGroups[socket.nick]);
         removeFromExistingRooms(socket.nick, myGroups[socket.nick])
         io.emit('delStat', { id: socket.nick });
         const temp = removeUser(socket.nick);
@@ -266,17 +265,8 @@ io.on('connection',(socket)=>{
                         }
                         io.in(g[i]._id).emit('joinedChat', obj);
                     }
-                    let room = g[i]._id
-                    var clients = io.sockets.adapter.rooms[room].sockets;
-                    console.log("cleAf", clients)
-                    var joinedSockets = [];
-                    for (var clientId in clients ) {
-                        //this is the socket of each client in the room.
-                        var clientSocket = io.sockets.connected[clientId];
-                        joinedSockets.push(clientSocket.nick)
-                    }
-                    console.log("Remaining:", joinedSockets)
-                    if(joinedSockets.length === 0){
+                    var clients = io.sockets.adapter.rooms[g[i]._id];
+                    if(!clients || clients.length === 0){
                         console.log("Destroying group!");
                         delete groups[g[i]._id];
                     }
