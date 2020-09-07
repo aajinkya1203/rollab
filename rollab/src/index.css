@@ -150,8 +150,6 @@ nav li a{
   font-size: 16px;
 }
 
-.activeLink{
-}
 
 @media only screen and (max-width:992px){
   .rollabTitle{
