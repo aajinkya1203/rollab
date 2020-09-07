@@ -62,8 +62,9 @@ io.on('connection',(socket)=>{
 
     // when user disconnects
     socket.on('disconnect', (test)=>{
+        console.log("Dis", myGroups[socket.nick]);
+        removeFromExistingRooms(socket.nick, myGroups[socket.nick])
         io.emit('delStat', { id: socket.nick });
-        console.log("Socket:",socket.nick);
         const temp = removeUser(socket.nick);
         console.log("Temp:",temp);
         if(temp){
@@ -71,7 +72,6 @@ io.on('connection',(socket)=>{
         }else{
             console.log("User wasn't present!")
         }
-        removeFromExistingRooms(socket.nick, myGroups[socket.nick], "Test")
 
     });
 
@@ -164,53 +164,52 @@ io.on('connection',(socket)=>{
         }else{
             groups[data.room] = "Test";
             users[data.id].join(data.room);
-            let obj= {
-                id: data.room,
-                msg: `${data.name} has joined the chat`
-            }
-            socket.to(data.room).emit('joinedChat', obj);
-            console.log("MyGroups",myGroups)
-            for(i = 0; i < myGroups.length; ++i){
-                if(data.room === myGroups[i]._id){
-                    console.log("Same!")
-                    let members = myGroups[i].members;
-                    // get all clients in this room
-                //     var clients = io.sockets.adapter.rooms[data.room].sockets;
-                //     var joinedSockets = [];
-                //     for (var clientId in clients ) {
-                //         //this is the socket of each client in the room.
-                //         var clientSocket = io.sockets.connected[clientId];
-                //         joinedSockets.append(clientSocket.nick)
-                //    }
-                //    console.log(joinedSockets)
-                    for (member of members){
-                        console.log("Mem", member);
-                        // if(users[member] && joinedSockets.includes(member) ){
-                        //     console.log("here")
-                        //     continue;
-                        // }else if(users[member] && !joinedSockets.includes(member)){
-                        //     users[member].join(data.room);
-                        //     console.log("Joined a new person!");
-                            // io.in(data.room).emit('big-announcement', 'the game will start soon');
-                            // }
-                        let obj= {
-                            id: data.room,
-                            msg: `${data.name} is online`
-                        }
-                        if(users[member]){
-                            users[member].join(data.room);
+            if(myGroups[socket.nick]){
+                for(i = 0; i < myGroups[socket.nick].length; ++i){
+                    console.log("Str",myGroups[socket.nick][i]._id)
+                    console.log("try",data.room)
+                    console.log("res",data.room == myGroups[socket.nick][i]._id)
+                    if(data.room == myGroups[socket.nick][i]._id){
+                        console.log("Same!")
+                        let members = myGroups[socket.nick][i].members;
+                        // get all clients in this room
+                    //     var clients = io.sockets.adapter.rooms[data.room].sockets;
+                    //     var joinedSockets = [];
+                    //     for (var clientId in clients ) {
+                    //         //this is the socket of each client in the room.
+                    //         var clientSocket = io.sockets.connected[clientId];
+                    //         joinedSockets.append(clientSocket.nick)
+                    //    }
+                    //    console.log(joinedSockets)
+                        for (member of members){
+                            console.log("Mem", member);
+                            // if(users[member] && joinedSockets.includes(member) ){
+                            //     console.log("here")
+                            //     continue;
+                            // }else if(users[member] && !joinedSockets.includes(member)){
+                            //     users[member].join(data.room);
+                            //     console.log("Joined a new person!");
+                                // io.in(data.room).emit('big-announcement', 'the game will start soon');
+                                // }
+                                if(users[member]){
+                                    users[member].join(data.room);
+                                }
+                            }
+                            let obj= {
+                                id: data.room,
+                                msg: `${data.name} has joined the chat`
+                            }
                             io.in(data.room).emit('joinedChat', obj);
-                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
     })
 
     // custom ting for adding a new user / updating his socket
-    socket.on('newUser', async ({ id }, callback)=>{
-        addUser({ id });
+    socket.on('newUser', async ({ id, name }, callback)=>{
+        addUser({ id, name });
         console.log("No:", (Object.keys(users)).length);
         io.emit('updateStat', { id });
         callback(true);
@@ -218,7 +217,7 @@ io.on('connection',(socket)=>{
             $in: [id]
         } });
         console.log("Welp",myGroups[id])
-        joinToExistingRooms(id, myGroups[id]);
+        joinToExistingRooms(id, myGroups[id], name);
     });
 
     // think this is useless
@@ -228,13 +227,14 @@ io.on('connection',(socket)=>{
     })
 
     // helper functions
-    const addUser = ({ id }) => {
+    const addUser = ({ id, name }) => {
         id = id.trim();
         socket.nick = id;
+        socket.user = name;
         users[socket.nick] = socket;
     };
 
-    const joinToExistingRooms = (id, g) =>{
+    const joinToExistingRooms = (id, g, name) =>{
         if (g.length !== 0){
             for(i = 0; i < g.length; i++){
                 if(g[i]._id in groups){
@@ -243,7 +243,7 @@ io.on('connection',(socket)=>{
                     console.log("User is online")
                     let obj= {
                         id: g[i]._id,
-                        msg: ``
+                        msg: `${name} is online`
                     }
                     socket.to(g[i]._id).emit('joinedChat', obj);
                 }
@@ -251,21 +251,34 @@ io.on('connection',(socket)=>{
         }
     }
 
-    const removeFromExistingRooms = (id, g, name) =>{
-        if (g.length !== 0){
+    const removeFromExistingRooms = (id, g) =>{
+        console.log("g", g)
+        if (g && g.length !== 0){
             for(i = 0; i < g.length; i++){
                 if(g[i]._id in groups){
                     if(users[id]){
-                        console.log(users[id])
                         users[id].leave(g[i]._id);
                         // emitting an event that says user is online
                         console.log("User has left")
                         let obj= {
                             id: g[i]._id,
-                            msg: `${name} has left the chat`
+                            msg: `${users[id].user} has left the chat`
                         }
-                        socket.to(data.room).emit('joinedChat', obj);
-                        
+                        io.in(g[i]._id).emit('joinedChat', obj);
+                    }
+                    let room = g[i]._id
+                    var clients = io.sockets.adapter.rooms[room].sockets;
+                    console.log("cleAf", clients)
+                    var joinedSockets = [];
+                    for (var clientId in clients ) {
+                        //this is the socket of each client in the room.
+                        var clientSocket = io.sockets.connected[clientId];
+                        joinedSockets.push(clientSocket.nick)
+                    }
+                    console.log("Remaining:", joinedSockets)
+                    if(joinedSockets.length === 0){
+                        console.log("Destroying group!");
+                        delete groups[g[i]._id];
                     }
                 }
             }
