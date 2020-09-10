@@ -13,6 +13,8 @@ import InfoImage from '../../images/Groups/Convo.png';
 
 var socket;
 
+var out;
+
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
     const [groups, setGroups] = useState([{type:"info"}]);
@@ -127,17 +129,19 @@ const Arena = (props) => {
         }
 
     }, []);
-    useEffect(()=>{
-        animateScroll.scrollToBottom({
-            containerId: "chatListWrapper"
-        });
-    },[chats]);
 
     useEffect(()=>{
-        animateScroll.scrollToBottom({
-            containerId: "chatListWrapper"
-        });
-    })
+        var out = document.querySelector("#chatListWrapper");
+        if(out && out.scrollTop !== 0){
+            animateScroll.scrollToBottom({
+                containerId: "chatListWrapper"
+            });
+        }else{
+            if(out){
+                out.scrollTop = out.scrollHeight;
+            }
+        }
+    });
 
     useEffect(()=>{
         if(socket){
@@ -263,9 +267,9 @@ const Arena = (props) => {
                 
     
                 })
-                animateScroll.scrollToBottom({
-                    containerId: "chatListWrapper"
-                });
+                // animateScroll.scrollToBottom({
+                //     containerId: "chatListWrapper"
+                // });
             }else if(props.match.params && props.match.params.gid){
                 let actualTime = new Date().getTime();
                 socket.emit('sendGroup', { room: props.match.params.gid, time: actualTime, message });
