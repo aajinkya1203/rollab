@@ -90,6 +90,7 @@ const Arena = (props) => {
 
             socket.on('joinedChat', data=>{
                 console.log("Data triggered");
+                console.log(data)
                 setGroups(groups => [...groups, data])
             })
 
@@ -99,7 +100,7 @@ const Arena = (props) => {
                 }
                 if(document.querySelector('#typedStatus')){
                     document.querySelector('#typedStatus').innerText = ""
-                }
+                } 
             })
 
             socket.on('updateStat', (data)=>{
@@ -139,18 +140,45 @@ const Arena = (props) => {
     })
 
     useEffect(()=>{
-        if(socket && props.match.params.id){
+        if(socket){
             socket.on('type', data=>{
                 console.log("here")
                 console.log(data.source)
                 console.log(props.match.params.id)
-                if(props.match.params.id === data.source){
+                if(props.match.params.id && props.match.params.id === data.source){
                     if(document.querySelector('#typingBox')){
                         document.querySelector('#typingBox').style.display = "block"
                     }
                     if(document.querySelector('#typedStatus')){
                         document.querySelector('#typedStatus').innerText = data.msgFormat
                     }
+                }else{
+                    if(document.querySelector('#typingBox')){
+                        document.querySelector('#typingBox').style.display = "none"
+                    }
+                    if(document.querySelector('#typedStatus')){
+                        document.querySelector('#typedStatus').innerText = ""
+                    } 
+                }
+            })
+            socket.on('typed-g', data=>{
+                console.log("here")
+                console.log(data.room)
+                console.log(props.match.params.gid)
+                if(props.match.params.gid && props.match.params.gid === data.room){
+                    if(document.querySelector('#typingBox')){
+                        document.querySelector('#typingBox').style.display = "block"
+                    }
+                    if(document.querySelector('#typedStatus')){
+                        document.querySelector('#typedStatus').innerText = data.msgFormat
+                    }
+                }else{
+                    if(document.querySelector('#typingBox')){
+                        document.querySelector('#typingBox').style.display = "none"
+                    }
+                    if(document.querySelector('#typedStatus')){
+                        document.querySelector('#typedStatus').innerText = ""
+                    } 
                 }
             })
         }
@@ -260,6 +288,18 @@ const Arena = (props) => {
                 });
             }else{
                 await socket.emit('typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
+                    console.log(resp)
+                });
+    
+            }
+        }else if(props.match.params.gid){
+            console.log("ee", e.target.value)
+            if(e.target.value == ""){
+                await socket.emit('stop-typing-g', { room: props.match.params.gid }, async (resp)=>{
+                    console.log(resp)
+                });
+            }else{
+                await socket.emit('typing-grp', { room: props.match.params.gid }, async (resp)=>{
                     console.log(resp)
                 });
     
