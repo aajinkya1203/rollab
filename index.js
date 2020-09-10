@@ -96,10 +96,10 @@ io.on('connection',(socket)=>{
         if(data.room in groups){
             let result = {
                 msgFormat: `${socket.user} is typing`,
-                source: source.nick,
+                source: socket.nick,
                 room: data.room,
             }
-            socket.to(roomId).emit('type-g', result);
+            socket.to(data.room).emit('typed-g', result);
             callback(true);
         }else{
             callback(false);
@@ -113,6 +113,16 @@ io.on('connection',(socket)=>{
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(roomExist(roomId)){
             socket.to(roomId).emit('stop-type');
+            callback(true);
+        }else{
+            callback(false);
+        }
+    });
+
+    // stop typing feature here
+    socket.on('stop-typing-g', (data, callback) => {
+        if(data.room in groups){
+            socket.to(data.room).emit('stop-type');
             callback(true);
         }else{
             callback(false);
