@@ -10,6 +10,9 @@ import Sidebar from './Sidebar';
 import ChatList from './ChatList';
 import Navbar from '../layout/Header';
 import InfoImage from '../../images/Groups/Convo.png';
+import { Avatar } from '@material-ui/core';
+import { AvatarGroup } from '@material-ui/lab';
+
 
 var socket;
 
@@ -342,6 +345,17 @@ const Arena = (props) => {
                                             props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? props.getAGroup.group.name : props.data.user.name
                                         }
                                     </h5>
+                                    {
+                                        props.match.path ==="/chat/groups/:gid" ? (
+                                            <AvatarGroup max={4} className="right stackCards">
+                                                <Avatar alt="Remy Sharp" >A</Avatar>
+                                                <Avatar alt="Travis Howard" >A</Avatar>
+                                                <Avatar alt="Cindy Baker" >A</Avatar>
+                                                <Avatar alt="Agnes Walker" >A</Avatar>
+                                                <Avatar alt="Trevor Henderson" >A</Avatar>
+                                            </AvatarGroup>
+                                        ) : null
+                                    }
                                 </div>
                                 <div className="divider"></div>
                     

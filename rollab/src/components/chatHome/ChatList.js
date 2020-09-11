@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { allUsers, allContacts, allMyGroups } from '../../query/queries';
 import { flowRight as compose } from 'lodash';
-import NewGroup from '../popups/NewGroup'
+import NewGroup from '../popups/NewGroup';
 
 const ChatList = (props)=> {
     const [cont, setCont] = useState([]);

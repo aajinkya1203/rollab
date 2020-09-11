@@ -613,3 +613,12 @@ input.select-dropdown.dropdown-trigger{
   padding: 2px;
   border-radius: 16px;
 }
+
+.stackCards{
+  margin-top: 10px;
+}
+.stackCards > div{ 
+  border: 2px solid #23272a;
+  background-color: #259ee9;
+  font-size: 1.05rem;
+}
