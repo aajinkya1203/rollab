@@ -11,6 +11,7 @@ import M from 'materialize-css';
 import { motion } from 'framer-motion'
 import Arena from './components/chatHome/Arena';
 import Profile from './components/svgs/profile/Profile';
+import Stats from './components/stats/Stats'
 
 
 
@@ -48,6 +49,7 @@ function App() {
         <Route path='/logout' component={ Home } />
         <Route path='/login' component={ Signin } />
         <Route path='/sign-up' component={ SignUp } />
+        <Route path='/stats' component={ Stats } />
         <Route path='/chat/groups/:gid' component={ Arena } />
         <Route path='/chat/groups' component={ Arena } />
         <Route path='/chat/:id' component={ Arena } />
