@@ -472,6 +472,7 @@ and blue -> 259ee9
 }
 .chats ul div.container{
   margin: 10px 0;
+  margin-bottom: 20px !important;
 }
 
 .chats .message{

@@ -403,9 +403,11 @@ const Arena = (props) => {
                                                         } else if (ele.type === "notif"){
                                                             if(ele.id === props.match.params.gid){
                                                                 return (
-                                                                    <div>
-                                                                        This is a div
-                                                                    </div>
+                                                                    <fieldset style={{color:"#5c5d67", borderColor:"#5c5d67"}}>
+                                                                        <legend style={{padding:"0 10px"}}>
+                                                                            {ele.msg}
+                                                                        </legend>
+                                                                    </fieldset>
                                                                 )
                                                             }
                                                             return null;
