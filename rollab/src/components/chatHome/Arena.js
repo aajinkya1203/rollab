@@ -345,17 +345,17 @@ const Arena = (props) => {
                                             props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? props.getAGroup.group.name : props.data.user.name
                                         }
                                     </h5>
+                                    <AvatarGroup max={4} className="right stackCards">
                                     {
-                                        props.match.path ==="/chat/groups/:gid" ? (
-                                            <AvatarGroup max={4} className="right stackCards">
-                                                <Avatar alt="Remy Sharp" >A</Avatar>
-                                                <Avatar alt="Travis Howard" >A</Avatar>
-                                                <Avatar alt="Cindy Baker" >A</Avatar>
-                                                <Avatar alt="Agnes Walker" >A</Avatar>
-                                                <Avatar alt="Trevor Henderson" >A</Avatar>
-                                            </AvatarGroup>
-                                        ) : null
+                                        props.match.path ==="/chat/groups/:gid" && props.getAGroup.group ? (
+                                            props.getAGroup.group.members.map(ele=>{
+                                                return(
+                                                    <Avatar alt="Remy Sharp" >{ele.name[0]}</Avatar>
+                                                    )
+                                                })
+                                                ) : null
                                     }
+                                    </AvatarGroup>
                                 </div>
                                 <div className="divider"></div>
                     
