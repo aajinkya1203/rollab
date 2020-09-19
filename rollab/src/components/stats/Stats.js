@@ -1,5 +1,8 @@
 import React from 'react';
 import {Line} from 'react-chartjs-2';
+import Sidebar from '../chatHome/Sidebar';
+import Navbar from '../layout/Header';
+import Weather from './Weather';
 
 const state = {
   labels: ['Monday', 'Tuesday', 'Wednesday',
@@ -19,22 +22,44 @@ const state = {
 
 const Stats = (props) => {
     return (
-        <div>
-            <Line
-                data={state}
-                options={{
-                    title:{
-                        display:false,
-                        // text:'Average Rainfall per month',
-                        // fontSize:20
-                    },
-                    legend:{
-                        display:false,
-                        position:'right'
-                    }
-                }}
-            />
-        </div>
+        <>
+            <Navbar props={props} />
+            <div id="stati" className="row"> 
+                <Sidebar/>
+                <div className="chart col s12 m10">
+                    <h3 className="white-text col s12 left">
+                        Your Statistics
+                    </h3>
+                    <div className="divider"></div>
+                    <div className="col s12 m7">
+                        <Line
+                            id="lineChart"
+                            data={state}
+                            options={{
+                                title:{
+                                    display:false,
+                                    // text:'Average Rainfall per month',
+                                    // fontSize:20
+                                },
+                                legend:{
+                                    display:false,
+                                    position:'right'
+                                },
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false
+                                },
+                                hover: {
+                                    mode: 'index',
+                                    intersect: false
+                                }
+                            }}
+                        />
+                    </div>
+                <Weather />
+                </div>
+            </div>
+        </>
     )
 }
 

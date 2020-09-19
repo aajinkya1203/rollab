@@ -316,7 +316,7 @@ nav li a{
 }
 
 /* chat page */
-html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena {
+html, body,#root, #chatting, #stati, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena, .chart {
   height: 100% !important;
   box-sizing: border-box !important;
 }
@@ -340,7 +340,7 @@ html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test,
 }
 
 
-#chatting{
+#chatting, #stati{
   margin-bottom: 0;
   background-color: #23272a;
 }
@@ -401,7 +401,7 @@ html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test,
   border-radius: 8px;
 }
 
-.arena{
+.arena, .chart{
   background-color: #23272a !important;
   height: 100%;
 }
@@ -622,4 +622,10 @@ input.select-dropdown.dropdown-trigger{
   border: 2px solid #23272a;
   background-color: #259ee9;
   font-size: 1.05rem;
+}
+
+#lineChart{
+  border-radius: 24px;
+  padding: 5px;
+  border: 1px solid #254252;
 }

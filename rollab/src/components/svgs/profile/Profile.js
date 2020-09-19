@@ -118,7 +118,7 @@ const Profile = (props)=> {
                         title: 'Usage',
                         description: `Track your usage, activity and your favourite pals based on<br/>the frequency! This part of the site is more of a statistical<br/>part and lets you have an overview of your whole activity on<br/>rollab.
                         <br/><br/>
-                        <a href="/dashboard" class="btn white-text">Know More</a>
+                        <a href="/stats" class="btn white-text">Know More</a>
                         `
                     },
                     2: {
