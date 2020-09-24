@@ -11,7 +11,8 @@ import M from 'materialize-css';
 import { motion } from 'framer-motion'
 import Arena from './components/chatHome/Arena';
 import Profile from './components/svgs/profile/Profile';
-import Stats from './components/stats/Stats'
+import Stats from './components/stats/Stats';
+import StackedCards from './components/layout/StackedCards'
 
 
 
@@ -55,6 +56,7 @@ function App() {
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
         <Route exact path='/profile' component={ Profile } />
+        <Route exact path='/stack' component={ StackedCards } />
         <Route exact path='/game' component={ Landing } />
       </Switch>
     </ApolloProvider>
