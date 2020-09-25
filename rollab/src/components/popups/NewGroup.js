@@ -16,7 +16,6 @@ const NewGroup = (props) => {
 
     // onSUbmit func
     const handleSubmit = async (e) => {
-        console.log("not happ")
         e.preventDefault();
         if((window.$('#mySelect').val()).length === 0){
             M.toast({html: "Slow down partner! Add some friends to the party!"})

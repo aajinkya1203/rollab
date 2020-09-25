@@ -21,7 +21,7 @@ var out;
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
     const [groups, setGroups] = useState([{type:"info"}]);
-    console.log(props)
+    // console.log(props)
     const ENDPOINT = "http://localhost:1000";
 
     // console.log(props)

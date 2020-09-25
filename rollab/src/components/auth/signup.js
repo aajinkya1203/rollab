@@ -6,6 +6,7 @@ import { flowRight as compose } from 'lodash';
 import { signupQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
+import AuthButton from '../svgs/AuthButton';
 
 
 class SignUp extends Component {
@@ -37,8 +38,8 @@ class SignUp extends Component {
         });
         console.log(res);
         if(res.data.addUser){
-            M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"})
-            this.props.history.push('/login');
+            M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"});
+            document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
         }
         else{
             M.toast({html: "Oopsie! Something went wrong!"})
@@ -53,7 +54,7 @@ class SignUp extends Component {
             <Navbar />
             <div style={{
                 backgroundColor:"#292b2c",
-                height: "100vh"
+                height: "114vh"
             }}>
                 <Cover />
                 <div className="row signing">
@@ -107,10 +108,11 @@ class SignUp extends Component {
                                 />
                             </div>
                             <div className="input-field">
-                                <button className="btn" 
+                                {/* <button className="btn" 
                                 type="submit" name="action">Register
                                 <i className="material-icons right">person</i>
-                                </button> 
+                                </button>  */}
+                                <AuthButton data={"Create"} props={this.props}/>
                                 <div className="progress" style={{
                                     width:"90%",
                                     margin:"0 auto",

@@ -6,6 +6,7 @@ import { flowRight as compose } from 'lodash';
 import { loginQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
+import AuthButton from '../svgs/AuthButton';
 
 
 class signin extends Component {
@@ -35,7 +36,7 @@ class signin extends Component {
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
-      this.props.history.push('/chat');
+      document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
     }else{
       document.querySelector('.progress').style.display = "none";
       M.toast({html: "Oopsie! Something went wrong!"})
@@ -89,10 +90,11 @@ class signin extends Component {
                     />
                   </div>
                   <div className="input-field">
-                    <button className="btn" 
+                    {/* <button className="btn" 
                       type="submit" name="action">Log In
                       <i className="material-icons right">send</i>
-                    </button> 
+                    </button>  */}
+                    <AuthButton data={"Login"} props={this.props} />
                     <div className="progress" style={{
                       width:"90%",
                       margin:"0 auto",
