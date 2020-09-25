@@ -3,6 +3,7 @@ import Navbar from '../layout/Header';
 import './landing.css';
 import Bot from '../../images/Games/bot.png'
 import Mates from '../../images/Games/mates.png'
+import { Link } from 'react-router-dom';
 
 const Landing = (props) => {
     useEffect(() => {
@@ -37,7 +38,7 @@ const Landing = (props) => {
                     <p className="subtitle">go against</p>
                     <h1 className="title">a<br/>bot</h1>
                     <br/>
-                    <button className="buttony">EXPLORE</button>
+                    <Link to="/game/solo" className="buttony">EXPLORE</Link>
                 </div>
                 </div>
                 <div className="splitzy rightzy">
@@ -46,7 +47,7 @@ const Landing = (props) => {
                     <p className="subtitle">go against</p>
                     <h1 className="title">your<br/>mates</h1>
                     <br/>
-                    <button className="buttony">EXPLORE</button>
+                    <Link to="/game/online" className="buttony">EXPLORE</Link>
                 </div>
                 </div>
             </div>
@@ -58,7 +59,7 @@ const Landing = (props) => {
                     <h5>
                         Go against a bot
                     </h5>
-                    <a className="buttony">EXPLORE</a>
+                    <Link to="/game/solo" className="buttony">EXPLORE</Link>
                     </span>
                 </div>
                 </div>
@@ -69,7 +70,7 @@ const Landing = (props) => {
                     <h5>
                         Go against your mates
                     </h5>
-                    <a className="buttony">EXPLORE</a>
+                    <Link to="/game/online" className="buttony">EXPLORE</Link>
                     </span>
                 </div>
                 </div>

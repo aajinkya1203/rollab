@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Line} from 'react-chartjs-2';
 import Sidebar from '../chatHome/Sidebar';
 import Navbar from '../layout/Header';
+import { animateScroll } from 'react-scroll';
 import Weather from './Weather';
 
 const state = {
@@ -21,6 +22,9 @@ const state = {
 }
 
 const Stats = (props) => {
+    useEffect(() => {
+        animateScroll.scrollToBottom();
+    })
     return (
         <>
             <Navbar props={props} />

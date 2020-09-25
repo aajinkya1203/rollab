@@ -13,6 +13,7 @@ import Arena from './components/chatHome/Arena';
 import Profile from './components/svgs/profile/Profile';
 import Stats from './components/stats/Stats';
 import StackedCards from './components/layout/StackedCards'
+import News from './components/stats/News';
 
 
 
@@ -56,8 +57,10 @@ function App() {
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
         <Route exact path='/profile' component={ Profile } />
-        <Route exact path='/stack' component={ StackedCards } />
+        <Route exact path='/game/online' component={ StackedCards } />
+        <Route exact path='/game/solo' component={ StackedCards } />
         <Route exact path='/game' component={ Landing } />
+        <Route path='/news' component={ News } />
       </Switch>
     </ApolloProvider>
   );

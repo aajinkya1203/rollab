@@ -9,14 +9,11 @@
     height: 10px;
 }
 .cardy-listy::-webkit-scrollbar-thumb {
-    background: #201c29;
-    border-radius: 10px;
-    box-shadow: inset 2px 2px 2px hsla(0,0%,100%,.25), inset -2px -2px 2px rgba(0,0,0,.25);
+    /* background: #201c29; */
+    /* border-radius: 10px;
+    box-shadow: inset 2px 2px 2px hsla(0,0%,100%,.25), inset -2px -2px 2px rgba(0,0,0,.25); */
 }
 
-.cardy-listy::-webkit-scrollbar-track {
-    background: linear-gradient(90deg,#201c29,#201c29 1px,#17141d 0,#17141d);
-}
 
 
 .cardy {
@@ -34,6 +31,13 @@
     scroll-snap-align: start;
     clear: both;
     position: relative;
+}
+
+.cardy-header{
+    background-color: #259ee9 !important;
+    color: white !important;
+    border-radius: 12px;
+    padding: 10px;
 }
 
 .cardy:focus-within~.cardy, .cardy:hover~.cardy {
@@ -70,7 +74,7 @@
 }
 
 .cardy-header h2:hover {
-    background: linear-gradient(90deg,#ff8a00,#e52e71);
+    /* background: linear-gradient(90deg,#ff8a00,#e52e71); */
     text-shadow: none;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
@@ -120,7 +124,7 @@
     width: 60px;
     height: 48px;
     fill: none;
-    stroke: #ff8a00;
+    stroke: #259ee9;
     stroke-width: 8;
     stroke-linecap: round;
     pointer-events: none;
@@ -154,4 +158,12 @@
     -webkit-box-decoration-break: clone;
     background-clip: text;
     border-color: white;
+}
+
+.turny{
+    background-color: #FFA100 !important;
+}
+
+.turnz{
+    stroke:  #FFA100 !important;
 }
