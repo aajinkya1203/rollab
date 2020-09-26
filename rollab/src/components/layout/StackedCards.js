@@ -3,6 +3,7 @@ import './stacked.css';
 import Test from '../../images/Stats/sunny.png';
 import Navbar from '../layout/Header';
 import Sidebar from '../chatHome/Sidebar';
+import Invite from '../popups/Invite';
 
 const online = [
     {id: 1, game: "Battle-Ship", src:"", desc: "Can you guess where their ships are ?"},
@@ -50,7 +51,9 @@ const StackedCards = (props) => {
                                     </div>
                                     <div className="tagsy">
                                         <a href="#">CREATE</a>
-                                        <a href="#">JOIN</a>
+                                        <a onClick={()=>{
+                                            document.querySelector(".invi").style.display = "inherit"
+                                        }}>JOIN</a>
                                     </div>
                                 </article>
                                 )
@@ -86,6 +89,7 @@ const StackedCards = (props) => {
                     }
                 </section>
             </div>
+            <Invite />
         </>
     )
 }

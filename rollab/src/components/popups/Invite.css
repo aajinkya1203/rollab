@@ -21,13 +21,18 @@
 
 div.invi {
     margin: 0;
-    height: 100vh;
-    display: flex;
+    /* height: 100vh;
+    display: flex; */
+    position: absolute;
+    top: 15%;
+    left: 20%;
     align-items: center;
     justify-content: center;
-    background: none;
+    background-size: contain;
+    /* background-color: rgba(0, 0, 0, 0.205); */
     overflow: hidden;
-    transform: scale(.9)
+    transform: scale(.9);
+    display: none;
   }
   
   #svgWrapper {

@@ -247,7 +247,16 @@ const Invite = () => {
             <button id="btny" type="button"><i className="material-icons white-text">send</i></button>
             </div>
             <p id="disclaimer">Enter a valid 9-digit code.</p>
-            <p id="successier">If your game code is correct, you'll be redirected to the lobby!</p>
+            <a style={{color: "#00b0e1",
+                        position: "fixed",
+                        top: "86.5%",
+                        cursor: "pointer"
+                    }} 
+                onClick={()=>{
+                    document.querySelector(".invi").style.display="none"
+                }}
+            >Close</a>
+            <p id="successier">If your game code is correct, you'll be redirected to the lobby! </p>
             </div>
             </div>
         </div>
