@@ -15,6 +15,7 @@ import Stats from './components/stats/Stats';
 import StackedCards from './components/layout/StackedCards'
 import News from './components/stats/News';
 import BetaProfile from './components/svgs/profile/BetaProfile';
+import Invite from './components/popups/Invite';
 
 
 
@@ -63,6 +64,7 @@ function App() {
         <Route exact path='/game' component={ Landing } />
         <Route path='/news' component={ News } />
         <Route path='/beta' component={ BetaProfile } />
+        <Route path='/invite' component={ Invite } />
       </Switch>
     </ApolloProvider>
   );

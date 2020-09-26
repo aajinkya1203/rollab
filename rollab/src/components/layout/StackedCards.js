@@ -49,7 +49,8 @@ const StackedCards = (props) => {
                                         </div>
                                     </div>
                                     <div className="tagsy">
-                                        <a href="#">PLAY</a>
+                                        <a href="#">CREATE</a>
+                                        <a href="#">JOIN</a>
                                     </div>
                                 </article>
                                 )

@@ -1,0 +1,177 @@
+.st0{fill:#78CBF3;}
+.st1{fill:#00B0E1;}
+.st2{fill:#F6B800;}
+.st3{fill:#F4B009;}
+.st4{fill:#F5F6F8;}
+.st5{fill:#FFFFFF;}
+.st6{fill:#ECF2F7;}
+.st7{fill:#EFEFEF;}
+.st8{fill:#E96F8C;}
+.st9{fill:#D85168;}
+.st10{fill:#F1AEC6;}
+.st11{display:none;}
+.st12{display:inline;fill:#F6B800;}
+.st13{display:inline;fill:#F4B009;}
+.st14{display:inline;fill:#FBCD47;}
+.st15{fill:#ED8BA6;}
+.st16{fill:#F5D5E4;}
+.st17{fill:#D74F66;}
+.st18{fill:#FBCD47;}
+.st19{fill:#009DCC;}
+
+div.invi {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    overflow: hidden;
+    transform: scale(.9)
+  }
+  
+  #svgWrapper {
+    width: 720px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  #mailboxSVG {
+    width: 720px;
+    position: absolute;
+    z-index: -1;
+    border-radius: 25px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.1);
+  }
+  
+  #textWrapper {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    top: 260px;
+  }
+  
+  h1#title-code {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #E96F8C;
+    font-weight: 300;
+    font-size: 42px;
+    position: relative;
+    top: -25px;
+    pointer-events: none;
+  }
+  
+  input#game-code, input#game-code:focus, input#game-code:hover {
+    position: absolute !important;
+    top: -47px  !important;
+    font-family: "Open Sans", sans-serif  !important;
+    font-size: 18px  !important;
+    padding: 12px 0  !important;
+    color: rgba(0,0,0,.5) !important;
+    background: transparent  !important;
+    width: 190px  !important;
+    left: -115px  !important;
+    text-align: center  !important;
+    outline: 0  !important;
+    border: none  !important;
+  }
+  
+  #disclaimer, #successier {
+    font-family: "Open Sans", sans-serif;
+    color: rgba(0,0,0,.5);
+    pointer-events: none;
+    font-size: 14px;
+    position: relative;
+    top: 18px;
+  }
+  
+  #successier {
+    position: relative;
+    top: -80px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #successier {
+    font-size: 18px;
+  }
+  
+  #formWrapper {
+    position: relative;
+  }
+  
+  #placeholdery {
+    position: absolute;
+    left: -115px;
+    top: -50px;
+    pointer-events: none;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-style: italic;
+    color: rgba(0,0,0,.3);
+    text-align: center;
+    width: 190px;
+  }
+  
+  button#btny {
+    background: transparent;
+    padding: 5px 9px;
+    border-radius: 100%;
+    color: transparent;
+    position: absolute;
+    /* top: -48px;
+    left: 88px; */
+    cursor: pointer;
+    border: none;
+  }
+
+  
+  @media (max-height: 720px) {
+    svg {
+      transform: scale(.7);
+    }
+    #textWrapper {
+      top: 193px;
+    }
+    #title-code {
+      font-size: 32px;
+    }
+    #disclaimer {
+      font-size: 12px;
+      top: 0;
+    }
+    #game-code, #placeholder {
+      font-size: 14px;
+    }
+    
+    #placeholder {
+      top: -46px;
+      left: -108px;
+    }
+    
+    #game-code {
+      top: -41px;
+      width: 130px;
+      left: -80px;
+      padding: 10px 0;
+    }
+    
+    #btny {
+      padding: 10px;
+      left: 62px;
+      top: -42px;
+    }
+    
+    
+    #successier {
+      font-size: 14px;
+      top: -70px;
+    }
+  }
