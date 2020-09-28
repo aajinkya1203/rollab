@@ -85,14 +85,22 @@ const DrawIO = () => {
     function onMouseUp(e){
         if (!drawing) { return; }
         drawing = false;
-        drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
+        try{
+            drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
+        }catch(err){
+            console.log("Out of frame!")
+        }
     }
 
     function onMouseMove(e){
         if (!drawing) { return; }
-        drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
-        current.x = e.clientX||e.touches[0].clientX;
-        current.y = e.clientY||e.touches[0].clientY;
+        try{
+            drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
+            current.x = e.clientX||e.touches[0].clientX;
+            current.y = e.clientY||e.touches[0].clientY;
+        }catch(err){
+            console.log("Out of frame!")
+        }
     }
 
     function onColorUpdate(e){

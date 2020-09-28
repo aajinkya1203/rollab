@@ -16,6 +16,7 @@ import StackedCards from './components/layout/StackedCards'
 import News from './components/stats/News';
 import BetaProfile from './components/svgs/profile/BetaProfile';
 import Invite from './components/popups/Invite';
+import DrawIO from './components/game/DrawIO/DrawIO';
 
 
 
@@ -65,6 +66,7 @@ function App() {
         <Route path='/news' component={ News } />
         <Route path='/beta' component={ BetaProfile } />
         <Route path='/invite' component={ Invite } />
+        <Route path='/draw' component={ DrawIO } />
       </Switch>
     </ApolloProvider>
   );
