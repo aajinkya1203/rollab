@@ -57,6 +57,7 @@ const users = {};
 const priv = {};
 const groups = {};
 var myGroups = {};
+var drawio = {};
 
 io.on('connection',(socket)=>{
 
@@ -90,6 +91,21 @@ io.on('connection',(socket)=>{
             callback(false);
         }
     });
+
+    // creating a drawio room
+    socket.on('createDrawio', (data, callback) => {
+        roomCode = Math.floor(100000000 + Math.random() * 900000000);
+        users[data.from].join(roomCode);
+        callback(roomCode);
+    })
+    // leaving a drawio room
+    socket.on('leaveDrawio', (data, callback) => {
+        users[data.from].leave(data.room);
+        callback(true)
+    })
+
+    // drawing feature
+    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
 
     // typing feature for GROUPS
     socket.on('typing-grp', (data, callback) => {
