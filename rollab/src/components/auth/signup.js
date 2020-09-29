@@ -39,7 +39,8 @@ class SignUp extends Component {
         console.log(res);
         if(res.data.addUser){
             M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"});
-            document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
+            // document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
+            this.props.history.push("/login");
         }
         else{
             M.toast({html: "Oopsie! Something went wrong!"})
@@ -108,11 +109,11 @@ class SignUp extends Component {
                                 />
                             </div>
                             <div className="input-field">
-                                {/* <button className="btn" 
+                                <button className="btn" 
                                 type="submit" name="action">Register
                                 <i className="material-icons right">person</i>
-                                </button>  */}
-                                <AuthButton data={"Create"} props={this.props}/>
+                                </button> 
+                                {/* <AuthButton data={"Create"} props={this.props}/> */}
                                 <div className="progress" style={{
                                     width:"90%",
                                     margin:"0 auto",

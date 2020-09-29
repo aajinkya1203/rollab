@@ -66,7 +66,7 @@ function App() {
         <Route path='/news' component={ News } />
         <Route path='/beta' component={ BetaProfile } />
         <Route path='/invite' component={ Invite } />
-        <Route path='/draw' component={ DrawIO } />
+        <Route path='/drawio/:rid' component={ DrawIO } />
       </Switch>
     </ApolloProvider>
   );

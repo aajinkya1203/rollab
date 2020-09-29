@@ -36,7 +36,8 @@ class signin extends Component {
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
-      document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
+      // document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
+      this.props.history.push("/chat");
     }else{
       document.querySelector('.progress').style.display = "none";
       M.toast({html: "Oopsie! Something went wrong!"})
@@ -90,11 +91,11 @@ class signin extends Component {
                     />
                   </div>
                   <div className="input-field">
-                    {/* <button className="btn" 
+                    <button className="btn" 
                       type="submit" name="action">Log In
                       <i className="material-icons right">send</i>
-                    </button>  */}
-                    <AuthButton data={"Login"} props={this.props} />
+                    </button> 
+                    {/* <AuthButton data={"Login"} props={this.props} /> */}
                     <div className="progress" style={{
                       width:"90%",
                       margin:"0 auto",

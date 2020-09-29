@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react'
 import './style.css';
 import socketIOClient from 'socket.io-client'; 
+import Navbar from '../../layout/Header';
+import Sidebar from '../../chatHome/Sidebar';
 
 var socket;
 
 
-const DrawIO = () => {
+const DrawIO = (props) => {
     var canvas;
     var colors;
     var context;
@@ -132,18 +134,24 @@ const DrawIO = () => {
         canvas.height = window.innerHeight;
     }
     return (
-        <div>
-            <canvas class="whiteboard" ></canvas>
+        <>
+        <Navbar props={props} />
+            <div id="stati" className="row">
+                {/* <Sidebar /> */}
+                <div>
+                    <canvas class="whiteboard" ></canvas>
 
-            <div class="colors">
-                <div class="color black"></div>
-                <div class="color red"></div>
-                <div class="color green"></div>
-                <div class="color blue"></div>
-                <div class="color yellow"></div>
+                    <div class="colors">
+                        <div class="color black"></div>
+                        <div class="color red"></div>
+                        <div class="color green"></div>
+                        <div class="color blue"></div>
+                        <div class="color yellow"></div>
+                    </div>
+
+                </div>
             </div>
-
-        </div>
+        </>
     )
 }
 
