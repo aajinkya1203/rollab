@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import './style.css';
 import socketIOClient from 'socket.io-client'; 
 import Navbar from '../../layout/Header';
-import Sidebar from '../../chatHome/Sidebar';
 
 var socket;
 
@@ -80,8 +79,12 @@ const DrawIO = (props) => {
 
     function onMouseDown(e){
         drawing = true;
-        current.x = e.clientX||e.touches[0].clientX;
-        current.y = e.clientY||e.touches[0].clientY;
+        try{
+            current.x = e.clientX||e.touches[0].clientX;
+            current.y = e.clientY||e.touches[0].clientY;
+        }catch(err){
+            console.log("Out of frame!")
+        }
     }
 
     function onMouseUp(e){

@@ -139,7 +139,7 @@ div.invi {
 
   
   @media (max-height: 720px) {
-    svg {
+    svg#mailboxSVG {
       transform: scale(.7);
     }
     #textWrapper {

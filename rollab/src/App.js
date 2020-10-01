@@ -67,6 +67,8 @@ function App() {
         <Route path='/beta' component={ BetaProfile } />
         <Route path='/invite' component={ Invite } />
         <Route path='/drawio/:rid' component={ DrawIO } />
+        {/* <Route path='/battleship/:bsid' component={ GameHome } />
+        <Route path='/musly/:mlid' component={ GameHome } /> */}
       </Switch>
     </ApolloProvider>
   );

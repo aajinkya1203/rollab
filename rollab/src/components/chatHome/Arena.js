@@ -285,7 +285,6 @@ const Arena = (props) => {
             M.toast({ html: "Holup! We are looking for some new changes." })           
         }
     }, [props.data.user]);
-
     const typing = async (e) => {
         let name = JSON.parse(localStorage.getItem('user')).name;
         if(props.match.params.id){
