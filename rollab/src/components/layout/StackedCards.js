@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './stacked.css';
 import Test from '../../images/Stats/sunny.png';
 import Navbar from '../layout/Header';
 import Sidebar from '../chatHome/Sidebar';
 import Invite from '../popups/Invite';
+import socketIOClient from 'socket.io-client';
 
 const online = [
     {id: 1, game: "Battle-Ship", src:"", desc: "Can you guess where their ships are ?"},
@@ -18,8 +19,32 @@ const bot =  [
 
 ]
 
+var socket;
+
 const StackedCards = (props) => {
-    console.log(props);
+    const ENDPOINT = "http://localhost:1000";
+    console.log(props)
+    useEffect(()=>{
+        socket = socketIOClient(ENDPOINT);
+        // on connection
+        socket.once('connect',()=>{
+            console.log("Connected");
+            socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
+        });
+
+    }, []);
+    const createGame = async (id) => {
+        if(id === 1){
+
+        }else if(id === 2){
+            await socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
+                console.log("Room Code:", code);
+                props.history.push(`/drawio/${code}`);
+            })
+        }else{
+
+        }
+    }
     return (
         <>
             <Navbar />
@@ -50,7 +75,9 @@ const StackedCards = (props) => {
                                         </div>
                                     </div>
                                     <div className="tagsy">
-                                        <a href="#">CREATE</a>
+                                        <a onClick={()=>{
+                                            createGame(ele.id);
+                                        }}>CREATE</a>
                                         <a onClick={()=>{
                                             document.querySelector(".invi").style.display = "inherit"
                                         }}>JOIN</a>

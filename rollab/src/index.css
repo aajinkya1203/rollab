@@ -320,8 +320,18 @@ html, body,#root, #chatting, #stati, #root>div>.sidebar, #root>div>.signing, #ro
   height: 100% !important;
   box-sizing: border-box !important;
 }
+
+#games{
+  height: 90% !important;
+  box-sizing: border-box;
+  background-color: #2d3034;
+}
+.game-chat{
+  height: 100% !important;
+  margin-right: 10px !important;
+}
 .sidebar{
-  background-color: #2c2f33;
+  background-color: #2d3034;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -428,6 +438,13 @@ html, body,#root, #chatting, #stati, #root>div>.sidebar, #root>div>.signing, #ro
   border: 1px solid grey !important;
   border-radius: 12px !important;
   padding: 5px 10px !important;
+  background-color: #292b2c !important;
+}
+
+.game-editor{
+  border: 1px solid grey !important;
+  border-radius: 12px !important;
+  padding: 0px 10px !important;
   background-color: #292b2c !important;
 }
 .editor:focus{
