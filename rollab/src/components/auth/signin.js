@@ -6,7 +6,6 @@ import { flowRight as compose } from 'lodash';
 import { loginQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
-import AuthButton from '../svgs/AuthButton';
 
 
 class signin extends Component {
@@ -36,7 +35,6 @@ class signin extends Component {
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
-      // document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
       this.props.history.push("/chat");
     }else{
       document.querySelector('.progress').style.display = "none";

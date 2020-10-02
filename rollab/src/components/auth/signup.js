@@ -6,7 +6,6 @@ import { flowRight as compose } from 'lodash';
 import { signupQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
-import AuthButton from '../svgs/AuthButton';
 
 
 class SignUp extends Component {
@@ -39,7 +38,6 @@ class SignUp extends Component {
         console.log(res);
         if(res.data.addUser){
             M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"});
-            // document.querySelector('.auth-button').dispatchEvent(new CustomEvent("donezo"));
             this.props.history.push("/login");
         }
         else{

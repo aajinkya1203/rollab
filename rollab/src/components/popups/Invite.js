@@ -80,7 +80,7 @@ const Invite = () => {
     return (
         <div className="invi">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-            <script src="https://kit.fontawesome.com/bf5ba39767.js" crossorigin="anonymous"></script>
+            <script src="https://kit.fontawesome.com/bf5ba39767.js" crossOrigin="anonymous"></script>
 
             <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"/> 
             <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"/> 
@@ -243,7 +243,7 @@ const Invite = () => {
             <h1 id="title-code">Join the game</h1>
             <div id="formWrapper">
             {/* <p id="placeholdery">Enter your game-code</p> */}
-            <input id="game-code" type="text" className="browser-default" autocomplete="off" required />
+            <input id="game-code" type="text" className="browser-default" autoComplete="off" required />
             <button id="btny" type="button"><i className="material-icons white-text">send</i></button>
             </div>
             <p id="disclaimer">Enter a valid 9-digit code.</p>

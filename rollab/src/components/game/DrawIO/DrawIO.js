@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './style.css';
+import { animateScroll } from 'react-scroll';
 import socketIOClient from 'socket.io-client'; 
 import Navbar from '../../layout/Header';
 import { Avatar } from '@material-ui/core';
+import M from 'materialize-css';
 import { AvatarGroup } from '@material-ui/lab';
 
 
@@ -14,8 +16,8 @@ const DrawIO = (props) => {
     var colors;
     var context;
     const ENDPOINT = "http://localhost:1000";
-    const [people, setPeople] = useState([{name:"Aajinkya"}, {name:"NotAajinkya"}, {name:"TestAajinkya"},]);
-
+    const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
+    const [word, setWord] = useState("");
     var current = {
         color: 'black'
     };
@@ -31,6 +33,7 @@ const DrawIO = (props) => {
             console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
+        animateScroll.scrollToTop();
         canvas.addEventListener('mousedown', onMouseDown, false);
         canvas.addEventListener('mouseup', onMouseUp, false);
         canvas.addEventListener('mouseout', onMouseUp, false);
@@ -47,20 +50,92 @@ const DrawIO = (props) => {
         }
     
         socket.on('drawing', onDrawingEvent);
+
+        socket.on('allParticipants', (data)=>{
+            setPeople(data);
+        })
     
         window.addEventListener('resize', onResize, false);
         onResize();
         socket.on('announce', (data)=>{
-            console.log(data)
+            M.toast({ html: data });
         })
 
         socket.emit('joinGame', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
             console.log(resp);
+            if(resp==609){
+                M.toast({ html: "Invalid game code!" });
+                props.history.push('/game/online');
+            }else if(resp == 414){
+                M.toast({ html: "Game in progress!" });
+                props.history.push('/game/online');
+            }
         });
 
         socket.on('deleteGame', (data)=>{
-            console.log(data);
+            M.toast({ html: data });
             props.history.push('/game/online');
+        });
+
+        socket.on('gameChat', (data)=>{
+            // let div = document.createElement('div');
+            // div.setAttribute('key', Math.random());
+            // div.setAttribute('style')
+            let a = `
+            <div key=${Math.random()} style="margin-top:10px">
+                <div class="left-align User">
+                    ${data.name}
+                </div>
+                <div class="message" style='background: #2d3034;
+                    padding: 10px;
+                    border-radius: 12px 12px 12px 0;
+                    width: fit-content;'
+                >
+                    ${data.msg}
+                </div>
+            </div>`;
+            if(document.querySelector("#gc")){
+                document.querySelector("#gc").innerHTML += a;
+            }
+            animateScroll.scrollToBottom({
+                containerId: "gc"
+            });  
+        });
+
+        socket.on('success', (data)=>{
+            let a = `
+            <fieldset style='color:#93ee6e; border-color:#93ee6e'>
+                <legend style='padding:0 10px'>
+                    ${data}
+                </legend>
+            </fieldset>
+            `;
+            if(document.querySelector("#gc")){
+                document.querySelector("#gc").innerHTML += a;
+            }
+            animateScroll.scrollToBottom({
+                containerId: "gc"
+            });   
+        });
+
+        socket.on('fail', (data)=>{
+            let a = `
+            <fieldset style='color:#ee6e6e; border-color:#ee6e6e'>
+                <legend style='padding:0 10px'>
+                    ${data}
+                </legend>
+            </fieldset>
+            `;
+            if(document.querySelector("#gc")){
+                document.querySelector("#gc").innerHTML += a;
+            }
+            animateScroll.scrollToBottom({
+                containerId: "gc"
+            });  
+        });
+
+        socket.on('nextWord', (data)=>{
+            setWord(data);
         })
         
         return ()=>{
@@ -95,7 +170,8 @@ const DrawIO = (props) => {
         y0: y0 / h,
         x1: x1 / w,
         y1: y1 / h,
-        color: color
+        color: color,
+        room: props.match.params.rid
         });
     }
 
@@ -133,6 +209,10 @@ const DrawIO = (props) => {
     function onColorUpdate(e){
         current.color = e.target.className.split(' ')[1];
     }
+    const sendMsg = (e) => {
+        socket.emit('gameChat', { msg: e.target.value, room: props.match.params.rid })
+        e.target.value = ""
+    }
 
     // limit the number of events per second
     function throttle(callback, delay) {
@@ -161,10 +241,17 @@ const DrawIO = (props) => {
     return (
         <>
         <Navbar props={props} />
-            <div id="games" classNameName="row">
+            <div id="games" className="row" style={{marginBottom: 0}}>
                 {/* <Sidebar /> */}
                 <div>
+                    {/* {
+                        sessionStorage.getItem('game') ? ( null
+                        ) : (
+                            <div className='canvas-wrapper'></div>
+                        )
+                    } */}
                     <canvas className="whiteboard" ></canvas>
+                    
 
                     <div className="colors">
                         <div className="color black"></div>
@@ -178,112 +265,52 @@ const DrawIO = (props) => {
                 <div className="game-chat" style={{height: '100%', width: '350px', float:'right'}}>
                     <div className="card blue-grey darken-1" style={{height: '90%', borderRadius: "12px"}}>
                         <div className="card-content white-text" style={{height: '90%'}}>
-                            <span className="card-title">Bottle</span>
-                            <ul style={{height: "75%" ,overflowY: "scroll"}}>
+                            {
+                                sessionStorage.getItem("game") ? (
+                                    <span className="card-title" id="word">Word: {word}<i className="material-icons  right">equalizer</i></span>
+                                    ) : (
+                                    <span className="card-title" id="word">Word: {word.length}<i className="material-icons  right">equalizer</i></span>
+                                )
+                            }
+                            
+                            <ul id="gc" style={{height: "75%" ,overflowY: "scroll"}}>
                                 
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        <i></i>Aajinkya
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
-
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        Aajinkya
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
-
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        <i></i>Aajinkya
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
-
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        <i></i>Aajinkya
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
-
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        <i>Aajinkya</i>
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
-
-                                <div className="" key={Math.random()} style={{marginTop:"10px"}}>
-                                    <div className="left-align User">
-                                        <i></i>Aajinkya
-                                    </div>
-                                    <div className="message" style={{background: "#2d3034",
-                                        padding: '10px',
-                                        borderRadius: "12px 12px 12px 0",
-                                        width: "fit-content"}}
-                                    >
-                                        Bottle
-                                    </div>
-                                </div>
                             </ul>
                             <div className="game-editor">
                                 <div className="input-field" style={{margin:0}}>
                                     <input type="text" name="message" id="message" 
-                                    placeholder="Guess the word..."
-                                    onKeyPress={e => e.key === 'Enter' ? null: null }
+                                    placeholder="Guess the word..." className="white-text"
+                                    onKeyPress={e => e.key === 'Enter' ? sendMsg(e) : null }
                                     />
                                 </div>
                             </div>
                         </div>
                         <div className="card-action">
-                            <a href="#" id="start" onClick={()=>{
-                                document.querySelector("#start").style.display = "none";
-                                document.querySelector("#leave").style.display = "inline-block";
-                            }} >Start</a>
-                            <a href="#" id="leave" style={{display: "none", color: "red"}}>Leave</a>
-                            <a href="#">Share</a>
+                            {
+                                sessionStorage.getItem('game') ? (
+                                        <>
+                                            <a href="#" id="start" onClick={()=>{
+                                                socket.emit('start', { room: props.match.params.rid });
+                                                document.querySelector("#start").style.display = "none";
+                                                document.querySelector("#share").style.display = "none";
+                                                document.querySelector("#leave").style.display = "inline-block";
+                                            }} >Start</a>
+                                            <a href="#" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</a>
+                                        </>
+                                    ) : (
+                                        <a href="#" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</a>
+                                    )
+                            }
+                            <a href="#" id="share">Share</a>
                             <AvatarGroup max={4} className="right" style={{position: "relative",top: "-5px"}}>
-                                    {
-                                        people ? people.map(ele=>{
-                                            return(
-                                                <Avatar style={{height: "30px", width: "30px"}} >{ele.name[0]}</Avatar>
-                                            )
-                                        }) : null
-                                    }
-                                    </AvatarGroup>
+                                {
+                                    people ? people.map(ele=>{
+                                        return(
+                                            <Avatar style={{height: "30px", width: "30px"}} >{ele[0]}</Avatar>
+                                        )
+                                    }) : null
+                                }
+                            </AvatarGroup>
                         </div>
                     </div>
                 </div>

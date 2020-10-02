@@ -32,13 +32,17 @@ const StackedCards = (props) => {
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
+        if(sessionStorage.getItem('game')){
+            sessionStorage.clear();
+        }
+
     }, []);
     const createGame = async (id) => {
         if(id === 1){
 
         }else if(id === 2){
             await socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
-                console.log("Room Code:", code);
+                sessionStorage.setItem('game', id);
                 props.history.push(`/drawio/${code}`);
             })
         }else{

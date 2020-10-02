@@ -33,6 +33,10 @@ const Arena = (props) => {
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
+        if(sessionStorage.getItem('game')){
+            sessionStorage.clear();
+        }
+
         const getDets = async ()=>{
             let status = await props.data.loading;
             let again = await props.data.user;

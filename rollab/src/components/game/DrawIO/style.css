@@ -1,4 +1,4 @@
-.whiteboard {
+.whiteboard{
     height: 100%;
     width: 100%;
     position: absolute;
@@ -11,7 +11,8 @@
   .colors {
     position: fixed;
   }
-  
+
+
   .color {
     display: inline-block;
     height: 48px;
