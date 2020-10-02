@@ -9,7 +9,7 @@ var socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const Groups = require('./models/Group');
-const { words } = require('./constants')
+const words = require('./constants')
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -104,69 +104,116 @@ io.on('connection',(socket)=>{
     socket.on('start',(data)=>{
         let game = _.sample(words);
         codes[data.room] = game;
-        socket.emit('nextWord', game)
+        io.in(data.room).emit("nextWord", game);
     });
 
 
     socket.on('joinGame', (data, callback) => {
         if(data.room in codes){
             console.log("Match in progress!");
-            callback(false);
+            callback(414);
         }else{
             if(data.room in drawio){
-                if(drawio[data.from] == data.from){
-                    console.log("Its the host!");
-                    callback(false);
-                }else{
-                    console.log("User in in!")
-                    users[data.from].join(data.room);
-                    let opt = [
-                        `${socket.user} has joined the game!`,
-                        `Fasten your seat belts, ${socket.user} has arrived!`,
-                        `Goddamn! ${socket.user} has blessed the lobby!`,
-                        `${socket.user} is finally here. Now we talking!`,
-                        `Alright, ${socket.user} has now made the game interesting!`,
-                        `${socket.user} we hope you bought some snacks.`,
-                        `Kaboom! ${socket.user} is here!.`,
-                        `Beep boop boop beep! ${socket.user} is here to bag a win!.`,
-                        
-                    ]
-                    io.in(data.room).emit("announce", _.sample(opt));
-                    callback(true);
+                try{
+                    var clientele = io.sockets.adapter.rooms[data.room].sockets;   
+                    let temp = []
+                    for (var clientId in clientele ) {
+    
+                        //this is the socket of each client in the room.
+                        var clientSocket = io.sockets.connected[clientId];
+                        temp.push(clientSocket.id);
+                    }
+                    if(temp.includes(users[data.from].id)){
+                        console.log("Its the host!");
+                        callback(false);
+                    }else{
+                        console.log("User in in!")
+                        users[data.from].join(data.room);
+                        let opt = [
+                            `${socket.user} has joined the game!`,
+                            `Fasten your seat belts, ${socket.user} has arrived!`,
+                            `Goddamn! ${socket.user} has blessed the lobby!`,
+                            `${socket.user} is finally here. Now we talking!`,
+                            `Alright, ${socket.user} has now made the game interesting!`,
+                            `${socket.user} we hope you bought some snacks.`,
+                            `Kaboom! ${socket.user} is here!.`,
+                            `Beep boop boop beep! ${socket.user} is here to bag a win!.`,
+                            
+                        ]
+                        io.in(data.room).emit("announce", _.sample(opt));
+                        callback(true);
+                    }
+                }catch(err){
+                    // console.log("Error")
                 }
             }else{
                 console.log("Invalid game code!")
                 callback(609);
             }
+            try{
+                
+                var clients = io.sockets.adapter.rooms[data.room].sockets;   
+                let names = []
+                for (var clientId in clients ) {
+    
+                    //this is the socket of each client in the room.
+                    var clientSocket = io.sockets.connected[clientId];
+                    names.push(clientSocket.user);
+                }
+                io.in(data.room).emit('allParticipants', [...new Set(names)]);
+            }catch(err){
+                // console.log("Error")
+            }
         }
     });
 
     socket.on('gameChat', (data, callback) => {
-        if(data.msg.substring(0, 3) === "\a-"){
-            if(codes[data.room] === data.msg){
+        console.log(data);
+        if(data.msg.substring(0, 3) === "/a-"){
+            if(codes[data.room] === data.msg.substring(3, data.msg.length)){
                 io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
             }else{
-                io.in(data.room).emit('fail', `${socket.user}, your guess seems to be wrong!`);
+                io.in(data.room).emit('fail', `${socket.user}, your guess is wrong!`);
             }
         }else{
-            io.in(data.room).emit('gameChat', {msg: data.msg});
+            io.in(data.room).emit('gameChat', {msg: data.msg, name: socket.user});
         }
     })
 
     // leaving a drawio room
     socket.on('leaveDrawio', (data, callback) => {
-        if(drawio[data.room] == data.from){
-            socket.to(data.room).emit('deleteGame', { data: "The host has left the game! Return to the main menu." });
+        try{
+
             users[data.from].leave(data.room);
-            delete drawio[data.room];
-            delete codes[data.room];
-            callback(true);
+            if(drawio[data.room] == data.from){
+                socket.to(data.room).emit('deleteGame', { data: "The host has left the game! Return to the main menu." });
+                delete drawio[data.room];
+                delete codes[data.room];
+                callback(true);
+            }else{
+                try{
+                    var clients = io.sockets.adapter.rooms[data.room].sockets;   
+                    let names = []
+                    for (var clientId in clients ) {
+        
+                        //this is the socket of each client in the room.
+                        var clientSocket = io.sockets.connected[clientId];
+                        names.push(clientSocket.user);
+                    }
+                    io.in(data.room).emit('allParticipants', [...new Set(names)]);
+                }catch(err){
+                    // console.log("Error caught")
+                }
+    
+            }
+            callback(false);
+        }catch(err){
+            callback(false);
         }
-        callback(false);
     })
 
     // drawing feature
-    socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
+    socket.on('drawing', (data) => socket.to(data.room).emit('drawing', data));
 
     // typing feature for GROUPS
     socket.on('typing-grp', (data, callback) => {
