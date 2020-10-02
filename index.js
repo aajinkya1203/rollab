@@ -8,7 +8,8 @@ const { URI } = require('./keys/keys');
 var socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-const Groups = require('./models/Group')
+const Groups = require('./models/Group');
+const { words } = require('./constants')
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -58,6 +59,7 @@ const priv = {};
 const groups = {};
 var myGroups = {};
 var drawio = {};
+const codes = {};
 
 io.on('connection',(socket)=>{
 
@@ -96,12 +98,71 @@ io.on('connection',(socket)=>{
     socket.on('createDrawio', (data, callback) => {
         roomCode = Math.floor(100000000 + Math.random() * 900000000);
         users[data.from].join(roomCode);
+        drawio[roomCode] = data.from;
         callback(roomCode);
+    });
+    socket.on('start',(data)=>{
+        let game = _.sample(words);
+        codes[data.room] = game;
+        socket.emit('nextWord', game)
+    });
+
+
+    socket.on('joinGame', (data, callback) => {
+        if(data.room in codes){
+            console.log("Match in progress!");
+            callback(false);
+        }else{
+            if(data.room in drawio){
+                if(drawio[data.from] == data.from){
+                    console.log("Its the host!");
+                    callback(false);
+                }else{
+                    console.log("User in in!")
+                    users[data.from].join(data.room);
+                    let opt = [
+                        `${socket.user} has joined the game!`,
+                        `Fasten your seat belts, ${socket.user} has arrived!`,
+                        `Goddamn! ${socket.user} has blessed the lobby!`,
+                        `${socket.user} is finally here. Now we talking!`,
+                        `Alright, ${socket.user} has now made the game interesting!`,
+                        `${socket.user} we hope you bought some snacks.`,
+                        `Kaboom! ${socket.user} is here!.`,
+                        `Beep boop boop beep! ${socket.user} is here to bag a win!.`,
+                        
+                    ]
+                    io.in(data.room).emit("announce", _.sample(opt));
+                    callback(true);
+                }
+            }else{
+                console.log("Invalid game code!")
+                callback(609);
+            }
+        }
+    });
+
+    socket.on('gameChat', (data, callback) => {
+        if(data.msg.substring(0, 3) === "\a-"){
+            if(codes[data.room] === data.msg){
+                io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
+            }else{
+                io.in(data.room).emit('fail', `${socket.user}, your guess seems to be wrong!`);
+            }
+        }else{
+            io.in(data.room).emit('gameChat', {msg: data.msg});
+        }
     })
+
     // leaving a drawio room
     socket.on('leaveDrawio', (data, callback) => {
-        users[data.from].leave(data.room);
-        callback(true)
+        if(drawio[data.room] == data.from){
+            socket.to(data.room).emit('deleteGame', { data: "The host has left the game! Return to the main menu." });
+            users[data.from].leave(data.room);
+            delete drawio[data.room];
+            delete codes[data.room];
+            callback(true);
+        }
+        callback(false);
     })
 
     // drawing feature
@@ -162,7 +223,7 @@ io.on('connection',(socket)=>{
                 "bonus": [tempto[0], tempto[1]]
             }
             io.in(roomId).emit('comm', msgFormat);
-            console.log("Room exiists")
+            // console.log("Room exiists")
             callback(true);
         }else{
             callback(false);
@@ -173,7 +234,7 @@ io.on('connection',(socket)=>{
     // need to take in from, room
     socket.on('sendGroup', (data)=>{
         // io.emit('updateStat', { id: socket.nick });
-        console.log(data);
+        // console.log(data);
         let obj = {
             "sender": {
                 "name": socket.user,
@@ -197,12 +258,12 @@ io.on('connection',(socket)=>{
         let roomId = jwt.sign(tempto[0], tempto[1]);
         if(users[tempto[0]] && users[tempto[1]]){
             priv[roomId] = [tempto[0], tempto[1]];
-            console.log("Room made!",priv);
+            // console.log("Room made!",priv);
             users[tempto[0]].join(roomId);
             users[tempto[1]].join(roomId);
-            console.log("\nAll users are in!");
-            console.log(roomId);
-            console.log("PrivRoom",priv[roomId]);
+            // console.log("\nAll users are in!");
+            // console.log(roomId);
+            // console.log("PrivRoom",priv[roomId]);
         }else{
             console.log("Try One of the user isn't online!");
         }
@@ -210,7 +271,7 @@ io.on('connection',(socket)=>{
 
     // join a group on tapping the button
     socket.on('group', async (data)=>{
-        console.log("Groups:",groups)
+        // console.log("Groups:",groups)
         if(data.room in groups){
 
             users[data.id].join(data.room);
@@ -221,18 +282,15 @@ io.on('connection',(socket)=>{
             // }
             // console.log("Roomsy:", data.room)
             // socket.to(data.room).emit('joinedChat', obj);
-            console.log("\nRoom already present!");
+            // console.log("\nRoom already present!");
             // console.log("\n\nRoom",groups[data.room]);
         }else{
             groups[data.room] = "Test";
             users[data.id].join(data.room);
             if(myGroups[socket.nick]){
                 for(i = 0; i < myGroups[socket.nick].length; ++i){
-                    console.log("Str",myGroups[socket.nick][i]._id)
-                    console.log("try",data.room)
-                    console.log("res",data.room == myGroups[socket.nick][i]._id)
                     if(data.room == myGroups[socket.nick][i]._id){
-                        console.log("Same!")
+                        // console.log("Same!")
                         let members = myGroups[socket.nick][i].members;
                         // get all clients in this room
                     //     var clients = io.sockets.adapter.rooms[data.room].sockets;
@@ -244,7 +302,6 @@ io.on('connection',(socket)=>{
                     //    }
                     //    console.log(joinedSockets)
                         for (member of members){
-                            console.log("Mem", member);
                             // if(users[member] && joinedSockets.includes(member) ){
                             //     console.log("here")
                             //     continue;
@@ -279,13 +336,13 @@ io.on('connection',(socket)=>{
         myGroups[id] = await Groups.find({ "members": {
             $in: [id]
         } });
-        console.log("Welp",myGroups[id])
+        // console.log("Welp",myGroups[id])
         joinToExistingRooms(id, myGroups[id], name);
     });
 
     // think this is useless
     socket.on('sendMessage', (message, to, callback)=>{
-        console.log("Message:",message,"to:",to);
+        // console.log("Message:",message,"to:",to);
         callback();
     })
 
@@ -303,7 +360,7 @@ io.on('connection',(socket)=>{
                 if(g[i]._id in groups){
                     users[id].join(g[i]._id);
                     // emitting an event that says user is online
-                    console.log("User is online")
+                    // console.log("User is online")
                     let obj= {
                         id: g[i]._id,
                         msg: `${name} is online`,
@@ -316,7 +373,6 @@ io.on('connection',(socket)=>{
     }
 
     const removeFromExistingRooms = (id, g) =>{
-        console.log("g", g)
         if (g && g.length !== 0){
             for(i = 0; i < g.length; i++){
                 if(g[i]._id in groups){
@@ -347,16 +403,16 @@ io.on('connection',(socket)=>{
         }else if(from && to){
             let tempto = [from, to].sort(compareFunc);
             let roomId = jwt.sign(tempto[0], tempto[1]);
-            console.log(users[tempto[0]])
-            console.log(users[tempto[1]])
+            // console.log(users[tempto[0]])
+            // console.log(users[tempto[1]])
             if(users[tempto[0]] && users[tempto[1]]){
                 priv[roomId] = [tempto[0], tempto[1]];
-                console.log("Room made!",priv);
+                // console.log("Room made!",priv);
                 users[tempto[0]].join(roomId);
                 users[tempto[1]].join(roomId);
-                console.log("\nAll users are in!");
-                console.log(roomId);
-                console.log("PrivRoom",priv[roomId]);
+                // console.log("\nAll users are in!");
+                // console.log(roomId);
+                // console.log("PrivRoom",priv[roomId]);
                 return true
             }else{
                 console.log("One of the user isn't online!");
@@ -371,7 +427,7 @@ io.on('connection',(socket)=>{
             for (var key of Object.keys(priv)){
                 let temp = priv[key].includes(id)
                 if(temp){
-                    console.log("Room",temp)
+                    // console.log("Room",temp)
                     delete priv[key]
                 }
             }
