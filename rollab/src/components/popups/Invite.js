@@ -3,7 +3,7 @@ import './Invite.css';
 import { gsap, Linear, Power1, Elastic, Bounce } from 'gsap';
 
 
-const Invite = () => {
+const Invite = (props) => {
     useEffect(()=>{
         var cloudOne = gsap.timeline({repeat: -1, delay: -12});
         cloudOne.to("#cloud-one", 36, {x: "-720px", ease: Linear.easeNone});
@@ -75,6 +75,8 @@ const Invite = () => {
             wrapper.to("#svgWrapper", 0, {x: "200%"});
             wrapper.to("#svgWrapper", 1.5, {x: "0", rotate: -9, ease: "back.out"});
             wrapper.to("#svgWrapper", 1, {delay: -.5, rotate: 0, scale: 1, ease: Bounce.easeOut});
+            console.log("props bruh", props);
+            props.join()
         });
     })
     return (

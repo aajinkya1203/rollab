@@ -17,6 +17,7 @@ import News from './components/stats/News';
 import BetaProfile from './components/svgs/profile/BetaProfile';
 import Invite from './components/popups/Invite';
 import DrawIO from './components/game/DrawIO/DrawIO';
+import { Reacteroids as Spacey } from './components/game/Spacey/Reacteroids';
 
 
 
@@ -67,6 +68,7 @@ function App() {
         <Route path='/beta' component={ BetaProfile } />
         <Route path='/invite' component={ Invite } />
         <Route path='/drawio/:rid' component={ DrawIO } />
+        <Route path='/spacey' component={ Spacey } />
         {/* <Route path='/battleship/:bsid' component={ GameHome } />
         <Route path='/musly/:mlid' component={ GameHome } /> */}
       </Switch>

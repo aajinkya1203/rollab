@@ -3,6 +3,7 @@ import './stacked.css';
 import Test from '../../images/Stats/sunny.png';
 import Navbar from '../layout/Header';
 import Sidebar from '../chatHome/Sidebar';
+import M from 'materialize-css';
 import Invite from '../popups/Invite';
 import socketIOClient from 'socket.io-client';
 
@@ -15,11 +16,13 @@ const online = [
 const bot =  [
     {id: 4, game: "TinEye", src:"", desc: "Can you find the item from an image?"},
     {id: 5, game: "Battle-Ship", src:"", desc: "Can you guess where their ships are ?"},
-    {id: 6, game: "BrainIt ", src:"", desc: "Guess the movie using emojis!"},
+    {id: 6, game: "BrainIt", src:"", desc: "Guess the movie using emojis!"},
+    {id: 7, game: "Spacey", src:"", desc: "A fun interactive shooting space game!"},
 
 ]
 
 var socket;
+var joinStuff = 0;
 
 const StackedCards = (props) => {
     const ENDPOINT = "http://localhost:1000";
@@ -47,6 +50,37 @@ const StackedCards = (props) => {
             })
         }else{
 
+        }
+    }
+
+    const joinGame = async () => {
+        let temp = document.querySelector("#game-code").value;
+        if(temp){
+            if(temp.length === 9){
+                if(joinStuff === 1){
+        
+                }else if(joinStuff === 2){
+                    props.history.push(`/drawio/${temp}`);
+                }else{
+        
+                }
+            }else{
+                M.toast({ html: "Your game code has to be of 9 digits" })
+            }
+        }else{
+            M.toast({ html: "Hold up partner! Let's have a game code first?" })
+        }
+    }
+
+    const botGame = async (id) => {
+        if(id === 4){
+
+        }else if(id === 5){
+
+        }else if(id === 6){
+
+        }else{
+            props.history.push('/spacey')
         }
     }
     return (
@@ -83,7 +117,8 @@ const StackedCards = (props) => {
                                             createGame(ele.id);
                                         }}>CREATE</a>
                                         <a onClick={()=>{
-                                            document.querySelector(".invi").style.display = "inherit"
+                                            document.querySelector(".invi").style.display = "inherit";
+                                            joinStuff = ele.id;
                                         }}>JOIN</a>
                                     </div>
                                 </article>
@@ -111,7 +146,9 @@ const StackedCards = (props) => {
                                         </div>
                                     </div>
                                     <div className="tagsy">
-                                        <a href="#">PLAY</a>
+                                        <a onClick={()=>{
+                                            botGame(ele.id);
+                                        }}>PLAY</a>
                                     </div>
                                 </article>
                                 )
@@ -120,7 +157,7 @@ const StackedCards = (props) => {
                     }
                 </section>
             </div>
-            <Invite />
+            <Invite join={joinGame}/>
         </>
     )
 }
