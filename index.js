@@ -167,8 +167,17 @@ io.on('connection',(socket)=>{
         }
     });
 
-    socket.on('gameChat', (data, callback) => {
+    // game invi
+    socket.on('share', (data, callback)=>{
         console.log(data);
+        for (var i in data){
+            if( i in users){
+                io.to(users[i].id).emit('invitation', `Hello there! You've been invited to a game of DrawIO by ${users[i].user}. Follow this link: /drawio/1234213`);
+            }
+        }
+    })
+
+    socket.on('gameChat', (data, callback) => {
         if(data.msg.substring(0, 3) === "/a-"){
             if(codes[data.room] === data.msg.substring(3, data.msg.length)){
                 io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
