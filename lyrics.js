@@ -127,83 +127,73 @@ module.exports=[
     {song: "Closer" , lyric: "And four years, no calls Now you're looking pretty in a hotel bar" },
     {song: "Closer" , lyric: "So baby, pull me closer in the backseat of your Rover That I know you can't afford" },
     
-    {song: "Cold Water" , lyric: "" },
-    {song: "Cold Water" , lyric: "" },
+    {song: "Cold Water" , lyric: "So take a deep breath and let it go You shouldn't be drowning on your own" },
+    {song: "Cold Water" , lyric: "And although time may take us into different places I will still be patient with you" },
     
-    {song: "Love Yourself" , lyric: "" },
-    {song: "Love Yourself" , lyric: "" },
+    {song: "Love Yourself" , lyric: "And I didn't wanna write a song 'cause I didn't want anyone thinking I still care" },
+    {song: "Love Yourself" , lyric: "And I've been so caught up in my job, didn't see what's going on" },
     
-    {song: "Sorry" , lyric: "" },
-    {song: "Sorry" , lyric: "" },
+    {song: "Sorry" , lyric: "'Cause I'm missin' more than just your body" },
+    {song: "Sorry" , lyric: "Yeah, I know that I let you down Is it too late to say I'm sorry now?" },
     
-    {song: "Hello" , lyric: "" },
-    {song: "Hello" , lyric: "" },
+    {song: "Hello" , lyric: "They say that time's supposed to heal ya But I ain't done much healing" },
+    {song: "Hello" , lyric: "I'm in California dreaming about who we used to be When we were younger and free" },
     
-    {song: "What Do You Mean?" , lyric: "" },
-    {song: "What Do You Mean?" , lyric: "" },
+    {song: "What Do You Mean?" , lyric: "When you don't want me to move But you tell me to go" },
+    {song: "What Do You Mean?" , lyric: "But you wanna say no What do you mean? hey" },
     
-    {song: "Can't Feel My Face" , lyric: "" },
-    {song: "Can't Feel My Face" , lyric: "" },
+    {song: "Can't Feel My Face" , lyric: "I can't feel my face when I'm with you But I love it, but I love it, oh" },
+    {song: "Can't Feel My Face" , lyric: "And I know she'll be the death of me, at least we'll both be numb" },
     
-    {song: "Drag Me Down" , lyric: "" },
-    {song: "Drag Me Down" , lyric: "" },
-    {song: "Drag Me Down" , lyric: "" },
+    {song: "Drag Me Down" , lyric: "I've got fire for a heart I'm not scared of the dark" },
+    {song: "Drag Me Down" , lyric: "The shell of a man that could never be his best" },
+    {song: "Drag Me Down" , lyric: "When no one else was ever behind me All these lights" },
     
-    {song: "Lean On" , lyric: "" },
-    {song: "Lean On" , lyric: "" },
+    {song: "Lean On" , lyric: "Blow a kiss, fire a gun" },
+    {song: "Lean On" , lyric: "All around the wind blows We would only hold on to let go" },
     
-    {song: "See You Again" , lyric: "" },
-    {song: "See You Again" , lyric: "" },
-    {song: "See You Again" , lyric: "" },
+    {song: "See You Again" , lyric: "That I'll be standing right here Talking to you 'bout another path" },
+    {song: "See You Again" , lyric: "Those were the days, hard work forever pays Now I see you in a better place" },
+    {song: "See You Again" , lyric: "How could we not talk about family when family's all that we got?" },
     
-    {song: "FourFiveSeconds" , lyric: "" },
-    {song: "FourFiveSeconds" , lyric: "" },
+    {song: "FourFiveSeconds" , lyric: "Sun was shinin', I'm positive Then I heard you was talkin' trash" },
+    {song: "FourFiveSeconds" , lyric: "And I know that you're up tonight Thinkin', \"How could I be so selfish?\"" },
     
-    {song: "Uptown Funk" , lyric: "" },
-    {song: "Uptown Funk" , lyric: "" },
-    {song: "Uptown Funk" , lyric: "" },
+    {song: "Uptown Funk" , lyric: "I'm too hot (hot damn) Called a police and a fireman" },
+    {song: "Uptown Funk" , lyric: "Girls hit your hallelujah  Girls hit your hallelujah" },
+    {song: "Uptown Funk" , lyric: "Stylin', wilin', livin' it up in the city Got Chucks on with Saint Laurent" },
     
-    {song: "Take Me to Church" , lyric: "" },
-    {song: "Take Me to Church" , lyric: "" },
-    {song: "Take Me to Church" , lyric: "" },
+    {song: "Take Me to Church" , lyric: "My lover's got humor She's the giggle at a funeral" },
+    {song: "Take Me to Church" , lyric: "If the Heavens ever did speak She's the last true mouthpiece" },
+    {song: "Take Me to Church" , lyric: "The only Heaven I'll be sent to Is when I'm alone with you" },
+        
+    {song: "Shake It Off" , lyric: "That's what people say, mmm hmm, that's what people say, mmm hmm" },
+    {song: "Shake It Off" , lyric: "But I keep cruising, can't stop, won't stop moving" },
     
-    {song: "Thinking Out Loud" , lyric: "" },
-    {song: "Thinking Out Loud" , lyric: "" },
+    {song: "Blame" , lyric: "So blame it on the night Don't blame it on me" },
+    {song: "Blame" , lyric: "Inside I'm hurtin' This ain't a feelin' I can keep" },
     
-    {song: "Shake It Off" , lyric: "" },
-    {song: "Shake It Off" , lyric: "" },
+   
+    {song: "Summer" , lyric: "And we could be together baby As long as skies are blue" },
     
-    {song: "Blame" , lyric: "" },
-    {song: "Blame" , lyric: "" },
+    {song: "Dark Horse" , lyric: "Make me your Aphrodite Make me your one and only" },
+       
+    {song: "The Monster" , lyric: "Oh well, guess beggars can't be choosey Wanted to receive attention for my music" },
+    {song: "The Monster" , lyric: "For wantin' my cake, and eat it too, and wantin' it both ways" },
     
-    {song: "Rude" , lyric: "" },
-    {song: "Rude" , lyric: "" },
+    {song: "Wake Up" , lyric: "I don't wanna wake up I want you spread out on the sheets" },
     
-    {song: "Summer" , lyric: "" },
+    {song: "Wrecking Ball" , lyric: "We clawed, we chained, our hearts in vain We jumped, never asking why" },
+    {song: "Wrecking Ball" , lyric: "Don't you ever say I just walked away I will always want you" },
     
-    {song: "Rather Be" , lyric: "" },
-    {song: "Rather Be" , lyric: "" },
+    {song: "Pillowtalk" , lyric: "The place to lose your fears Yeah, reckless behavior" },
+    {song: "Pillowtalk" , lyric: "I'm seeing the pain, seeing the pleasure Nobody but you, 'body but me" },
+    {song: "Pillowtalk" , lyric: "Fucking in, fighting on It's our paradise and it's our war zone" },
     
-    {song: "Dark Horse" , lyric: "" },
-    
-    {song: "Timber" , lyric: "" },
-    
-    {song: "The Monster" , lyric: "" },
-    {song: "The Monster" , lyric: "" },
-    
-    {song: "Royals" , lyric: "" },
-    
-    {song: "Wrecking Ball" , lyric: "" },
-    {song: "Wrecking Ball" , lyric: "" },
-    
-    {song: "Pillowtalk" , lyric: "" },
-    {song: "Pillowtalk" , lyric: "" },
-    {song: "Pillowtalk" , lyric: "" },
-    
-    {song: "Alright" , lyric: "" },
-    {song: "Alright" , lyric: "" },
-    {song: "Alright" , lyric: "" },
+    {song: "Alright" , lyric: "Uh, and when I wake up I recognize you're lookin' at me for the pay cut" },
+    {song: "Alright" , lyric: "Painkillers only put me in the twilight" },
+    {song: "Alright" , lyric: "Nazareth, I'm fucked up Homie, you fucked up" },
 
-    {song: "Gooba" , lyric: "" },
-    {song: "Gooba" , lyric: "" },
+    {song: "Gooba" , lyric: "Drop it down and wobble, wobble up, mami booted up" },
+    {song: "Gooba" , lyric: "Now we catch him at the chicken spot, up a couple chops" },
 ]
