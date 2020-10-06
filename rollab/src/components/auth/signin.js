@@ -6,6 +6,7 @@ import { flowRight as compose } from 'lodash';
 import { loginQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
+import AuthButton from '../svgs/AuthButton';
 
 
 class signin extends Component {

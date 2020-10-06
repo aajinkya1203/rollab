@@ -6,6 +6,8 @@ import Navbar from '../../layout/Header';
 import { Avatar } from '@material-ui/core';
 import M from 'materialize-css';
 import { AvatarGroup } from '@material-ui/lab';
+import { Link } from 'react-router-dom';
+import Share from '../../popups/Share';
 
 
 var socket;
@@ -24,6 +26,7 @@ const DrawIO = (props) => {
     var drawing = false;
 
     useEffect(()=>{
+        window.$('.modal').modal();
         canvas = document.getElementsByClassName('whiteboard')[0];
         colors = document.getElementsByClassName('color');
         context = canvas.getContext('2d');
@@ -227,6 +230,12 @@ const DrawIO = (props) => {
         };
     }
 
+    const share = (data) => {
+        socket.emit('share', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
+            console.log("done!");
+        })
+    }
+
     function onDrawingEvent(data){
         var w = canvas.width;
         var h = canvas.height;
@@ -295,13 +304,13 @@ const DrawIO = (props) => {
                                                 document.querySelector("#share").style.display = "none";
                                                 document.querySelector("#leave").style.display = "inline-block";
                                             }} >Start</a>
-                                            <a href="#" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</a>
+                                            <Link to="/game/online" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</Link>
                                         </>
                                     ) : (
-                                        <a href="#" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</a>
+                                        <Link to="/game/online" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</Link>
                                     )
                             }
-                            <a href="#" id="share">Share</a>
+                            <a href="#" id="share" className="modal-trigger" data-target="modal3">Share</a>
                             <AvatarGroup max={4} className="right" style={{position: "relative",top: "-5px"}}>
                                 {
                                     people ? people.map(ele=>{
@@ -314,6 +323,7 @@ const DrawIO = (props) => {
                         </div>
                     </div>
                 </div>
+                <Share share={share}/>
             </div>
         </>
     )
