@@ -2,7 +2,7 @@
 
 
   
-#bodz {
+#bodz, #notifi {
 background-color: #000000d1;
 width: 100%;
 height: 100%;
@@ -11,6 +11,25 @@ position: fixed;
 z-index: 20;
 display: none;
 }
+
+
+#notif-logs{
+  padding: 50px 80px;
+}
+
+#notif-logs blockquote{
+  background: white;
+  color: black;
+  padding: 20px;
+  width: 500px;
+  border-radius: 0px 12px 12px 0px;
+}
+#notif-logs blockquote .material-icons{
+  color: white;
+  padding: 5px;
+  margin-right: 10px;
+  border-radius: 100%;}
+
 .slider-wrap {
   height: 100%;
   width: 100%;
@@ -20,6 +39,26 @@ display: none;
   width: 80%;
   left: 50px;
   top: 50px;
+}
+
+.groups-notif{
+  border-color: #ffdc25;
+}
+.invi-notif{
+  border-color: #259ee9;
+  }
+.notif-notif{
+  border-color: #ee6e73;
+}
+
+.groups-notif span{
+  background-color: #ffdc25;
+}
+.invi-notif span{
+  background-color: #259ee9;
+  }
+.notif-notif span{
+  background-color: #ee6e73;
 }
 
 .slider-item {

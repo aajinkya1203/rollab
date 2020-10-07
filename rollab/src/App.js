@@ -20,6 +20,7 @@ import DrawIO from './components/game/DrawIO/DrawIO';
 import { Reacteroids as Spacey } from './components/game/Spacey/Reacteroids';
 import Musly from './components/game/musly/musly'
 import ChatBotUI from './components/chatHome/ChatBot/ChatBotUI';
+import Notifications from './components/chatHome/ChatBot/Notifications';
 
 
 
@@ -52,16 +53,30 @@ function App() {
         className="floating"
         id="rFAB"
         onDoubleClick={()=>{
+          document.querySelector('#notifi').style.display = ""
           if(document.querySelector('#bodz').style.display == ""){
             document.querySelector('#bodz').style.display = "initial"
           }else{
             document.querySelector('#bodz').style.display = ""
           }
         }}
+        onTap={()=>{
+              if(document.querySelector('#notifi').style.display == ""){
+                if(document.querySelector('#bodz').style.display == ""){
+                  document.querySelector('#notifi').style.display = "initial";
+                }else{
+                  
+                }
+              }else{
+                document.querySelector('#bodz').style.display = "";
+                document.querySelector('#notifi').style.display = "";
+              }
+        }}
       >
         R
       </motion.div>
       <ChatBotUI />
+      <Notifications />
       <Switch>
         <Route exact path='/' component={ Home } />
         <Route path='/logout' component={ Home } />

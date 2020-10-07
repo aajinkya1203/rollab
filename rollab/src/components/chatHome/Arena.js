@@ -57,7 +57,16 @@ const Arena = (props) => {
                 let test = loc.match(re)
                 
                 if(!test){
-                    console.log("NOYS")
+                    console.log("NOYS");
+                    let yout = `
+                    <blockquote class="valign-wrapper notif-notif">
+                        <span class="material-icons">
+                            notification_important
+                        </span>
+                        ${data.sender.name} has sent you a message
+                    </blockquote>
+                    `;
+                    document.querySelector('#notif-logs').innerHTML += yout;
                 }else{
                     test = (test[0]).match(re2)
                     // console.log("Regex:", test[0])
