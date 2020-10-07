@@ -49,9 +49,19 @@ function App() {
       {/* <Navbar /> */}
       <motion.div drag 
         dragConstraints={{ right:0, left: -80 ,top: 80, bottom: 300}}
-      className="floating">
+        className="floating"
+        id="rFAB"
+        onDoubleClick={()=>{
+          if(document.querySelector('#bodz').style.display == ""){
+            document.querySelector('#bodz').style.display = "initial"
+          }else{
+            document.querySelector('#bodz').style.display = ""
+          }
+        }}
+      >
         R
       </motion.div>
+      <ChatBotUI />
       <Switch>
         <Route exact path='/' component={ Home } />
         <Route path='/logout' component={ Home } />
@@ -72,7 +82,6 @@ function App() {
         <Route path='/drawio/:rid' component={ DrawIO } />
         <Route path='/spacey' component={ Spacey } />
         <Route path='/musly' component={ Musly } />
-        <Route path='/chatbot' component={ ChatBotUI } />
         {/* <Route path='/battleship/:bsid' component={ GameHome } />
         <Route path='/musly/:mlid' component={ GameHome } /> */}
       </Switch>

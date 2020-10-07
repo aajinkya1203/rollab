@@ -3,10 +3,13 @@
 
   
 #bodz {
-background-image: linear-gradient(180deg, #ffb253 0%, #f56259 100%);
+background-color: #000000d1;
 width: 100%;
 height: 100%;
 margin:0;
+position: fixed;
+z-index: 20;
+display: none;
 }
 .slider-wrap {
   height: 100%;
