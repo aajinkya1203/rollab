@@ -172,6 +172,7 @@ io.on('connection',(socket)=>{
         console.log(data);
         for (var i in data){
             if( i in users){
+                console.log("Log", users[i].id);
                 io.to(users[i].id).emit('invitation', `Hello there! You've been invited to a game of DrawIO by ${users[i].user}. Follow this link: /drawio/1234213`);
             }
         }
