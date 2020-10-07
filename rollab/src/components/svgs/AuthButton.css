@@ -11,7 +11,7 @@
   }
 
   
-  canvas {
+  canvas#canvas {
     height: 100vh;
     pointer-events: none;
     position: fixed;

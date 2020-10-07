@@ -36,6 +36,21 @@ const DrawIO = (props) => {
             console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
+        socket.on('comm', (data)=>{
+            let yout = `
+            <blockquote class="valign-wrapper notif-notif">
+                <span class="material-icons">
+                    notification_important
+                </span>
+                ${data.sender.name} has sent you a message
+            </blockquote>
+            `;
+            document.querySelector('#notif-logs').innerHTML += yout;
+            document.querySelector("#rFAB").classList.add("pulse");
+            animateScroll.scrollToBottom({
+                containerId: "notifi"
+            })
+        })
         animateScroll.scrollToTop();
         canvas.addEventListener('mousedown', onMouseDown, false);
         canvas.addEventListener('mouseup', onMouseUp, false);
@@ -140,7 +155,21 @@ const DrawIO = (props) => {
         socket.on('nextWord', (data)=>{
             setWord(data);
         })
-        
+        socket.on('invitation', data=>{
+            let yout = `
+            <blockquote class="valign-wrapper invi-notif">
+                <span class="material-icons">
+                    notification_important
+                </span>
+                ${data}
+            </blockquote>
+            `;
+            document.querySelector('#notif-logs').innerHTML += yout;
+            document.querySelector("#rFAB").classList.add("pulse");
+            animateScroll.scrollToBottom({
+                containerId: "notifi"
+            })
+        })
         return ()=>{
             //leaving from ze games
             socket.emit('leaveDrawio', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
@@ -251,14 +280,7 @@ const DrawIO = (props) => {
         <>
         <Navbar props={props} />
             <div id="games" className="row" style={{marginBottom: 0}}>
-                {/* <Sidebar /> */}
-                <div>
-                    {/* {
-                        sessionStorage.getItem('game') ? ( null
-                        ) : (
-                            <div className='canvas-wrapper'></div>
-                        )
-                    } */}
+
                     <canvas className="whiteboard" ></canvas>
                     
 
@@ -270,7 +292,7 @@ const DrawIO = (props) => {
                         <div className="color yellow"></div>
                     </div>
 
-                </div>
+
                 <div className="game-chat" style={{height: '100%', width: '350px', float:'right'}}>
                     <div className="card blue-grey darken-1" style={{height: '90%', borderRadius: "12px"}}>
                         <div className="card-content white-text" style={{height: '90%'}}>

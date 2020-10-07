@@ -53,6 +53,7 @@ function App() {
         className="floating"
         id="rFAB"
         onDoubleClick={()=>{
+          document.querySelector("#rFAB").classList.remove("pulse")
           document.querySelector('#notifi').style.display = ""
           if(document.querySelector('#bodz').style.display == ""){
             document.querySelector('#bodz').style.display = "initial"
@@ -61,6 +62,7 @@ function App() {
           }
         }}
         onTap={()=>{
+              document.querySelector("#rFAB").classList.remove("pulse")
               if(document.querySelector('#notifi').style.display == ""){
                 if(document.querySelector('#bodz').style.display == ""){
                   document.querySelector('#notifi').style.display = "initial";

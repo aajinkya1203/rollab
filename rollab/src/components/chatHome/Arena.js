@@ -57,7 +57,6 @@ const Arena = (props) => {
                 let test = loc.match(re)
                 
                 if(!test){
-                    console.log("NOYS");
                     let yout = `
                     <blockquote class="valign-wrapper notif-notif">
                         <span class="material-icons">
@@ -67,12 +66,28 @@ const Arena = (props) => {
                     </blockquote>
                     `;
                     document.querySelector('#notif-logs').innerHTML += yout;
+                    document.querySelector("#rFAB").classList.add("pulse");
+                    animateScroll.scrollToBottom({
+                        containerId: "notifi"
+                    })
                 }else{
                     test = (test[0]).match(re2)
                     // console.log("Regex:", test[0])
                     // console.log("Len:", test[0].length)
                     if((!(data.bonus).includes(test[0]))){
-                        console.log("NOYS")
+                        let yout = `
+                        <blockquote class="valign-wrapper notif-notif">
+                            <span class="material-icons">
+                                notification_important
+                            </span>
+                            ${data.sender.name} has sent you a message
+                        </blockquote>
+                        `;
+                        document.querySelector('#notif-logs').innerHTML += yout;
+                        document.querySelector("#rFAB").classList.add("pulse");
+                        animateScroll.scrollToBottom({
+                            containerId: "notifi"
+                        })
                     }else{
                         let div = document.createElement('div');
                         div.className="container"
@@ -107,13 +122,23 @@ const Arena = (props) => {
             });
 
             socket.on('joinedChat', data=>{
-                console.log("Data triggered");
-                console.log(data)
                 setGroups(groups => [...groups, data])
             });
 
             socket.on('invitation', data=>{
-                console.log("Invi", data);
+                let yout = `
+                <blockquote class="valign-wrapper invi-notif">
+                    <span class="material-icons">
+                        notification_important
+                    </span>
+                    ${data}
+                </blockquote>
+                `;
+                document.querySelector('#notif-logs').innerHTML += yout;
+                document.querySelector("#rFAB").classList.add("pulse");
+                animateScroll.scrollToBottom({
+                    containerId: "notifi"
+                })
             })
 
             socket.on('stop-type', data=>{
@@ -307,23 +332,22 @@ const Arena = (props) => {
         if(props.match.params.id){
             if(e.target.value == ""){
                 await socket.emit('stop-typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
-                    console.log(resp)
+                    //console.log(resp)
                 });
             }else{
                 await socket.emit('typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
-                    console.log(resp)
+                    //console.log(resp)
                 });
     
             }
         }else if(props.match.params.gid){
-            console.log("ee", e.target.value)
             if(e.target.value == ""){
                 await socket.emit('stop-typing-g', { room: props.match.params.gid }, async (resp)=>{
-                    console.log(resp)
+                    //console.log(resp)
                 });
             }else{
                 await socket.emit('typing-grp', { room: props.match.params.gid }, async (resp)=>{
-                    console.log(resp)
+                    //console.log(resp)
                 });
     
             }

@@ -6,6 +6,8 @@ import Sidebar from '../chatHome/Sidebar';
 import M from 'materialize-css';
 import Invite from '../popups/Invite';
 import socketIOClient from 'socket.io-client';
+import { animateScroll } from 'react-scroll';
+
 
 const online = [
     {id: 1, game: "Battle-Ship", src:"", desc: "Can you guess where their ships are ?"},
@@ -34,6 +36,38 @@ const StackedCards = (props) => {
             console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
+
+        socket.on('comm', (data)=>{
+            let yout = `
+            <blockquote class="valign-wrapper notif-notif">
+                <span class="material-icons">
+                    notification_important
+                </span>
+                ${data.sender.name} has sent you a message
+            </blockquote>
+            `;
+            document.querySelector('#notif-logs').innerHTML += yout;
+            document.querySelector("#rFAB").classList.add("pulse");
+            animateScroll.scrollToBottom({
+                containerId: "notifi"
+            })
+        })
+
+        socket.on('invitation', data=>{
+            let yout = `
+            <blockquote class="valign-wrapper invi-notif">
+                <span class="material-icons">
+                    notification_important
+                </span>
+                ${data}
+            </blockquote>
+            `;
+            document.querySelector('#notif-logs').innerHTML += yout;
+            document.querySelector("#rFAB").classList.add("pulse");
+            animateScroll.scrollToBottom({
+                containerId: "notifi"
+            })
+        })
 
         if(sessionStorage.getItem('game')){
             sessionStorage.clear();
