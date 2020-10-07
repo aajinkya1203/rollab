@@ -103,7 +103,7 @@
     position: relative;
   }
   
-  .message {
+  .message-glu {
     left: 50%;
     position: absolute;
     top: 50%;
@@ -111,7 +111,7 @@
     width: 100%;
   }
   
-  .message svg {
+  .message-glu svg {
     display: inline-block;
     fill: none;
     margin-right: 5px;

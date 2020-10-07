@@ -101,6 +101,10 @@ const Arena = (props) => {
                 console.log("Data triggered");
                 console.log(data)
                 setGroups(groups => [...groups, data])
+            });
+
+            socket.on('invitation', data=>{
+                console.log("Invi", data);
             })
 
             socket.on('stop-type', data=>{
