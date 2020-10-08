@@ -64,8 +64,8 @@ const Invite = (props) => {
             wrapper.to("#svgWrapper", 1, {scale: .8, ease: Bounce.easeOut});
             wrapper.to("#svgWrapper", 1, {delay: -.6, x: "-200%", rotate: 9, ease: Power1.easeIn});
             wrapper.to("#title-code, #disclaimer, #btny, #game-code, #placeholdery", 0, {opacity: 1, pointerEvents: "all"});
-            wrapper.to("#inputSVG", 0, {morphSVG: {shape:"#inputSVG"}, y: 0});
-            wrapper.to("#btnSVG", 0, {morphSVG: {shape:"#btnSVG"}, y: 0});
+            wrapper.to("#inputSVG", 0, {morphSVG: "#inputSVG", y: 0});
+            wrapper.to("#btnSVG", 0, {morphSVG: "#btnSVG", y: 0});
             wrapper.to("#successier", 0, {opacity: 0});
             wrapper.to("#mailbox-stick", 0, {rotate: 0, x: 0, transformOrigin: "left"});
             wrapper.to("#cover-closed", 0, {rotation: 0, y: 0, transformOrigin: "bottom"});
@@ -74,9 +74,7 @@ const Invite = (props) => {
             wrapper.to("#mail", 0, {opacity: 0, scale: 0, x: 0, transformOrigin: "right", display: "none"});
             wrapper.to("#svgWrapper", 0, {x: "200%"});
             wrapper.to("#svgWrapper", 1.5, {x: "0", rotate: -9, ease: "back.out"});
-            wrapper.to("#svgWrapper", 1, {delay: -.5, rotate: 0, scale: 1, ease: Bounce.easeOut});
-            console.log("props bruh", props);
-            props.join()
+            wrapper.to("#svgWrapper", 1, {delay: -.5, rotate: 0, scale: 1, ease: Bounce.easeOut, onComplete: props.join()});
         });
     })
     return (

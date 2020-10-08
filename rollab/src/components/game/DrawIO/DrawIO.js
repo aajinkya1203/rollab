@@ -325,7 +325,11 @@ const DrawIO = (props) => {
                                                 document.querySelector("#start").style.display = "none";
                                                 document.querySelector("#share").style.display = "none";
                                                 document.querySelector("#leave").style.display = "inline-block";
+                                                document.querySelector("#next").style.display = "inline-block";
                                             }} >Start</a>
+                                            <a href="#" id="next" style={{display: "none"}} onClick={()=>{
+                                                socket.emit('start', { room: props.match.params.rid });
+                                            }}>Next</a>
                                             <Link to="/game/online" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</Link>
                                         </>
                                     ) : (

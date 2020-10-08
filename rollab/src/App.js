@@ -21,6 +21,8 @@ import { Reacteroids as Spacey } from './components/game/Spacey/Reacteroids';
 import Musly from './components/game/musly/musly'
 import ChatBotUI from './components/chatHome/ChatBot/ChatBotUI';
 import Notifications from './components/chatHome/ChatBot/Notifications';
+import { animateScroll } from 'react-scroll';
+
 
 
 
@@ -62,6 +64,9 @@ function App() {
           }
         }}
         onTap={()=>{
+            animateScroll.scrollToBottom({
+                containerId: "notifi"
+            })
               document.querySelector("#rFAB").classList.remove("pulse")
               if(document.querySelector('#notifi').style.display == ""){
                 if(document.querySelector('#bodz').style.display == ""){

@@ -48,9 +48,6 @@ const StackedCards = (props) => {
             `;
             document.querySelector('#notif-logs').innerHTML += yout;
             document.querySelector("#rFAB").classList.add("pulse");
-            animateScroll.scrollToBottom({
-                containerId: "notifi"
-            })
         })
 
         socket.on('invitation', data=>{
@@ -64,9 +61,7 @@ const StackedCards = (props) => {
             `;
             document.querySelector('#notif-logs').innerHTML += yout;
             document.querySelector("#rFAB").classList.add("pulse");
-            animateScroll.scrollToBottom({
-                containerId: "notifi"
-            })
+            
         })
 
         if(sessionStorage.getItem('game')){
