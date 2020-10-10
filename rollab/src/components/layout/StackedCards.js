@@ -105,7 +105,7 @@ const StackedCards = (props) => {
         if(id === 4){
 
         }else if(id === 5){
-
+            props.history.push('/solo/battleship')
         }else if(id === 6){
 
         }else{

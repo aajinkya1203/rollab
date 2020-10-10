@@ -23,6 +23,7 @@ import ChatBotUI from './components/chatHome/ChatBot/ChatBotUI';
 import Notifications from './components/chatHome/ChatBot/Notifications';
 import { animateScroll } from 'react-scroll';
 import Delete from './components/popups/Delete';
+import Single from './components/game/battleship/single-battle';
 
 
 
@@ -106,8 +107,8 @@ function App() {
         <Route path='/spacey' component={ Spacey } />
         <Route path='/musly' component={ Musly } />
         <Route path='/delete' component={ Delete } />
-        {/* <Route path='/battleship/:bsid' component={ GameHome } />
-        <Route path='/musly/:mlid' component={ GameHome } /> */}
+        <Route path='/solo/battleship' component={ Single } />
+        {/* <Route path='/musly/:mlid' component={ GameHome } /> */}
       </Switch>
     </ApolloProvider>
   );
