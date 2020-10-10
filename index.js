@@ -9,7 +9,7 @@ var socket = require('socket.io');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const Groups = require('./models/Group');
-const words = require('./constants')
+const words = require('./constants');
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -18,9 +18,21 @@ const compareFunc = (a, b) => {
 
 const app = express();
 
+// app.use(function (req, res, next) {
 
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+  
+//     // Pass to next layer of middleware
+//     next();
+// });
 app.use(cors());
-app.use( bodyParser.json() );
+app.use( bodyParser.json());
+app.use(require('./routes/routes'));
+
+
 
 // having options to connect to the db
 options = {
@@ -39,6 +51,11 @@ mongoose.connection.once('connected', ()=>{
     console.log("Error connecting to the Database!");
 });
 
+
+
+
+
+
 // graphql route
 app.use('/graphql',graphqlHTTP({
     schema,
@@ -49,7 +66,9 @@ app.use('/graphql',graphqlHTTP({
 PORT = process.env.PORT || 1000;
 const server = app.listen(PORT, ()=>{
     console.log("Listening to requests on port", PORT);
-})
+});
+
+
 
 var io = socket(server);
 
