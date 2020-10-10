@@ -1,0 +1,319 @@
+:root {
+    --text-color: #646B8C;
+    --headline-color: #2B3044;
+    --mail: #555B77;
+    --mail-triangle: #494F69;
+    --mail-background: #404660;
+    --mail-shadow: #D1D6EE;
+    --paper: #fff;
+    --paper-border: #D1D6EE;
+    --confirm-color: #fff;
+    --confirm-background: #275EFE;
+    --game-paddle: #404660;
+    --game-ball: #275EFE;
+    --controls-text: #646B8C;
+    --controls-icon: #646B8C;
+    --controls-background: #E1E6F9;
+}
+
+#unsubscribe,
+#game-delete {
+    button {
+        outline: none;
+        border: none;
+        display: table;
+        margin: 0 auto;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: inherit;
+        padding: 8px 20px;
+        line-height: 21px;
+        border-radius: 7px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
+#unsubscribe {
+    .letter {
+        width: 84px;
+        height: 72px;
+        margin: 0 auto 32px auto;
+        position: relative;
+        animation: letter 2s ease infinite;
+        &:before,
+        &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 48px;
+            z-index: 1;
+        }
+        &:before {
+            background: var(--mail);
+            clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+        }
+        &:after {
+            background: var(--mail-triangle);
+            clip-path: polygon(0 100%, 50% 55%, 100% 100%);
+        }
+        .background {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--mail-background);
+            clip-path: polygon(0 24px, 50% 0, 100% 24px, 100% 100%, 0 100%);
+        }
+        .shadow {
+            background: black;
+            width: 92px;
+            height: 4px;
+            border-radius: 50%;
+            position: absolute;
+            top: 108%;
+            left: -4px;
+            background: var(--mail-shadow);
+            animation: shadow 2s ease infinite;
+        }
+        .body-delete {
+            width: 360px;
+            height: 260px;
+            bottom: 0;
+            left: -138px;
+            border-radius: 1px;
+            background: var(--paper);
+            box-shadow: inset 0 0 0 1px var(--paper-border);
+            position: absolute;
+            transform: translateY(36%) translateZ(0) scale(.2, .16) rotate(90deg);
+            .game-delete {
+                width: 360px;
+                height: 260px;
+                position: relative;
+                transition: opacity .3s ease .8s;
+                .headline {
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: -32px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    transform: translateZ(0);
+                    span {
+                        color: var(--headline-color);
+                        font-size: 16px;
+                        font-weight: 600;
+                        line-height: 24px;
+                    }
+                    .close {
+                        cursor: pointer;
+                        svg {
+                            width: 20px;
+                            height: 20px;
+                            display: block;
+                            fill: var(--text-color);
+                            padding: 2px;
+                        }
+                    }
+                }
+                .paddle,
+                .ball {
+                    top: 0;
+                    position: absolute;
+                    transition: opacity .3s;
+                    transform: translate(var(--x, 0), var(--y, 0));
+                }
+                .paddle {
+                    width: 6px;
+                    height: 48px;
+                    border-radius: 3px;
+                    --y: 106px;
+                    background: var(--game-paddle);
+                    &.one {
+                        left: 0;
+                    }
+                    &.two {
+                        right: 0;
+                    }
+                }
+                .ball {
+                    background: var(--game-ball);
+                    border-radius: 50%;
+                    width: 16px;
+                    height: 16px;
+                    left: 0;
+                }
+                .controls {
+                    bottom: -80px;
+                    left: 0;
+                    right: 0;
+                    position: absolute;
+                    span {
+                        display: block;
+                        text-align: center;
+                        margin-bottom: 12px;
+                        font-size: 14px;
+                        font-weight: 500;
+                        color: var(--controls-text);
+                    }
+                    div {
+                        display: flex;
+                        justify-content: center;
+                        button {
+                            width: 64px;
+                            padding: 8px 0;
+                            margin: 0;
+                            background: var(--controls-background);
+                            &:not(:last-child) {
+                                margin-right: 16px;
+                            }
+                            svg {
+                                width: 20px;
+                                height: 20px;
+                                display: block;
+                                margin: 0 auto;
+                                fill: var(--controls-icon);
+                            }
+                        }
+                    }
+                }
+                .start-delete {
+                    position: absolute;
+                    text-align: center;
+                    white-space: nowrap;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
+                    transition: opacity .3s;
+                    button {
+                        color: var(--confirm-color);
+                        background: var(--confirm-background);
+                    }
+                    small {
+                        margin: 4px 0 0 0;
+                        display: block;
+                        font-style: italic;
+                        font-size: 12px;
+                        color: var(--text-color);
+                    }
+                }
+                &:not(.idle) {
+                    .start-delete {
+                        opacity: 0;
+                        pointer-events: none;
+                    }
+                }
+                &:not(.init) {
+                    .ball {
+                        opacity: 0;
+                    }
+                }
+            }
+        }
+    }
+    h1 {
+        text-align: center;
+        margin: 0 0 8px 0;
+        font-family: inherit;
+        font-weight: 600;
+        font-size: 24px;
+        color: var(--headline-color);
+    }
+    p {
+        text-align: center;
+        margin: 0;
+        font-size: 16px;
+        color: var(--text-color);
+    }
+    .cta {
+        margin-top: 32px;
+        button {
+            color: var(--confirm-color);
+            background: var(--confirm-background);
+        }
+    }
+    &:not(.show-game) {
+        .letter {
+            .body-delete {
+                .game-delete {
+                    opacity: 0;
+                    pointer-events: none;
+                    transition-delay: 0s;
+                }
+            }
+        }
+    }
+    &.show-game {
+        .letter {
+            animation-play-state: paused;
+            .body-delete {
+                animation: paper .8s linear forwards;
+            }
+            .shadow {
+                animation-play-state: paused;
+            }
+        }
+    }
+    &.hide-game {
+        .letter {
+            .body-delete {
+                animation: paper-back .8s linear forwards;
+            }
+        }
+    }
+}
+
+@keyframes paper {
+    30% {
+        z-index: 0;
+        transform: translateY(18%) translateZ(0) scale(.2, .16) rotate(90deg);
+    }
+    60%,
+    100% {
+        z-index: 2;
+    }
+    60% {
+        transform: translateY(0) translateZ(0) scale(.2, .16) rotate(0deg);
+    }
+    100% {
+        transform: translateY(63%) translateZ(0);
+    }
+}
+
+@keyframes paper-back {
+    0% {
+        transform: translateY(63%) translateZ(0);
+    }
+    30% {
+        transform: translateY(0) translateZ(0) scale(.2, .16) rotate(0deg);
+    }
+    60% {
+        z-index: 0;
+        transform: translateY(18%) translateZ(0) scale(.2, .16) rotate(90deg);
+    }
+    0%,
+    30% {
+        z-index: 2;
+    }
+    100% {
+        transform: translateY(36%) translateZ(0) scale(.2, .16) rotate(90deg);
+    }
+}
+
+@keyframes letter {
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes shadow {
+    50% {
+        opacity: .7;
+        transform: translateY(4px) scale(.8);
+    }
+}

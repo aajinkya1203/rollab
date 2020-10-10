@@ -22,6 +22,7 @@ import Musly from './components/game/musly/musly'
 import ChatBotUI from './components/chatHome/ChatBot/ChatBotUI';
 import Notifications from './components/chatHome/ChatBot/Notifications';
 import { animateScroll } from 'react-scroll';
+import Delete from './components/popups/Delete';
 
 
 
@@ -104,6 +105,7 @@ function App() {
         <Route path='/drawio/:rid' component={ DrawIO } />
         <Route path='/spacey' component={ Spacey } />
         <Route path='/musly' component={ Musly } />
+        <Route path='/delete' component={ Delete } />
         {/* <Route path='/battleship/:bsid' component={ GameHome } />
         <Route path='/musly/:mlid' component={ GameHome } /> */}
       </Switch>
