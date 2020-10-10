@@ -129,7 +129,8 @@ const Delete = (props) => {
 
         }
 
-        document.addEventListener('keydown', e => {
+        const forKeyDown = e => {
+            console.log("here")
             e.preventDefault();
             init();
             if(e.keyCode == 38 || e.which == 38) {
@@ -138,9 +139,10 @@ const Delete = (props) => {
             if(e.keyCode == 40 || e.which == 40) {
                 one.top = 8;
             }
-        }, false);
+        }
 
-        document.addEventListener('keyup', e => {
+        document.addEventListener('keydown', forKeyDown, false);
+        const forKeyUp = e => {
             e.preventDefault();
             init();
             if(e.keyCode == 38 || e.which == 38) {
@@ -149,7 +151,13 @@ const Delete = (props) => {
             if(e.keyCode == 40 || e.which == 40) {
                 one.top = 0;
             }
-        }, false);
+        }
+        document.addEventListener('keyup', forKeyUp, false);
+
+        return ()=>{
+            document.removeEventListener('keyup', forKeyUp, false);
+            document.removeEventListener('keydown', forKeyDown, false);
+       }
 
     }, [])
     return (
