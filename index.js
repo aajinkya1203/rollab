@@ -79,11 +79,70 @@ const groups = {};
 var myGroups = {};
 var drawio = {};
 const codes = {};
+// Handle a socket connection request from web client
+const connections = [null, null]
 
 io.on('connection',(socket)=>{
 
+    // battleship games routes
+    // Find an available player number
+    let playerIndex = -1;
+    for (const i in connections) {
+        if (connections[i] === null) {
+            playerIndex = i
+            break
+        }
+    }
+
+    // Tell the connecting client what player number they are
+    socket.emit('player-number', playerIndex)
+
+    console.log(`Player ${playerIndex} has connected`)
+
+    // Ignore player 3
+    if (playerIndex === -1) return
+
+    connections[playerIndex] = false
+
+    // Tell eveyone what player number just connected
+    socket.broadcast.emit('player-connection', playerIndex)
+
+    // On Ready
+    socket.on('player-ready', () => {
+        socket.broadcast.emit('enemy-ready', playerIndex)
+        connections[playerIndex] = true
+    })
+
+    // Check player connections
+    socket.on('check-players', () => {
+        const players = []
+        for (const i in connections) {
+        connections[i] === null ? players.push({connected: false, ready: false}) : players.push({connected: true, ready: connections[i]})
+        }
+        socket.emit('check-players', players)
+    })
+
+    // On Fire Received
+    socket.on('fire', id => {
+        console.log(`Shot fired from ${playerIndex}`, id)
+
+        // Emit the move to the other player
+        socket.broadcast.emit('fire', id)
+    })
+
+    // on Fire Reply
+    socket.on('fire-reply', square => {
+        console.log(square)
+
+        // Forward the reply to the other player
+        socket.broadcast.emit('fire-reply', square)
+    })
     // when user disconnects
     socket.on('disconnect', (test)=>{
+        console.log(`Player ${playerIndex} disconnected`)
+        connections[playerIndex] = null
+        //Tell everyone what player numbe just disconnected
+        socket.broadcast.emit('player-connection', playerIndex)
         removeFromExistingRooms(socket.nick, myGroups[socket.nick])
         io.emit('delStat', { id: socket.nick });
         const temp = removeUser(socket.nick);
