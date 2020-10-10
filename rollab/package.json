@@ -1,7 +1,6 @@
 {
   "name": "rollab",
   "version": "0.1.0",
-  "proxy": "https://api.genius.com/",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -12,7 +11,6 @@
     "apollo-boost": "^0.4.9",
     "chart.js": "^2.9.3",
     "framer-motion": "^1.11.1",
-    "genius-lyrics-api": "^3.0.3",
     "graphql": "^15.3.0",
     "gsap": "^3.4.2",
     "lodash": "^4.17.19",

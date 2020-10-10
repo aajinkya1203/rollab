@@ -5,6 +5,8 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import Profile from '../../../images/bot.png';
 
 
+var message = "";
+
 const ChatBotUI = (props) => {
     const [notifs, setNotifs] = useState([])
     useEffect(()=>{
@@ -34,10 +36,66 @@ const ChatBotUI = (props) => {
         var delay = setTimeout(function(){
             var firstElem = array.shift();
             return startAnim(firstElem, array); 
-        },1000)
+        },100)
     }
 
-    const handleReq = (e) => {
+    const getResp = async (array) => {
+        await fetch('http://localhost:1000/to-bot', {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                query: message,
+            })
+        }).then(res=>res.json()).then(data=>{
+            let res = divTemplate(data);
+            let temp = [...array];
+            temp.push(res);
+            document.querySelector('#card-slider').append(res);
+            setNotifs(temp);
+            sortArray(temp);
+        }).catch(err=>{
+            console.log("Error occured!", err); 
+        })
+
+    }
+
+    const divTemplate = (msg) => {
+        
+        let div = document.createElement('div');
+        div.setAttribute('class', 'slider-item');
+
+        let div1 = document.createElement('div');
+        div1.setAttribute('class', "animation-card_image");
+
+        let img = document.createElement('img');
+        img.setAttribute("src", "https://i.pinimg.com/originals/fd/a1/3b/fda13b9d6d88f25a9d968901d319216a.jpg");
+        img.setAttribute('alt', '');
+
+        div1.appendChild(img);
+
+        let div2 = document.createElement('div');
+        div2.setAttribute('class', 'animation-card_content');
+        let h4 = document.createElement('h4');
+        h4.setAttribute('class', 'animation-card_content_title title-2');
+        h4.innerText = "rollab assistant";
+        let p1 = document.createElement("p");
+        p1.className = "animation-card_content_description p-2";
+        p1.innerText = msg;
+        let p2 = document.createElement("p");
+        p2.className = "animation-card_content_city";
+        p2.innerText = "Just now";
+
+        div2.append(h4)
+        div2.append(p1)
+        div2.append(p2)
+        div.append(div1)
+        div.append(div2)
+        return div;
+    }
+
+    const handleReq = async (e) => {
         let div = document.createElement('div');
         div.setAttribute('class', 'slider-item');
 
@@ -60,18 +118,20 @@ const ChatBotUI = (props) => {
         p1.innerText = e.target.value;
         let p2 = document.createElement("p");
         p2.className = "animation-card_content_city";
-        p2.innerText = "1200";
+        p2.innerText = "Just now";
 
         div2.append(h4)
         div2.append(p1)
         div2.append(p2)
         div.append(div1)
-        div.append(div2)
+        div.append(div2);
+        message = e.target.value;
         let temp = [...notifs];
-        temp.push(div)
-        setNotifs(temp);
+        temp.push(div);
         document.querySelector('#card-slider').append(div);
+        setNotifs(temp);
         sortArray(temp);
+        getResp(temp);
         e.target.value = "";
     }
     
