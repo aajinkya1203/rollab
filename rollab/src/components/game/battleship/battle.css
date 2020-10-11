@@ -1,14 +1,4 @@
-/* body {
-    margin: 0;
-    background-color: #F3F3F3;
-    overflow-x: hidden;
-  }
-  
-  *, *::before, *::after {
-    font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
-  }
-   */
+
   .splash-container {
     display: flex;
     flex-direction: column;
@@ -249,7 +239,7 @@
   }
   
   .miss::before {
-    content: '';
+    /* content: ''; */
     position: absolute;
     animation: hit .2s ease-out forwards;
     border: 1vmin solid white;

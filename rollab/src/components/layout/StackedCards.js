@@ -6,7 +6,6 @@ import Sidebar from '../chatHome/Sidebar';
 import M from 'materialize-css';
 import Invite from '../popups/Invite';
 import socketIOClient from 'socket.io-client';
-import { animateScroll } from 'react-scroll';
 
 
 const online = [
@@ -30,6 +29,9 @@ const StackedCards = (props) => {
     const ENDPOINT = "http://localhost:1000";
     console.log(props)
     useEffect(()=>{
+        if(!localStorage.getItem("id")){
+            props.history.push("/");
+        }
         socket = socketIOClient(ENDPOINT);
         // on connection
         socket.once('connect',()=>{
@@ -87,7 +89,7 @@ const StackedCards = (props) => {
         if(temp){
             if(temp.length === 9){
                 if(joinStuff === 1){
-        
+                    props.history.push("/online/battleship");
                 }else if(joinStuff === 2){
                     props.history.push(`/drawio/${temp}`);
                 }else{
@@ -114,7 +116,7 @@ const StackedCards = (props) => {
     }
     return (
         <>
-            <Navbar />
+            <Navbar props={props}/>
             <div id="stati" className="row">
                 <Sidebar />
                 <section className="cardy-listy">

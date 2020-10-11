@@ -24,6 +24,7 @@ import Notifications from './components/chatHome/ChatBot/Notifications';
 import { animateScroll } from 'react-scroll';
 import Delete from './components/popups/Delete';
 import Single from './components/game/battleship/single-battle';
+import MultiBattle from './components/game/battleship/muli-battle';
 
 
 
@@ -108,7 +109,7 @@ function App() {
         <Route path='/musly' component={ Musly } />
         <Route path='/delete' component={ Delete } />
         <Route path='/solo/battleship' component={ Single } />
-        {/* <Route path='/musly/:mlid' component={ GameHome } /> */}
+        <Route path='/online/battleship' component={ MultiBattle } />
       </Switch>
     </ApolloProvider>
   );
