@@ -26,7 +26,7 @@ const Weather = () => {
                 <div className="col s12 m5">
                     <div className="card" style={{borderRadius:"24px"}}>
                         <div className="card-image">
-                            <img src={weather.weather[0].main === "Clear" ? Sunny : Rainy} style={{borderRadius:"24px"}}/>
+                            <img alt="weather" src={weather.weather[0].main === "Clear" ? Sunny : Rainy} style={{borderRadius:"24px"}}/>
                             <span className="card-title">
                                 {weather.main.temp}°C
                                 <br/>

@@ -5,7 +5,6 @@ import './Delete.scss';
 const Delete = (props) => {
     useEffect(()=>{
         const $ = (s, o = document) => o.querySelector(s);
-        const $$ = (s, o = document) => o.querySelectorAll(s);
 
         var unsubscribe = $('#unsubscribe'),
             game = $('.game-delete', unsubscribe),
@@ -133,10 +132,10 @@ const Delete = (props) => {
             console.log("here")
             e.preventDefault();
             init();
-            if(e.keyCode == 38 || e.which == 38) {
+            if(e.keyCode === 38 || e.which === 38) {
                 one.top = -8;
             }
-            if(e.keyCode == 40 || e.which == 40) {
+            if(e.keyCode === 40 || e.which === 40) {
                 one.top = 8;
             }
         }
@@ -145,10 +144,10 @@ const Delete = (props) => {
         const forKeyUp = e => {
             e.preventDefault();
             init();
-            if(e.keyCode == 38 || e.which == 38) {
+            if(e.keyCode === 38 || e.which === 38) {
                 one.top = 0;
             }
-            if(e.keyCode == 40 || e.which == 40) {
+            if(e.keyCode === 40 || e.which === 40) {
                 one.top = 0;
             }
         }

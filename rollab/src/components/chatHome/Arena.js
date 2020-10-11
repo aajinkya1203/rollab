@@ -16,7 +16,6 @@ import { AvatarGroup } from '@material-ui/lab';
 
 var socket;
 
-var out;
 
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
@@ -38,8 +37,6 @@ const Arena = (props) => {
         }
 
         const getDets = async ()=>{
-            let status = await props.data.loading;
-            let again = await props.data.user;
             // let oneMore = await props.data.user.message.convos;
             if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
                 setMessages(props.data.user.message.convos);
@@ -330,7 +327,7 @@ const Arena = (props) => {
     const typing = async (e) => {
         let name = JSON.parse(localStorage.getItem('user')).name;
         if(props.match.params.id){
-            if(e.target.value == ""){
+            if(e.target.value === ""){
                 await socket.emit('stop-typing', { from: localStorage.getItem('id') , to: props.match.params.id, name }, async (resp)=>{
                     //console.log(resp)
                 });
@@ -341,7 +338,7 @@ const Arena = (props) => {
     
             }
         }else if(props.match.params.gid){
-            if(e.target.value == ""){
+            if(e.target.value === ""){
                 await socket.emit('stop-typing-g', { room: props.match.params.gid }, async (resp)=>{
                     //console.log(resp)
                 });
@@ -428,7 +425,7 @@ const Arena = (props) => {
                                                             
                                                             return (
                                                                 <div className="container info-brac row" key={Math.random()}>
-                                                                    <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
+                                                                    <img src={InfoImage} alt="Informative-mage" className="responsive-img col s12 l5"/>
                                                                     <div className="col s12 l7">
                                                                         <h6 style={{padding:"10px 0"}}>
                                                                             Talk without your data getting stored
@@ -475,7 +472,7 @@ const Arena = (props) => {
                                                 ) : (
 
                                                     <div className="container info-brac row" key={Math.random()}>
-                                                        <img src={InfoImage} alt="Info-image" className="responsive-img col s12 l5"/>
+                                                        <img src={InfoImage} alt="informative-mage" className="responsive-img col s12 l5"/>
                                                         <div className="col s12 l7">
                                                             <h6 style={{padding:"10px 0"}}>
                                                                 Talk without your data getting stored

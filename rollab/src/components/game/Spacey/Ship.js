@@ -42,10 +42,10 @@ export default class Ship {
   }
 
   rotate(dir){
-    if (dir == 'LEFT') {
+    if (dir === 'LEFT') {
       this.rotation -= this.rotationSpeed;
     }
-    if (dir == 'RIGHT') {
+    if (dir === 'RIGHT') {
       this.rotation += this.rotationSpeed;
     }
   }

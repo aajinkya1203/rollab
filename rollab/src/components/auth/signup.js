@@ -111,7 +111,6 @@ class SignUp extends Component {
                                 type="submit" name="action">Register
                                 <i className="material-icons right">person</i>
                                 </button> 
-                                {/* <AuthButton data={"Create"} props={this.props}/> */}
                                 <div className="progress" style={{
                                     width:"90%",
                                     margin:"0 auto",

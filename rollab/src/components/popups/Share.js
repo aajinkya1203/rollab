@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import M from 'materialize-css';
-import { myAllContacts, allMyGroups } from '../../query/queries';
+import { myAllContacts } from '../../query/queries';
 import { flowRight as compose } from 'lodash';
 import { graphql } from 'react-apollo';
 import SendButton from '../svgs/SendButton';
@@ -21,7 +21,6 @@ const Share = (props) => {
             M.toast({html: "Slow down partner! Add some friends to the party!"})
         }else{
             let selected = window.$('#mySelect').val();
-            let admin = localStorage.getItem("id");
             props.share(selected)
            
             document.querySelector('.Sendbutton').dispatchEvent(new CustomEvent("happen"));

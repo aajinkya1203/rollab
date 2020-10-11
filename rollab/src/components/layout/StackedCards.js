@@ -132,7 +132,7 @@ const StackedCards = (props) => {
                                     </header>
             
                                     <div className="cardy-author">
-                                        <a className="author-avatar" href="#">
+                                        <a className="author-avatar" href="#!">
                                             <img src={Test} />
                                         </a>
                                         <svg className="half-circle turnz" viewBox="0 0 106 57">
@@ -144,10 +144,10 @@ const StackedCards = (props) => {
                                         </div>
                                     </div>
                                     <div className="tagsy">
-                                        <a onClick={()=>{
+                                        <a href="#!" onClick={()=>{
                                             createGame(ele.id);
                                         }}>CREATE</a>
-                                        <a onClick={()=>{
+                                        <a href="#!" onClick={()=>{
                                             document.querySelector(".invi").style.display = "inherit";
                                             joinStuff = ele.id;
                                         }}>JOIN</a>
@@ -165,7 +165,7 @@ const StackedCards = (props) => {
                                     </header>
             
                                     <div className="cardy-author">
-                                        <a className="author-avatar" href="#">
+                                        <a className="author-avatar" href="#!">
                                             <img src={Test} />
                                         </a>
                                         <svg className="half-circle" viewBox="0 0 106 57">
@@ -177,7 +177,7 @@ const StackedCards = (props) => {
                                         </div>
                                     </div>
                                     <div className="tagsy">
-                                        <a onClick={()=>{
+                                        <a href="#!" onClick={()=>{
                                             botGame(ele.id);
                                         }}>PLAY</a>
                                     </div>

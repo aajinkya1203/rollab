@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import { apiKey } from '../../keys/key';
-import { split } from 'lodash';
 
 const Musly = () => {
     useEffect(()=>{

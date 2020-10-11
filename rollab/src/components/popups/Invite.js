@@ -18,12 +18,12 @@ const Invite = (props) => {
         cloudFive.to("#cloud-five", 24, {x: "-720px", ease: Linear.easeNone});
 
         window.$("#game-code").focus(function(){
-        if(window.$("#game-code").val() == ""){
+        if(window.$("#game-code").val() === ""){
             window.$("#placeholdery").fadeToggle();
         }
         });
         window.$("#game-code").focusout(function(){
-        if(window.$("#game-code").val() == ""){
+        if(window.$("#game-code").val() === ""){
             window.$("#placeholdery").fadeToggle();
         }
         });
@@ -247,7 +247,7 @@ const Invite = (props) => {
             <button id="btny" type="button"><i className="material-icons white-text">send</i></button>
             </div>
             <p id="disclaimer">Enter a valid 9-digit code.</p>
-            <a style={{color: "#00b0e1",
+            <a href="#!" style={{color: "#00b0e1",
                         position: "fixed",
                         top: "86.5%",
                         cursor: "pointer"

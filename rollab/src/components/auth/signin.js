@@ -6,7 +6,6 @@ import { flowRight as compose } from 'lodash';
 import { loginQuery } from '../../query/queries';
 import M from 'materialize-css';
 import Navbar from '../layout/Header';
-import AuthButton from '../svgs/AuthButton';
 
 
 class signin extends Component {
@@ -94,7 +93,6 @@ class signin extends Component {
                       type="submit" name="action">Log In
                       <i className="material-icons right">send</i>
                     </button> 
-                    {/* <AuthButton data={"Login"} props={this.props} /> */}
                     <div className="progress" style={{
                       width:"90%",
                       margin:"0 auto",

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './Beta.scss';
 
 const BetaProfile = () => {
@@ -382,12 +382,12 @@ const BetaProfile = () => {
                 </div>
                 <div className='portfolio_home__title'>
                 <div className='logo'>
-                    <img className='first' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/clogotemp.png'/>
-                    <img className='second' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/clogotemp2.png'/>
+                    <img alt="" className='first' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/clogotemp.png'/>
+                    <img alt="" className='second' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/clogotemp2.png'/>
                     <div className='page_portfolio'>
                     <div className='portfolio_home__header'>
                         <div className='logoMain'>
-                            <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/cagencylogo.png'/>
+                            <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/cagencylogo.png'/>
                         </div>
                         <div className='nav'>
                             <ul>
@@ -410,10 +410,10 @@ const BetaProfile = () => {
                     <div className='portfolio_home__work'>
                         <div className='portfolio_home__header work'>
                             <div className='back'>
-                                <img className='trigger' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png'/>
+                                <img alt="" className='trigger' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png'/>
                             </div>
                             <div className='logoMain'>
-                                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/slogowhite.png'/>
+                                <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/slogowhite.png'/>
                             </div>
                             <div className='nav'>
                                 <ul>
@@ -437,7 +437,7 @@ const BetaProfile = () => {
                             My Protein
                         </div>
                         <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/fud.png' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/fud.png' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL</div>
                             <div className='title'>My protein rebrand and digital campaign</div>
@@ -450,7 +450,7 @@ const BetaProfile = () => {
                             Nike Air Max
                         </div>
                         <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/nike.png' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/nike.png' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL   STRATEGY</div>
                             <div className='title'>Nike Air max video campaign 2017</div>
@@ -463,7 +463,7 @@ const BetaProfile = () => {
                             Apple Watch
                         </div>
                         <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/rpo.jpg' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/rpo.jpg' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DIGITAL   STRATEGY</div>
                             <div className='title'>The new Apple Watch digital campaign 2019</div>
@@ -476,13 +476,13 @@ const BetaProfile = () => {
                             Jade Teriyaki
                         </div>
                         <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/orangetyhing.png' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/orangetyhing.png' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL   STRATEGY</div>
                             <div className='title'>Another agency did this campaign, not us</div>
                         </div>
                         </div>
-                        <img className='scroll' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png' />
+                        <img alt="" className='scroll' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png' />
                     </div>
                     <div className='portfolio_home__slider'>
                         <div className='slider_inner'>
@@ -493,13 +493,13 @@ const BetaProfile = () => {
                             My Protein
                             </div>
                             <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/fud.png' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/fud.png' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL</div>
                             <div className='title'>My protein rebrand and digital campaign</div>
                             <div className='button'>
                                 View case study
-                                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
+                                <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
                             </div>
                             </div>
                         </div>
@@ -510,13 +510,13 @@ const BetaProfile = () => {
                             Nike Air Max
                             </div>
                             <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/nike.png' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/nike.png' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL   STRATEGY</div>
                             <div className='title'>Nike Air max video campaign 2017</div>
                             <div className='button'>
                                 View case study
-                                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
+                                <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
                             </div>
                             </div>
                         </div>
@@ -527,13 +527,13 @@ const BetaProfile = () => {
                             Apple Watch
                             </div>
                             <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/rpo.jpg' />
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/rpo.jpg' />
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DIGITAL   STRATEGY</div>
                             <div className='title'>The new Apple Watch digital campaign 2019</div>
                             <div className='button'>
                                 View case study
-                                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
+                                <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png' />
                             </div>
                             </div>
                         </div>
@@ -544,13 +544,13 @@ const BetaProfile = () => {
                             Jade Teriyaki
                             </div>
                             <div className='image'>
-                            <img draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/orangetyhing.png'/>
+                            <img alt="" draggable='false' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/orangetyhing.png'/>
                             <div className='overlay'></div>
                             <div className='cats'>ADVERTISING   DESIGN   DIGITAL   STRATEGY</div>
                             <div className='title'>Another agency did this campaign, not us</div>
                             <div className='button'>
                                 View case study
-                                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png'/>
+                                <img alt="" src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowbblakc.png'/>
                             </div>
                             </div>
                         </div>
@@ -565,7 +565,7 @@ const BetaProfile = () => {
                     &amp;
                     <span>Branding Agency</span>
                 </h1>
-                <img className='trigger' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png' />
+                <img alt="" className='trigger' src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowDown.png' />
                 </div>
             </div>
         </div>
