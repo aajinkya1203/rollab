@@ -24,6 +24,8 @@ const MultiBattle = (props) => {
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
+        socket.emit('battleship');
+
         const userGrid = document.querySelector('.grid-user')
         const computerGrid = document.querySelector('.grid-computer')
         const displayGrid = document.querySelector('.grid-display')

@@ -19,6 +19,7 @@ const Musly = (props) => {
     const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
 
     useEffect(()=>{
+        window.$('.modal').modal();
         socket = socketIOClient(ENDPOINT);
         // on connection
         socket.once('connect',()=>{
@@ -42,7 +43,7 @@ const Musly = (props) => {
             setPeople(data);
         });
 
-        socket.emit('joinGameMusly', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
+        socket.emit('joinGameMusly', { from: localStorage.getItem('id'), room: props.match.params.mid }, (resp)=>{
             console.log(resp);
             if(resp==609){
                 M.toast({ html: "Invalid game code!" });
@@ -78,6 +79,29 @@ const Musly = (props) => {
           }
       });
 
+      socket.on('gameChat', (data)=>{
+        let a = `
+        <div key=${Math.random()} style="margin-top:10px">
+            <div class="left-align User">
+                ${data.name}
+            </div>
+            <div class="message" style='background: #2d3034;
+                padding: 10px;
+                border-radius: 12px 12px 12px 0;
+                width: fit-content;'
+            >
+                ${data.msg}
+            </div>
+        </div>`;
+        if(document.querySelector("#gc")){
+            document.querySelector("#gc").innerHTML += a;
+        }
+        animateScroll.scrollToBottom({
+            containerId: "gc"
+        });  
+    });
+
+
       socket.on('success', (data)=>{
           let a = `
           <fieldset style='color:#93ee6e; border-color:#93ee6e'>
@@ -103,6 +127,10 @@ const Musly = (props) => {
               document.querySelector("#gc").innerHTML += a;
           }
       });
+
+      socket.on('announce', (data)=>{
+          M.toast({ html: data });
+      })
 
       socket.on('nextWord', (data)=>{
           // setWord(data);
@@ -225,7 +253,7 @@ const Musly = (props) => {
           console.clear();
           var messenger = new Messenger(window.$('#messenger-musly'));
           return()=>{
-            socket.emit('leaveMusly', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
+            socket.emit('leaveMusly', { from: localStorage.getItem('id'), room: props.match.params.mid }, (resp)=>{
                 console.log(resp);
                 // disconnecting this when it unmounts
                 console.log("Dismounting");
@@ -236,12 +264,12 @@ const Musly = (props) => {
           }
     }, []);
     const sendMsg = (e) => {
-        socket.emit('gameChatMusly', { msg: e.target.value, room: props.match.params.rid })
+        socket.emit('gameChatMusly', { msg: e.target.value, room: props.match.params.mid })
         e.target.value = ""
     }
 
     const share = (data) => {
-        socket.emit('shared', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
+        socket.emit('shared', { people: data, from: localStorage.getItem("id"), room: props.match.params.mid }, ()=>{
             console.log("done!");
         })
     }
@@ -253,7 +281,7 @@ const Musly = (props) => {
     return (
         <>
             <Navbar props={props} />
-            <div>
+            <div id="musly-wrapper" style={{height: "100%", backgroundColor: "#23272a"}}>
                 <div id="messenger-musly" className="white-text"></div>
                 <div className="game-chat musly-chat museDown" style={{height: '100%', width: '350px', float:'right'}}>
                     <div className="card blue-grey darken-1" style={{height: '90%', borderRadius: "12px"}}>
@@ -294,14 +322,14 @@ const Musly = (props) => {
                                 sessionStorage.getItem('game') ? (
                                         <>
                                             <a href="#" id="start" onClick={()=>{
-                                                socket.emit('start', { room: props.match.params.rid });
+                                                socket.emit('start', { room: props.match.params.mid });
                                                 document.querySelector("#start").style.display = "none";
                                                 document.querySelector("#share").style.display = "none";
                                                 document.querySelector("#leave").style.display = "inline-block";
                                                 document.querySelector("#next").style.display = "inline-block";
                                             }} >Start</a>
                                             <a href="#" id="next" style={{display: "none"}} onClick={()=>{
-                                                socket.emit('start', { room: props.match.params.rid });
+                                                socket.emit('start', { room: props.match.params.mid });
                                             }}>Next</a>
                                             <Link to="/game/online" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</Link>
                                         </>

@@ -106,7 +106,7 @@ function App() {
         <Route path='/invite' component={ Invite } />
         <Route path='/drawio/:rid' component={ DrawIO } />
         <Route path='/spacey' component={ Spacey } />
-        {/* <Route path='/musly/:mid' component={ Musly } /> */}
+        <Route path='/musly/:mid' component={ Musly } />
         <Route path='/delete' component={ Delete } />
         <Route path='/solo/battleship' component={ Single } />
         <Route path='/online/battleship' component={ MultiBattle } />

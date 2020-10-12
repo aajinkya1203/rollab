@@ -1,5 +1,5 @@
  body {
-    background: #23272a;
+    /* background: #23272a; */
 }
 #messenger-musly {
   position: absolute;
@@ -29,5 +29,5 @@
 
 .musly-chat.museDown{
   transition: 1s all ease-in !important;
-  height: 100% !important;
+  height: 15% !important;
 }

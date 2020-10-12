@@ -80,7 +80,7 @@ const StackedCards = (props) => {
     }, []);
     const createGame = (id) => {
         if(id === 1){
-
+            props.history.push('/online/battleship');
         }else if(id === 2){
             console.log("yo", socket);
             socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
