@@ -199,11 +199,17 @@ io.on('connection',(socket)=>{
     });
 
     // start musly
-    socket.on('startMusly',(data)=>{
+    socket.on('startMusly',(data, callback)=>{
         let game = _.sample(lyrics);
         museCodes[data.room] = game.song;
-        io.in(data.room).emit("nextWord", game.lyric);
+        console.log("ans:", game.song);
+        io.in(data.room).emit("nextWord", game);
+        callback(true);
     });
+
+    socket.on('animateMusly',(data)=>{
+        io.in(data.room).emit('animateMusly');
+    })
 
     // join drawio
     socket.on('joinGame', (data, callback) => {
@@ -358,8 +364,13 @@ io.on('connection',(socket)=>{
 
     // game chat for musly
     socket.on('gameChatMusly', (data, callback) => {
+        io.in(data.room).emit('gameChat', {msg: data.msg, name: socket.user});
+    })
+
+    socket.on('gameChatMuslyCheck', (data, callback) => {
+        console.log("dadwadawd", data);
         if(data.msg.substring(0, 3) === "/a-"){
-            if(museCodes[data.room] === data.msg.substring(3, data.msg.length)){
+            if(data.compare === data.msg.substring(3, data.msg.length)){
                 io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
             }else{
                 io.in(data.room).emit('fail', `${socket.user}, your guess is wrong!`);
