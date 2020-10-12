@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 const Groups = require('./models/Group');
 const words = require('./constants');
+const lyrics = require('./lyrics');
 
 // used for making room id
 const compareFunc = (a, b) => {
@@ -78,35 +79,38 @@ const priv = {};
 const groups = {};
 var myGroups = {};
 var drawio = {};
+var musly = {};
 const codes = {};
+const museCodes = {};
 // Handle a socket connection request from web client
 const connections = [null, null]
-
+let playerIndex = -1;
 io.on('connection',(socket)=>{
 
     // battleship games routes
-    // Find an available player number
-    let playerIndex = -1;
-    for (const i in connections) {
-        if (connections[i] === null) {
-            playerIndex = i
-            break
+    socket.on('battleship', (data)=>{
+        // Find an available player number
+        for (const i in connections) {
+            if (connections[i] === null) {
+                playerIndex = i
+                break
+            }
         }
-    }
 
-    // Tell the connecting client what player number they are
-    socket.emit('player-number', playerIndex)
+        // Tell the connecting client what player number they are
+        socket.emit('player-number', playerIndex)
 
-    console.log(`Player ${playerIndex} has connected`)
+        console.log(`Player ${playerIndex} has connected`)
 
-    // Ignore player 3
-    if (playerIndex === -1) return
+        // Ignore player 3
+        if (playerIndex === -1) return
 
-    connections[playerIndex] = false
+        connections[playerIndex] = false
 
-    // Tell eveyone what player number just connected
-    socket.broadcast.emit('player-connection', playerIndex)
+        // Tell eveyone what player number just connected
+        socket.broadcast.emit('player-connection', playerIndex)
 
+    })
     // On Ready
     socket.on('player-ready', () => {
         socket.broadcast.emit('enemy-ready', playerIndex)
@@ -137,9 +141,9 @@ io.on('connection',(socket)=>{
         // Forward the reply to the other player
         socket.broadcast.emit('fire-reply', square)
     })
+
     // when user disconnects
     socket.on('disconnect', (test)=>{
-        console.log(`Player ${playerIndex} disconnected`)
         connections[playerIndex] = null
         //Tell everyone what player numbe just disconnected
         socket.broadcast.emit('player-connection', playerIndex)
@@ -179,13 +183,29 @@ io.on('connection',(socket)=>{
         drawio[roomCode] = data.from;
         callback(roomCode);
     });
+    // creating a drawio room
+    socket.on('createMusly', (data, callback) => {
+        roomCode = Math.floor(100000000 + Math.random() * 900000000);
+        users[data.from].join(roomCode);
+        musly[roomCode] = data.from;
+        callback(roomCode);
+    });
+
+    // start drawio
     socket.on('start',(data)=>{
         let game = _.sample(words);
         codes[data.room] = game;
         io.in(data.room).emit("nextWord", game);
     });
 
+    // start musly
+    socket.on('startMusly',(data)=>{
+        let game = _.sample(lyrics);
+        museCodes[data.room] = game.song;
+        io.in(data.room).emit("nextWord", game.lyric);
+    });
 
+    // join drawio
     socket.on('joinGame', (data, callback) => {
         if(data.room in codes){
             console.log("Match in progress!");
@@ -245,9 +265,68 @@ io.on('connection',(socket)=>{
         }
     });
 
-    // game invi
+    // join musly
+    socket.on('joinGameMusly', (data, callback) => {
+        if(data.room in museCodes){
+            console.log("Match in progress!");
+            callback(414);
+        }else{
+            if(data.room in musly){
+                try{
+                    var clientele = io.sockets.adapter.rooms[data.room].sockets;   
+                    let temp = []
+                    for (var clientId in clientele ) {
+    
+                        //this is the socket of each client in the room.
+                        var clientSocket = io.sockets.connected[clientId];
+                        temp.push(clientSocket.id);
+                    }
+                    if(temp.includes(users[data.from].id)){
+                        console.log("Its the host!");
+                        callback(false);
+                    }else{
+                        console.log("User in in!")
+                        users[data.from].join(data.room);
+                        let opt = [
+                            `${socket.user} has joined the game!`,
+                            `Fasten your seat belts, ${socket.user} has arrived!`,
+                            `Goddamn! ${socket.user} has blessed the lobby!`,
+                            `${socket.user} is finally here. Now we talking!`,
+                            `Alright, ${socket.user} has now made the game interesting!`,
+                            `${socket.user} we hope you bought some snacks.`,
+                            `Kaboom! ${socket.user} is here!.`,
+                            `Beep boop boop beep! ${socket.user} is here to bag a win!.`,
+                            
+                        ]
+                        io.in(data.room).emit("announce", _.sample(opt));
+                        callback(true);
+                    }
+                }catch(err){
+                    // console.log("Error")
+                }
+            }else{
+                console.log("Invalid game code!")
+                callback(609);
+            }
+            try{
+                
+                var clients = io.sockets.adapter.rooms[data.room].sockets;   
+                let names = []
+                for (var clientId in clients ) {
+    
+                    //this is the socket of each client in the room.
+                    var clientSocket = io.sockets.connected[clientId];
+                    names.push(clientSocket.user);
+                }
+                io.in(data.room).emit('allParticipants', [...new Set(names)]);
+            }catch(err){
+                // console.log("Error")
+            }
+        }
+    });
+
+    // game invi - drawio
     socket.on('share', (data, callback)=>{
-        console.log("Shared",data);
         for (i of data.people){
             if(Object.keys(users).includes(i)){
                 console.log("Log", users[i].id);
@@ -255,10 +334,32 @@ io.on('connection',(socket)=>{
             }
         }
     })
+    // game invi - musly
+    socket.on('shared', (data, callback)=>{
+        for (i of data.people){
+            if(Object.keys(users).includes(i)){
+                io.to(users[i].id).emit('invitation', `Hello there! You've been invited to a game of Musly by ${users[i].user}. Follow this link: <a href='/musly/${data.room}'>Redirect</a>`);
+            }
+        }
+    })
 
+    // game chat for drawio
     socket.on('gameChat', (data, callback) => {
         if(data.msg.substring(0, 3) === "/a-"){
             if(codes[data.room] === data.msg.substring(3, data.msg.length)){
+                io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
+            }else{
+                io.in(data.room).emit('fail', `${socket.user}, your guess is wrong!`);
+            }
+        }else{
+            io.in(data.room).emit('gameChat', {msg: data.msg, name: socket.user});
+        }
+    })
+
+    // game chat for musly
+    socket.on('gameChatMusly', (data, callback) => {
+        if(data.msg.substring(0, 3) === "/a-"){
+            if(museCodes[data.room] === data.msg.substring(3, data.msg.length)){
                 io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
             }else{
                 io.in(data.room).emit('fail', `${socket.user}, your guess is wrong!`);
@@ -277,6 +378,38 @@ io.on('connection',(socket)=>{
                 socket.to(data.room).emit('deleteGame', { data: "The host has left the game! Return to the main menu." });
                 delete drawio[data.room];
                 delete codes[data.room];
+                callback(true);
+            }else{
+                try{
+                    var clients = io.sockets.adapter.rooms[data.room].sockets;   
+                    let names = []
+                    for (var clientId in clients ) {
+        
+                        //this is the socket of each client in the room.
+                        var clientSocket = io.sockets.connected[clientId];
+                        names.push(clientSocket.user);
+                    }
+                    io.in(data.room).emit('allParticipants', [...new Set(names)]);
+                }catch(err){
+                    // console.log("Error caught")
+                }
+    
+            }
+            callback(false);
+        }catch(err){
+            callback(false);
+        }
+    })
+
+    // leaving a musly room
+    socket.on('leaveMusly', (data, callback) => {
+        try{
+
+            users[data.from].leave(data.room);
+            if(musly[data.room] == data.from){
+                socket.to(data.room).emit('deleteGame', { data: "The host has left the game! Return to the main menu." });
+                delete musly[data.room];
+                delete museCodes[data.room];
                 callback(true);
             }else{
                 try{
