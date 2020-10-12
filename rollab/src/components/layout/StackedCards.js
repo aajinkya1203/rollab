@@ -15,9 +15,9 @@ const online = [
 ]
 
 const bot =  [
-    {id: 4, game: "TinEye", src:"", desc: "Can you find the item from an image?"},
+    // {id: 4, game: "TinEye", src:"", desc: "Can you find the item from an image?"},
     {id: 5, game: "Battle-Ship", src:"", desc: "Can you guess where their ships are ?"},
-    {id: 6, game: "BrainIt", src:"", desc: "Guess the movie using emojis!"},
+    // {id: 6, game: "BrainIt", src:"", desc: "Guess the movie using emojis!"},
     {id: 7, game: "Spacey", src:"", desc: "A fun interactive shooting space game!"},
 
 ]
@@ -69,18 +69,30 @@ const StackedCards = (props) => {
         if(sessionStorage.getItem('game')){
             sessionStorage.clear();
         }
+        return ()=>{
+            // disconnecting this when it unmounts
+            console.log("Dismounting");
+            socket.emit('disconnect');
+            // disposing instance of the socket var
+            socket.off();
+        }
 
     }, []);
-    const createGame = async (id) => {
+    const createGame = (id) => {
         if(id === 1){
 
         }else if(id === 2){
-            await socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
+            console.log("yo", socket);
+            socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
+                console.log(code);
                 sessionStorage.setItem('game', id);
                 props.history.push(`/drawio/${code}`);
             })
         }else{
-
+            socket.emit("createMusly", { from: localStorage.getItem('id') }, (code)=>{
+                sessionStorage.setItem('game', id);
+                props.history.push(`/musly/${code}`);
+            })
         }
     }
 

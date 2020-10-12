@@ -480,10 +480,13 @@ const MultiBattle = (props) => {
         }
       
         return ()=>{
-            console.log("Mounting")
-            // document.removeEventListener("DOMContentLoaded", allActions, true)
+          // disconnecting this when it unmounts
+          console.log("Dismounting");
+          socket.emit('disconnect');
+          // disposing instance of the socket var
+          socket.off();
         }
-    })
+    }, []);
     
     return (
         <>

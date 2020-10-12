@@ -102,11 +102,11 @@ function App() {
         <Route exact path='/game/solo' component={ StackedCards } />
         <Route exact path='/game' component={ Landing } />
         <Route path='/news' component={ News } />
-        <Route path='/beta' component={ BetaProfile } />
+        {/* <Route path='/beta' component={ BetaProfile } /> */}
         <Route path='/invite' component={ Invite } />
         <Route path='/drawio/:rid' component={ DrawIO } />
         <Route path='/spacey' component={ Spacey } />
-        <Route path='/musly' component={ Musly } />
+        {/* <Route path='/musly/:mid' component={ Musly } /> */}
         <Route path='/delete' component={ Delete } />
         <Route path='/solo/battleship' component={ Single } />
         <Route path='/online/battleship' component={ MultiBattle } />

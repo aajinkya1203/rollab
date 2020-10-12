@@ -96,9 +96,6 @@ const DrawIO = (props) => {
         });
 
         socket.on('gameChat', (data)=>{
-            // let div = document.createElement('div');
-            // div.setAttribute('key', Math.random());
-            // div.setAttribute('style')
             let a = `
             <div key=${Math.random()} style="margin-top:10px">
                 <div class="left-align User">
@@ -170,6 +167,7 @@ const DrawIO = (props) => {
                 containerId: "notifi"
             })
         })
+        
         return ()=>{
             //leaving from ze games
             socket.emit('leaveDrawio', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
@@ -260,6 +258,7 @@ const DrawIO = (props) => {
     }
 
     const share = (data) => {
+        console.log("Share called")
         socket.emit('share', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
             console.log("done!");
         })

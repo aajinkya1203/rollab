@@ -7,9 +7,12 @@ import Share from '../../popups/Share';
 import { AvatarGroup } from '@material-ui/lab';
 import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { animateScroll } from 'react-scroll';
 
 
 var socket;
+
+var counter = 0;
 
 const Musly = (props) => {
     const ENDPOINT = "http://localhost:1000";
@@ -22,6 +25,106 @@ const Musly = (props) => {
             console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
+        socket.on('comm', (data)=>{
+            let yout = `
+            <blockquote class="valign-wrapper notif-notif">
+                <span class="material-icons">
+                    notification_important
+                </span>
+                ${data.sender.name} has sent you a message
+            </blockquote>
+            `;
+            document.querySelector('#notif-logs').innerHTML += yout;
+            document.querySelector("#rFAB").classList.add("pulse");
+        });
+
+        socket.on('allParticipants', (data)=>{
+            setPeople(data);
+        });
+
+        socket.emit('joinGameMusly', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
+            console.log(resp);
+            if(resp==609){
+                M.toast({ html: "Invalid game code!" });
+                props.history.push('/game/online');
+            }else if(resp == 414){
+                M.toast({ html: "Game in progress!" });
+                props.history.push('/game/online');
+            }
+        });
+
+        socket.on('deleteGame', (data)=>{
+            M.toast({ html: data });
+            props.history.push('/game/online');
+        });
+
+        
+        socket.on('gameChatMusly', (data)=>{
+          let a = `
+          <div key=${Math.random()} style="margin-top:10px">
+              <div class="left-align User">
+                  ${data.name}
+              </div>
+              <div class="message" style='background: #2d3034;
+                  padding: 10px;
+                  border-radius: 12px 12px 12px 0;
+                  width: fit-content;'
+              >
+                  ${data.msg}
+              </div>
+          </div>`;
+          if(document.querySelector("#gc")){
+              document.querySelector("#gc").innerHTML += a;
+          }
+      });
+
+      socket.on('success', (data)=>{
+          let a = `
+          <fieldset style='color:#93ee6e; border-color:#93ee6e'>
+              <legend style='padding:0 10px'>
+                  ${data}
+              </legend>
+          </fieldset>
+          `;
+          if(document.querySelector("#gc")){
+              document.querySelector("#gc").innerHTML += a;
+          }
+      });
+
+      socket.on('fail', (data)=>{
+          let a = `
+          <fieldset style='color:#ee6e6e; border-color:#ee6e6e'>
+              <legend style='padding:0 10px'>
+                  ${data}
+              </legend>
+          </fieldset>
+          `;
+          if(document.querySelector("#gc")){
+              document.querySelector("#gc").innerHTML += a;
+          }
+      });
+
+      socket.on('nextWord', (data)=>{
+          // setWord(data);
+          console.log("Lyric:", data);
+      })
+      socket.on('invitation', data=>{
+          let yout = `
+          <blockquote class="valign-wrapper invi-notif">
+              <span class="material-icons">
+                  notification_important
+              </span>
+              ${data}
+          </blockquote>
+          `;
+          document.querySelector('#notif-logs').innerHTML += yout;
+          document.querySelector("#rFAB").classList.add("pulse");
+          animateScroll.scrollToBottom({
+              containerId: "notifi"
+          })
+      })
+      
+
 
         var Messenger = function(el){
             'use strict';
@@ -36,11 +139,10 @@ const Musly = (props) => {
                 'Musly - guess the song through the lyrics',
                 'You got 10s to guess the answer and only 5 rounds!',
                 'Aight, lets begin. Goodluck!',
-                'Finesse a nigga with some counterfeit. But now I\'m countin\' this'
               ];
               m.counter = 0;
               
-              setTimeout(m.animateIn, 5000);
+              // setTimeout(m.animateIn, 5000);
             };
             
             m.generateRandomString = function(length){
@@ -95,8 +197,8 @@ const Musly = (props) => {
               if(do_cycles === true){
                 setTimeout(m.animateFadeBuffer, 50);
               } else {
-                  m.counter += 1;
-                  if(m.counter > m.messages.length){
+                  counter += 1;
+                  if(counter > 7){
                       console.log("above")
                   }else{
                       setTimeout(m.cycleText, 10000);
@@ -122,14 +224,24 @@ const Musly = (props) => {
           
           console.clear();
           var messenger = new Messenger(window.$('#messenger-musly'));
+          return()=>{
+            socket.emit('leaveMusly', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
+                console.log(resp);
+                // disconnecting this when it unmounts
+                console.log("Dismounting");
+                socket.emit('disconnect');
+                // disposing instance of the socket var
+                socket.off();
+            })
+          }
     }, []);
     const sendMsg = (e) => {
-        socket.emit('gameChat', { msg: e.target.value, room: props.match.params.rid })
+        socket.emit('gameChatMusly', { msg: e.target.value, room: props.match.params.rid })
         e.target.value = ""
     }
 
     const share = (data) => {
-        socket.emit('share', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
+        socket.emit('shared', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
             console.log("done!");
         })
     }
