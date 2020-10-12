@@ -12,8 +12,9 @@ import { animateScroll } from 'react-scroll';
 
 var socket;
 
+var messenger;
 var counter = 0;
-
+console.log("counter:", counter);
 const Musly = (props) => {
     const ENDPOINT = "http://localhost:1000";
     const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
@@ -133,9 +134,12 @@ const Musly = (props) => {
       })
 
       socket.on('nextWord', (data)=>{
-          // setWord(data);
-          console.log("Lyric:", data);
-      })
+        messenger.addElement(data);
+    })
+    
+    socket.on('animateMusly', ()=>{
+        setTimeout(messenger.animateIn, 5000);
+    })
       socket.on('invitation', data=>{
           let yout = `
           <blockquote class="valign-wrapper invi-notif">
@@ -163,6 +167,7 @@ const Musly = (props) => {
               m.message = 0;
               m.current_length = 0;
               m.fadeBuffer = false;
+              m.answer=[];
               m.messages = [
                 'Musly - guess the song through the lyrics',
                 'You got 10s to guess the answer and only 5 rounds!',
@@ -170,7 +175,6 @@ const Musly = (props) => {
               ];
               m.counter = 0;
               
-              // setTimeout(m.animateIn, 5000);
             };
             
             m.generateRandomString = function(length){
@@ -181,6 +185,15 @@ const Musly = (props) => {
               
               return random_text;
             };
+
+            m.getCorrect = function(){
+                return m.answer[counter-4];
+            }
+
+            m.addElement = function(a){
+                m.messages.push(a.lyric);
+                m.answer.push(a.song);
+            }
             
             m.animateIn = function(){
               if(m.current_length < m.messages[m.message].length){
@@ -229,7 +242,13 @@ const Musly = (props) => {
                   if(counter > 7){
                       console.log("above")
                   }else{
-                      setTimeout(m.cycleText, 10000);
+                    console.log("Counter", counter)
+                    if(sessionStorage.getItem('game') && counter>=3 ){
+                        socket.emit('startMusly', { room: props.match.params.mid }, (data)=>{
+                            // do nothing
+                        });
+                    }
+                    setTimeout(m.cycleText, 10000);
                   }
               }
             };
@@ -244,6 +263,7 @@ const Musly = (props) => {
               m.fadeBuffer = false;
               window.$(el).html('');
               
+              console.log("here")
               setTimeout(m.animateIn, 200);
             };
             
@@ -251,8 +271,9 @@ const Musly = (props) => {
           }
           
           console.clear();
-          var messenger = new Messenger(window.$('#messenger-musly'));
+          messenger = new Messenger(window.$('#messenger-musly'));
           return()=>{
+              counter = 0;
             socket.emit('leaveMusly', { from: localStorage.getItem('id'), room: props.match.params.mid }, (resp)=>{
                 console.log(resp);
                 // disconnecting this when it unmounts
@@ -264,7 +285,11 @@ const Musly = (props) => {
           }
     }, []);
     const sendMsg = (e) => {
-        socket.emit('gameChatMusly', { msg: e.target.value, room: props.match.params.mid })
+        if(e.target.value.substring(0, 3) === "/a-"){
+            socket.emit('gameChatMuslyCheck', { msg: e.target.value, room: props.match.params.mid, compare: messenger.getCorrect() })
+        }else{
+            socket.emit('gameChatMusly', { msg: e.target.value, room: props.match.params.mid })
+        }
         e.target.value = ""
     }
 
@@ -322,15 +347,11 @@ const Musly = (props) => {
                                 sessionStorage.getItem('game') ? (
                                         <>
                                             <a href="#" id="start" onClick={()=>{
-                                                socket.emit('start', { room: props.match.params.mid });
+                                                socket.emit('animateMusly', { room: props.match.params.mid });
                                                 document.querySelector("#start").style.display = "none";
                                                 document.querySelector("#share").style.display = "none";
                                                 document.querySelector("#leave").style.display = "inline-block";
-                                                document.querySelector("#next").style.display = "inline-block";
                                             }} >Start</a>
-                                            <a href="#" id="next" style={{display: "none"}} onClick={()=>{
-                                                socket.emit('start', { room: props.match.params.mid });
-                                            }}>Next</a>
                                             <Link to="/game/online" id="leave" style={{display: "none", color: "#ee6e6e"}}>Leave</Link>
                                         </>
                                     ) : (
