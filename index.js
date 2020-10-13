@@ -368,9 +368,8 @@ io.on('connection',(socket)=>{
     })
 
     socket.on('gameChatMuslyCheck', (data, callback) => {
-        console.log("dadwadawd", data);
         if(data.msg.substring(0, 3) === "/a-"){
-            if(data.compare === data.msg.substring(3, data.msg.length)){
+            if(String(data.compare).toLowerCase() === data.msg.substring(3, data.msg.length).toLowerCase()){
                 io.in(data.room).emit('success', `${socket.user} has guessed it right!`);
             }else{
                 io.in(data.room).emit('fail', `${socket.user}, your guess is wrong!`);
