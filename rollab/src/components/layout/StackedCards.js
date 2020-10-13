@@ -97,21 +97,26 @@ const StackedCards = (props) => {
     }
 
     const joinGame = async () => {
-        let temp = document.querySelector("#game-code").value;
-        if(temp){
-            if(temp.length === 9){
-                if(joinStuff === 1){
-                    props.history.push("/online/battleship");
-                }else if(joinStuff === 2){
-                    props.history.push(`/drawio/${temp}`);
+        try{
+
+            let temp = document.querySelector("#game-code").value;
+            if(temp){
+                if(temp.length === 9){
+                    if(joinStuff === 1){
+                        props.history.push("/online/battleship");
+                    }else if(joinStuff === 2){
+                        props.history.push(`/drawio/${temp}`);
+                    }else{
+                        props.history.push(`/musly/${temp}`);
+                    }
                 }else{
-        
+                    M.toast({ html: "Your game code has to be of 9 digits" })
                 }
             }else{
-                M.toast({ html: "Your game code has to be of 9 digits" })
+                M.toast({ html: "Hold up partner! Let's have a game code first?" })
             }
-        }else{
-            M.toast({ html: "Hold up partner! Let's have a game code first?" })
+        }catch(err){
+            // console.log(err)
         }
     }
 

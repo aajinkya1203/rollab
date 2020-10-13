@@ -56,7 +56,7 @@ const Musly = (props) => {
         });
 
         socket.on('deleteGame', (data)=>{
-            M.toast({ html: data });
+            M.toast({ html: data.data });
             props.history.push('/game/online');
         });
 
@@ -77,6 +77,9 @@ const Musly = (props) => {
           </div>`;
           if(document.querySelector("#gc")){
               document.querySelector("#gc").innerHTML += a;
+              animateScroll.scrollToBottom({
+                    containerId: "gc"
+                });  
           }
       });
 
@@ -96,10 +99,10 @@ const Musly = (props) => {
         </div>`;
         if(document.querySelector("#gc")){
             document.querySelector("#gc").innerHTML += a;
+            animateScroll.scrollToBottom({
+                containerId: "gc"
+            });  
         }
-        animateScroll.scrollToBottom({
-            containerId: "gc"
-        });  
     });
 
 
@@ -113,6 +116,10 @@ const Musly = (props) => {
           `;
           if(document.querySelector("#gc")){
               document.querySelector("#gc").innerHTML += a;
+              animateScroll.scrollToBottom({
+                containerId: "gc"
+            });  
+    
           }
       });
 
@@ -126,6 +133,10 @@ const Musly = (props) => {
           `;
           if(document.querySelector("#gc")){
               document.querySelector("#gc").innerHTML += a;
+              animateScroll.scrollToBottom({
+                containerId: "gc"
+            });  
+    
           }
       });
 
@@ -342,7 +353,7 @@ const Musly = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="card-action">
+                        <div className="card-action game-action">
                             {
                                 sessionStorage.getItem('game') ? (
                                         <>
