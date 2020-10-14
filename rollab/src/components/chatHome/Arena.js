@@ -12,7 +12,7 @@ import Navbar from '../layout/Header';
 import InfoImage from '../../images/Groups/Convo.png';
 import { Avatar } from '@material-ui/core';
 import { AvatarGroup } from '@material-ui/lab';
-
+import Click from '../../images/click.png';
 
 var socket;
 
@@ -360,8 +360,8 @@ const Arena = (props) => {
                     (props.location.pathname === '/chat' || 
                     props.location.pathname === '/chat/groups') && props.match.isExact === true
                     ? (
-                        <div>
-                            Click any contact to start chatting...
+                        <div className="arena col s12 m7 l8 center" >
+                            <img src={Click} alt="Click any contact to start chatting..." style={{position:"relative", top:"20%"}}/>
                         </div>
                     ) : (
                         props.data.user || props.getAGroup.group ? (
