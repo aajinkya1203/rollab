@@ -32,7 +32,7 @@ _Need to write something really important but need it to get stored? Personally 
 
 ## Contributions
 ---
-A solo project by me! Check out more cool stuffs (here)[https://github.com].
+A solo project by me! Check out more cool stuffs [here](https://github.com/aajinkya1203).
 
 You can also have an insight of the contributions and its rate [here](https://github.com/aajinkya1203/rollab/graphs/contributors).
 
