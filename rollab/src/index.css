@@ -585,6 +585,13 @@ fieldset{
   background-origin: content-box;
   background-size: cover;
 }
+.NoticeWrapper{
+  background-image: url(./images/GroupPopup/Notif.png);
+  height: 20rem !important;
+  background-position: center;
+  background-origin: content-box;
+  background-size: cover;
+}
 .ShareBannerWrapper{
   background-image: url(./images/GroupPopup/sharePopup.gif);
   height: 20rem !important;

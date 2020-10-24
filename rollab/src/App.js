@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './index.css';
 import Home from './components/dashboard/home';
 import Signin from './components/auth/signin';
@@ -13,8 +13,6 @@ import Arena from './components/chatHome/Arena';
 import Profile from './components/svgs/profile/Profile';
 import Stats from './components/stats/Stats';
 import StackedCards from './components/layout/StackedCards'
-import News from './components/stats/News';
-import BetaProfile from './components/svgs/profile/BetaProfile';
 import Invite from './components/popups/Invite';
 import DrawIO from './components/game/DrawIO/DrawIO';
 import { Reacteroids as Spacey } from './components/game/Spacey/Reacteroids';
@@ -50,9 +48,38 @@ const client = new ApolloClient({
 })
 
 function App() {
+  useEffect(()=>{
+    window.$(document).ready(function(){
+      window.$('#notice').modal();
+      if(Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) <= 600){
+        window.$('#notice').modal('open');
+        window.$('#notice').modal('open');
+        setTimeout(function(){
+          window.$('#notice').modal('close');
+        }, 7000);
+      }
+    });
+  });
   return (
     <ApolloProvider client={client}>
-      {/* <Navbar /> */}
+      <div id="notice" className="modal">
+        <div className="modal-content" style={{height:"100%", padding: 0}}>
+            <div className="NoticeWrapper" style={{height:"100%"}}>
+            </div>
+            <div>
+               <p style={{textAlign: "center", padding: "10px 15px"}}>
+                 <strong>To all the mobile users!</strong><br />
+                 <div className="divider" style={{background: "grey", marginTop: "20px"}}></div><br />
+                   <br />
+                  Most of the key features are disabled for smaller screen size to avoid
+                  any unpleasent experience. For a better experience, please log in from your laptop / larger screen size!.
+                  <br />
+                  <br />
+                  Team rollab.
+               </p>
+            </div>
+        </div>
+    </div>
       <motion.div drag 
         dragConstraints={{ right:0, left: -80 ,top: 80, bottom: 300}}
         className="floating"
