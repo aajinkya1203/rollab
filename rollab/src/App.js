@@ -98,18 +98,22 @@ function App() {
         <Route path='/chat/:id' component={ Arena } />
         <Route exact path='/chat' component={ Arena } />
         <Route exact path='/profile' component={ Profile } />
-        <Route exact path='/game/online' component={ StackedCards } />
-        <Route exact path='/game/solo' component={ StackedCards } />
-        <Route exact path='/game' component={ Landing } />
-        <Route path='/news' component={ News } />
-        {/* <Route path='/beta' component={ BetaProfile } /> */}
-        <Route path='/invite' component={ Invite } />
-        <Route path='/drawio/:rid' component={ DrawIO } />
-        <Route path='/spacey' component={ Spacey } />
-        <Route path='/musly/:mid' component={ Musly } />
-        <Route path='/delete' component={ Delete } />
-        <Route path='/solo/battleship' component={ Single } />
-        <Route path='/online/battleship' component={ MultiBattle } />
+        {
+          Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) > 600 ? (
+            <>
+            <Route exact path='/game/online' component={ StackedCards } />
+            <Route exact path='/game/solo' component={ StackedCards } />
+            <Route exact path='/game' component={ Landing } />
+            <Route path='/invite' component={ Invite } />
+            <Route path='/drawio/:rid' component={ DrawIO } />
+            <Route path='/spacey' component={ Spacey } />
+            <Route path='/musly/:mid' component={ Musly } />
+            <Route path='/delete' component={ Delete } />
+            <Route path='/solo/battleship' component={ Single } />
+            <Route path='/online/battleship' component={ MultiBattle } />
+            </>
+          ) : null
+        }
       </Switch>
     </ApolloProvider>
   );

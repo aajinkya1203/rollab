@@ -37,16 +37,6 @@ const Arena = (props) => {
             sessionStorage.clear();
         }
 
-        // const getDets = async ()=>{
-        //     // let oneMore = await props.data.user.message.convos;
-        //     if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
-        //         console.log("wadawd")
-        //         setMessages(props.data.user.message.convos);
-        //     }
-        // }
-
-        // getDets();
-
         // if(socket){
             socket.on('comm', async (data)=>{
                 let loc = window.location.href;
@@ -318,11 +308,9 @@ const Arena = (props) => {
     useEffect(() => {
         if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
             if(!allMessages[props.data.user.id]){
-                console.log("here", allMessages)
                 allMessages[props.data.user.id] = props.data.user.message.convos;
                 setMessages(props.data.user.message.convos);
             }else{
-                console.log("bruha", allMessages)
                 setMessages(allMessages[props.data.user.id].messages);
             }
             M.toast({ html: "Holup! We are looking for some new changes." })           
