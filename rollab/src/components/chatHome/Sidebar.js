@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { graphql } from 'react-apollo';
 import { flowRight as compose } from 'lodash';
@@ -6,12 +6,19 @@ import { addContact, allUsers, userDetails } from '../../query/queries';
 import M from 'materialize-css';
 
 const Sidebar=(props)=> {
+    const [mates, setMates] = useState([]);
     useEffect(()=>{
         window.$(document).ready(function(){
             window.$('.tooltipped').tooltip();
-            window.$('.modal').modal();
+            window.$('.modal').modal({
+                dismissible: false
+            });
+            
         });
     });
+    useEffect(()=>{
+        setMates(props.allUsers.allUsers);
+    }, [props.allUsers])
     const addContact= async (to, toCont)=>{
         let from = localStorage.getItem("id");
         let fromCont = localStorage.getItem("user");
@@ -28,6 +35,33 @@ const Sidebar=(props)=> {
         if(!data.data.addContact){
             M.toast({ html: "You've already added them to your contacts!" });
         }
+    }
+    const handleChange=(e)=>{
+        e.preventDefault();
+        let res = props.allUsers.allUsers.filter(ele=>(ele.name.toLowerCase()).startsWith(e.target.value.toLowerCase()));
+        document.querySelector("#searchTing").innerHTML = "";
+        res.forEach(user=>{
+            let temp = `
+            <li
+            class="collection-item avatar truncate resContact" id=${user.contacts.id} key=${user.id}>
+                <span 
+                class="btn btn-large btn-floating"
+                >
+                    ${user.name[0]}
+                </span>
+                <span class="title center-align">${user.name}</span>
+                <div class="center-align chip">
+                    ${user.email}
+                </div>
+            </li>
+            `;
+            document.querySelector("#searchTing").innerHTML += temp;
+        })
+        window.$('.resContact').on('click', function(){
+            let id = window.$(this).attr("key");
+            let cid = window.$(this).attr("id");
+            addContact(id, cid);
+        })
     }
     return (
         <>
@@ -91,21 +125,23 @@ const Sidebar=(props)=> {
             <h4>Find new friends...</h4>
             <div className="input-field col s12">
                 <input type="text" className="validate" style={{
-                    height: "48px",
-                    color:"white"
-                }}/>
+                        height: "48px",
+                        color:"white"
+                    }}
+                    onChange={handleChange}
+                />
                 <label htmlFor="first_name">Search</label>
             </div>
-            <ul className="collection searched">
-                { props.allUsers && props.allUsers.allUsers ? (
-                    props.allUsers.allUsers.map(user=>{
+            <ul className="collection searched" id="searchTing">
+                { mates && mates.length !== 0  ? (
+                    mates.map(user=>{
                         if(user.id === localStorage.getItem("id")){
                             return null;
                         }
                         return(
                             <li 
                             onClick={()=>addContact(user.id, user.contacts.id)}
-                            className="collection-item avatar truncate" key={user.id}>
+                            className="collection-item avatar truncate" key={user.id} id={user.contacts.id}>
                                 <span 
                                 className="btn btn-large btn-floating"
                                 >

@@ -518,8 +518,8 @@ const Arena = (props) => {
 
                             </div>                    
                         ) : (
-                            <div>
-                                Click any contact to start chatting...
+                            <div className="arena col s12 m7 l8 center valign-wrapper" >
+                                <img src={Click} alt="Click any contact to start chatting..." style={{maxWidth: "100%", margin: "0 auto", height: "auto"}}/>
                             </div>
                         )
                     )
