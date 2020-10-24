@@ -35,7 +35,11 @@ class signin extends Component {
       localStorage.setItem('token', res.data.login.token);
       localStorage.setItem('user', JSON.stringify(res.data.login));
       localStorage.setItem('id', res.data.login.id);
-      this.props.history.push("/chat");
+      if(Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) > 600){
+        this.props.history.push("/chat");
+      }else{
+        this.props.history.push("/notification");
+      }
     }else{
       document.querySelector('.progress').style.display = "none";
       M.toast({html: "Oopsie! Something went wrong!"})

@@ -36,6 +36,7 @@ const Arena = (props) => {
         if(sessionStorage.getItem('game')){
             sessionStorage.clear();
         }
+        
 
         // if(socket){
             socket.on('comm', async (data)=>{
