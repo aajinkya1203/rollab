@@ -16,6 +16,7 @@ import Click from '../../images/click.png';
 
 var socket;
 
+var allMessages = {};
 
 const Arena = (props) => {
     const [chats, setMessages] = useState([]);
@@ -36,23 +37,31 @@ const Arena = (props) => {
             sessionStorage.clear();
         }
 
-        const getDets = async ()=>{
-            // let oneMore = await props.data.user.message.convos;
-            if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
-                setMessages(props.data.user.message.convos);
-            }
-        }
+        // const getDets = async ()=>{
+        //     // let oneMore = await props.data.user.message.convos;
+        //     if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
+        //         console.log("wadawd")
+        //         setMessages(props.data.user.message.convos);
+        //     }
+        // }
 
-        getDets();
+        // getDets();
 
         // if(socket){
             socket.on('comm', async (data)=>{
-                console.log("Message event triggered",data);
                 let loc = window.location.href;
                 let re = /\/chat\/(.+)/gi
                 let re2 = /\b(?:(?!chat)\w)+\b/gi
                 let test = loc.match(re)
-                
+                if(data.bonus[0] === localStorage.getItem("id")){
+                    let records = allMessages[data.bonus[1]];
+                    records.messages.push(data);
+                    allMessages[data.bonus[1]] = records;
+                }else{
+                    let records = allMessages[data.bonus[0]];
+                    records.messages.push(data);
+                    allMessages[data.bonus[0]] = records;
+                }
                 if(!test){
                     let yout = `
                     <blockquote class="valign-wrapper notif-notif">
@@ -188,9 +197,6 @@ const Arena = (props) => {
     useEffect(()=>{
         if(socket){
             socket.on('type', data=>{
-                console.log("here")
-                console.log(data.source)
-                console.log(props.match.params.id)
                 if(props.match.params.id && props.match.params.id === data.source){
                     if(document.querySelector('#typingBox')){
                         document.querySelector('#typingBox').style.display = "block"
@@ -208,9 +214,6 @@ const Arena = (props) => {
                 }
             })
             socket.on('typed-g', data=>{
-                console.log("here")
-                console.log(data.room)
-                console.log(props.match.params.gid)
                 if(props.match.params.gid && props.match.params.gid === data.room){
                     if(document.querySelector('#typingBox')){
                         document.querySelector('#typingBox').style.display = "block"
@@ -238,7 +241,6 @@ const Arena = (props) => {
             socket.emit('privChat', { from: localStorage.getItem('id') , to: props.match.params.id})
         }
         if(props.match.params.gid){
-            console.log(props.match.params.gid)
             socket.emit('group', { id: localStorage.getItem('id') , room: props.match.params.gid, name: JSON.parse(localStorage.getItem("user")).name})
         }
     },[props.match.params.id, props.match.params.gid]);
@@ -258,12 +260,10 @@ const Arena = (props) => {
                 let actualTime = new Date().getTime();
                 await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: actualTime }, async (resp) => {
                     op = resp;
-                    console.log("OP:",op);
-                    
                     if(op===true){
-                        console.log("socketed")
+                        // console.log("socketed")
                     }else{
-                        console.log("db")
+                        // console.log("db")
                         let div = document.createElement('div');
                         div.className="container"
                         div.setAttribute('key', Math.random());
@@ -309,9 +309,6 @@ const Arena = (props) => {
                 
     
                 })
-                // animateScroll.scrollToBottom({
-                //     containerId: "chatListWrapper"
-                // });
             }else if(props.match.params && props.match.params.gid){
                 let actualTime = new Date().getTime();
                 socket.emit('sendGroup', { room: props.match.params.gid, time: actualTime, message });
@@ -320,7 +317,14 @@ const Arena = (props) => {
     }
     useEffect(() => {
         if((props.data.loading) === false && props.data.user && props.data.user.message.convos){
-            setMessages(props.data.user.message.convos);
+            if(!allMessages[props.data.user.id]){
+                console.log("here", allMessages)
+                allMessages[props.data.user.id] = props.data.user.message.convos;
+                setMessages(props.data.user.message.convos);
+            }else{
+                console.log("bruha", allMessages)
+                setMessages(allMessages[props.data.user.id].messages);
+            }
             M.toast({ html: "Holup! We are looking for some new changes." })           
         }
     }, [props.data.user]);
@@ -360,8 +364,8 @@ const Arena = (props) => {
                     (props.location.pathname === '/chat' || 
                     props.location.pathname === '/chat/groups') && props.match.isExact === true
                     ? (
-                        <div className="arena col s12 m7 l8 center" >
-                            <img src={Click} alt="Click any contact to start chatting..." style={{position:"relative", top:"20%"}}/>
+                        <div className="arena col s12 m7 l8 center valign-wrapper" >
+                            <img src={Click} alt="Click any contact to start chatting..." style={{maxWidth: "100%", margin: "0 auto", height: "auto"}}/>
                         </div>
                     ) : (
                         props.data.user || props.getAGroup.group ? (
@@ -486,9 +490,9 @@ const Arena = (props) => {
                                                 )
                                             ) : (
 
-                                                chats && chats.messages ? 
+                                                props.match.params && allMessages[props.match.params.id] && allMessages[props.match.params.id].messages ? 
                                                 (
-                                                    chats.messages.map(ele=>{
+                                                    allMessages[props.match.params.id].messages.map(ele=>{
                                                         return(
                                                             <div className="container" key={Math.random()}>
                                                                 <div className="left-align chip User">
