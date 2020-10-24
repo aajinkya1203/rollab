@@ -1,68 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# rollab
+A new era of communicating!
 
-## Available Scripts
+A platform to communicate with your friends in realtime, while at the same time challenging them to an online game. No friends online? Don't worry, we got you! You can go against a bot too or even chat with the rollab assistant without any of your chats getting stored ever with the bot!
 
-In the project directory, you can run:
+_Need to have a group discussion / gossip / share some tea with your friends? Create a group, invite and go on without the chats ever getting stored!_
 
-### `npm start`
+_Need to write something really important but need it to get stored? Personally message the friend!_
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Status - Pending
+---
+- [ ] Integrate a TF-based game
+- [ ] Remove unnecessary ```console.log()```
+- [ ] Make certain pages responsive
+- [ ] Add more features to the dashboard
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Technologies Used
+---
+- ReactJS
+- NodeJS
+- SocketIO
+- GSAP Animations
+- React Spring
+- Framer Motion
+- Apollo-client
+- Docker
+- GraphQL
+- Scraping- axios
+- REST API
+- MongoDB
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributions
+---
+A solo project by me! Check out more cool stuffs [here](https://github.com/aajinkya1203).
 
-### `npm run build`
+You can also have an insight of the contributions and its rate [here](https://github.com/aajinkya1203/rollab/graphs/contributors).
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Found something off?
+---
+Make an issue [here](https://github.com/aajinkya1203/rollab/issues) and describe the issue.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Need to contribute to the project?
+---
+- Fork the repo
+- Make your changes
+- Make a PR to main branch
