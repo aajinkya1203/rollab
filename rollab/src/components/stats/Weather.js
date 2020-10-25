@@ -13,12 +13,10 @@ const Weather = () => {
         fetch(weatherURL)
             .then(res => res.json())
             .then(data =>{
-                console.log("Data List Loaded", data.list)
                 setWeather(data.list[0]);
             })
             
     })
-    console.log(weather)
     return (
         <>
         {
@@ -27,7 +25,7 @@ const Weather = () => {
                     <div className="card" style={{borderRadius:"24px"}}>
                         <div className="card-image">
                             <img alt="weather" src={weather.weather[0].main === "Clear" ? Sunny : Rainy} style={{borderRadius:"24px"}}/>
-                            <span className="card-title">
+                            <span className="card-title flow-text">
                                 {weather.main.temp}°C
                                 <br/>
                                 As of {moment(weather.dt_txt).fromNow()}

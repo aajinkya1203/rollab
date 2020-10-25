@@ -240,4 +240,23 @@ query($id: ID){
 }
 `
 
-export { loginQuery, getAGroup, allMyGroups, createGroup, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };
+const getFreq = gql`
+query($id: ID){
+  user(id: $id){
+    messages{
+      convos{
+        person{
+          id
+          name
+        }
+        messages{
+          text
+        }
+      }
+    }
+  }
+}
+
+`
+
+export { loginQuery, getFreq, getAGroup, allMyGroups, createGroup, signupQuery, userDetails, allUsers, addContact, userDetailWithMessages, allContacts, myAllContacts, sendMessage };

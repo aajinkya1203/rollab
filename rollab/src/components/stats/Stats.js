@@ -4,6 +4,7 @@ import Sidebar from '../chatHome/Sidebar';
 import Navbar from '../layout/Header';
 import { animateScroll } from 'react-scroll';
 import Weather from './Weather';
+import Frequency from './Frequency';
 
 const state = {
   labels: ['Monday', 'Tuesday', 'Wednesday',
@@ -60,7 +61,8 @@ const Stats = (props) => {
                             }}
                         />
                     </div>
-                <Weather />
+                    <Weather />
+                    <Frequency />
                 </div>
             </div>
         </>
