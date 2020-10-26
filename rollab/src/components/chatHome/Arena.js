@@ -43,12 +43,15 @@ const Arena = (props) => {
                 let loc = window.location.href;
                 let re = /\/chat\/(.+)/gi
                 let re2 = /\b(?:(?!chat)\w)+\b/gi
-                let test = loc.match(re)
+                let test = loc.match(re);
+                console.log(data.bonus)
                 if(data.bonus[0] === localStorage.getItem("id")){
+                    console.log("here")
                     let records = allMessages[data.bonus[1]];
                     records.messages.push(data);
                     allMessages[data.bonus[1]] = records;
                 }else{
+                    console.log("nah")
                     let records = allMessages[data.bonus[0]];
                     records.messages.push(data);
                     allMessages[data.bonus[0]] = records;
@@ -242,19 +245,33 @@ const Arena = (props) => {
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
+            console.log(props)
             if(props.match.params && props.match.params.id){
 
                 document.querySelector('#message').value = ''
                 let messageId = JSON.parse(localStorage.getItem('user')).messages.id;
                 let name = JSON.parse(localStorage.getItem('user')).name;
                 let op = false;
-                let actualTime = new Date().getTime();
+                var actualTime = new Date().getTime();
                 await socket.emit('sendPriv', { message, from: localStorage.getItem('id') , to: props.match.params.id, name, time: actualTime }, async (resp) => {
                     op = resp;
                     if(op===true){
                         // console.log("socketed")
                     }else{
                         // console.log("db")
+                        let dataStruc = {
+                                "sender": {
+                                    "name": JSON.parse(localStorage.getItem('user')).name,
+                                    "_id": localStorage.getItem('id'),
+                                    "__typename": "User"
+                                },
+                                "time": actualTime,
+                                "text": message,
+                                "bonus": [localStorage.getItem('id'), props.match.params.id]
+                        }
+                        let records = allMessages[props.match.params.id];
+                        records.messages.push(dataStruc);
+                        allMessages[localStorage.getItem('id')] = records;
                         let div = document.createElement('div');
                         div.className="container"
                         div.setAttribute('key', Math.random());
