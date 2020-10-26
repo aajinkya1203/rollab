@@ -1,0 +1,35 @@
+.colors {
+    position: relative;
+    width: 250px;
+    height: 64px;
+    &:hover {
+      .color:not(:first-child) {
+        transform: translateX(105%)
+      }
+    }
+}
+  
+.color {
+    position: absolute;
+    top: 0;
+    width: 54px;
+    height: 54px;
+    background-color: #eee;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 64px;
+    font-size: 32px;
+    transition: all 0.5s ease;
+    z-index: 100;
+    
+    > .color {
+      z-index: -1;
+      transform: translateX(25%)
+    }
+    div{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        box-shadow: 5px 0 5px 1px rgba(0, 0, 0, 0.3);
+    }
+  }

@@ -8,7 +8,7 @@ import M from 'materialize-css';
 import { AvatarGroup } from '@material-ui/lab';
 import { Link } from 'react-router-dom';
 import Share from '../../popups/Share';
-
+import './Palette.scss';
 
 var socket;
 
@@ -28,7 +28,7 @@ const DrawIO = (props) => {
     useEffect(()=>{
         window.$('.modal').modal();
         canvas = document.getElementsByClassName('whiteboard')[0];
-        colors = document.getElementsByClassName('color');
+        colors = document.getElementsByClassName('cy');
         context = canvas.getContext('2d');
         socket = socketIOClient(ENDPOINT);
         // on connection
@@ -284,15 +284,19 @@ const DrawIO = (props) => {
                     
 
                     <div className="colors">
-                        <div className="color black"></div>
-                        <div className="color red"></div>
-                        <div className="color green"></div>
-                        <div className="color blue"></div>
-                        <div className="color yellow"></div>
+                        <div className="color"><div className="cy black"></div>
+                        <div className="color"><div className="cy red"></div>
+                        <div className="color"><div className="cy green"></div>
+                        <div className="color"><div className="cy blue"></div>
+                        <div className="color"><div className="cy yellow"></div></div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                     </div>
 
 
-                <div className="game-chat" style={{height: '100%', width: '350px', float:'right'}}>
+                <div className="game-chaty" style={{height: '100%', width: '350px', float:'right'}}>
                     <div className="card blue-grey darken-1" style={{height: '90%', borderRadius: "12px"}}>
                         <div className="card-content white-text" style={{height: '90%'}}>
                             {

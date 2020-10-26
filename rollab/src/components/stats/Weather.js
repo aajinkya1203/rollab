@@ -26,10 +26,12 @@ const Weather = () => {
                         <div className="card-image">
                             <img alt="weather" src={weather.weather[0].main === "Clear" ? Sunny : Rainy} style={{borderRadius:"24px"}}/>
                             <span className="card-title flow-text">
-                                {weather.main.temp}°C
-                                <br/>
-                                As of {moment(weather.dt_txt).fromNow()}
-                                <br />
+                                <span className="hide-on-med-only"> 
+                                    {weather.main.temp}°C
+                                    <br/>
+                                    As of {moment(weather.dt_txt).fromNow()}
+                                    <br />
+                                </span>
                                 <span style={{fontSize:"14px", color: "yellow"}}>
                                     Feels like {weather.main.feels_like} | Humidity {weather.main.humidity} | Pressure {weather.main.pressure} Pa
                                 </span>

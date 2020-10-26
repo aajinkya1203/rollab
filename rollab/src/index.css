@@ -318,10 +318,20 @@ nav li a{
 }
 
 /* chat page */
-html, body,#root, #chatting, #stati, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena, .chart {
+#root > #stati, #root>#stati>.sidebar{
+  height: 60em;
+}
+
+@media only screen and (min-width: 1500px){
+  #root > #stati, #root>#stati>.sidebar{
+    height: 100em;
+  }  
+}
+html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test, .arena, .chart {
   height: 100% !important;
   box-sizing: border-box !important;
 }
+
 
 #games{
   height: 90% !important;
