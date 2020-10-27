@@ -30,7 +30,7 @@ const ChatList = (props)=> {
         }
     }
     return (
-        <div id="contactList" className="col m3 l3 hide-on-small-only">
+        <div id="contactList" className="col m3 l3 hide-on-small-only" style={{overflowY: "scroll"}}>
             <div className="input-field searchCont" style={{
                 color:"#259ee9"
             }}>
