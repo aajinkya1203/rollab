@@ -334,7 +334,7 @@ html, body,#root, #chatting, #root>div>.sidebar, #root>div>.signing, #row>.test,
 
 
 #games{
-  height: 90% !important;
+  height: 100vh !important;
   box-sizing: border-box;
   background-color: #2d3034;
 }

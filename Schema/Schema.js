@@ -421,9 +421,8 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args){
                 let doesExist = await Contact.find({_id: mongoose.Types.ObjectId(args.fromCont), "contacts": { $in: [args.to] } });
-                console.log(doesExist)
                 if(doesExist.length != 0){
-                    console.log("exitting")
+                    // console.log("exitting")
                     return;
                 }
 

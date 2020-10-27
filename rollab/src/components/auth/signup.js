@@ -35,7 +35,6 @@ class SignUp extends Component {
                 password: this.state.password
             }
         });
-        console.log(res);
         if(res.data.addUser){
             M.toast({html: "Wohoo! You're in...Log in to get in ヽ(•‿•)ノ"});
             this.props.history.push("/login");

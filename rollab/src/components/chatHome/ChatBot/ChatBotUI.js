@@ -56,7 +56,7 @@ const ChatBotUI = (props) => {
             setNotifs(temp);
             sortArray(temp);
         }).catch(err=>{
-            console.log("Error occured!", err); 
+            // console.log("Error occured!", err); 
         })
 
     }

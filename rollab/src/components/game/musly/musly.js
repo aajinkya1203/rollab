@@ -14,7 +14,6 @@ var socket;
 
 var messenger;
 var counter = 0;
-console.log("counter:", counter);
 const Musly = (props) => {
     // const ENDPOINT = "http://localhost:1000";
     const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
@@ -24,7 +23,6 @@ const Musly = (props) => {
         socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
-            console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
         socket.on('comm', (data)=>{
@@ -45,7 +43,6 @@ const Musly = (props) => {
         });
 
         socket.emit('joinGameMusly', { from: localStorage.getItem('id'), room: props.match.params.mid }, (resp)=>{
-            console.log(resp);
             if(resp==609){
                 M.toast({ html: "Invalid game code!" });
                 props.history.push('/game/online');
@@ -251,9 +248,8 @@ const Musly = (props) => {
               } else {
                   counter += 1;
                   if(counter > 7){
-                      console.log("above")
+                    //   console.log("above")
                   }else{
-                    console.log("Counter", counter)
                     if(sessionStorage.getItem('game') && counter>=3 ){
                         socket.emit('startMusly', { room: props.match.params.mid }, (data)=>{
                             // do nothing
@@ -274,7 +270,6 @@ const Musly = (props) => {
               m.fadeBuffer = false;
               window.$(el).html('');
               
-              console.log("here")
               setTimeout(m.animateIn, 200);
             };
             
@@ -286,9 +281,7 @@ const Musly = (props) => {
           return()=>{
               counter = 0;
             socket.emit('leaveMusly', { from: localStorage.getItem('id'), room: props.match.params.mid }, (resp)=>{
-                console.log(resp);
                 // disconnecting this when it unmounts
-                console.log("Dismounting");
                 socket.emit('disconnect');
                 // disposing instance of the socket var
                 socket.off();
@@ -306,7 +299,7 @@ const Musly = (props) => {
 
     const share = (data) => {
         socket.emit('shared', { people: data, from: localStorage.getItem("id"), room: props.match.params.mid }, ()=>{
-            console.log("done!");
+            // console.log("done!");
         })
     }
 

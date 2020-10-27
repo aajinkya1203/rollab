@@ -9,7 +9,6 @@ const SendButton = () => {
             let getVar = variable => getComputedStyle(button).getPropertyValue(variable);
         
             button.addEventListener('happen', e => {
-                console.log("this happened")
                 if(!button.classList.contains('active')) {
         
                     button.classList.add('active');

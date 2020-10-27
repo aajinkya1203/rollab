@@ -6,12 +6,12 @@ const uuid = require('uuid');
 
 
 router.post('/to-bot', (req, res)=>{
-    console.log("Dets:", req.body)
+    // console.log("Dets:", req.body)
     runSample(req.body.query).then(data=>{
-        console.log("Result", data);
+        // console.log("Result", data);
         res.json(data);
     }).catch(err=>{
-        console.log("Caught err", err)
+        // console.log("Caught err", err)
     })
 
 });
@@ -47,14 +47,13 @@ async function runSample(query, projectId = 'rollab-gkjg') {
   
     // Send request and log result
     const responses = await sessionClient.detectIntent(request);
-    console.log('Detected intent');
     const result = responses[0].queryResult;
     // console.log(` \n Query: ${result.queryText}`);
     // console.log(`  Response: ${result.fulfillmentText}`);
     if (result.intent) {
       // console.log(`  Intent: ${result.intent.displayName}`);
     } else {
-      console.log(`  No intent matched.`);
+      // console.log(`  No intent matched.`);
     }
     return result.fulfillmentText;
   }

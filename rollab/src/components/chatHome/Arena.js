@@ -29,7 +29,6 @@ const Arena = (props) => {
         socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
-            console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
@@ -44,14 +43,11 @@ const Arena = (props) => {
                 let re = /\/chat\/(.+)/gi
                 let re2 = /\b(?:(?!chat)\w)+\b/gi
                 let test = loc.match(re);
-                console.log(data.bonus)
                 if(data.bonus[0] === localStorage.getItem("id")){
-                    console.log("here")
                     let records = allMessages[data.bonus[1]];
                     records.messages.push(data);
                     allMessages[data.bonus[1]] = records;
                 }else{
-                    console.log("nah")
                     let records = allMessages[data.bonus[0]];
                     records.messages.push(data);
                     allMessages[data.bonus[0]] = records;
@@ -167,7 +163,7 @@ const Arena = (props) => {
         });
         return ()=>{
             // disconnecting this when it unmounts
-            console.log("Dismounting");
+            // console.log("Dismounting");
             socket.emit('disconnect');
             // disposing instance of the socket var
             socket.off();
@@ -245,7 +241,6 @@ const Arena = (props) => {
         if(message === ""){
             M.toast({html:"Slow down, partner. Write a message first."})   
         }else{
-            console.log(props)
             if(props.match.params && props.match.params.id){
 
                 document.querySelector('#message').value = ''
@@ -430,7 +425,6 @@ const Arena = (props) => {
                                             props.match.path === "/chat/groups" || props.match.path ==="/chat/groups/:gid" ? (
                                                 groups && groups.length !== 0 ? (
                                                     groups.map(ele => {
-                                                        console.log(ele)
                                                         if(ele.type === "info"){
                                                             
                                                             return (

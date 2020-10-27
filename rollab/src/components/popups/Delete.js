@@ -129,7 +129,6 @@ const Delete = (props) => {
         }
 
         const forKeyDown = e => {
-            console.log("here")
             e.preventDefault();
             init();
             if(e.keyCode === 38 || e.which === 38) {

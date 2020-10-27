@@ -20,7 +20,7 @@ const MultiBattle = (props) => {
         socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
-            console.log("Connected");
+            // console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
@@ -111,7 +111,6 @@ const MultiBattle = (props) => {
                 playerNum = parseInt(num)
                 if(playerNum === 1) currentPlayer = "enemy"
         
-                console.log(playerNum)
         
                 // Get other player status
                 socket.emit('check-players')
@@ -120,7 +119,7 @@ const MultiBattle = (props) => {
         
             // Another player has connected or disconnected
             socket.on('player-connection', num => {
-              console.log(`Player number ${num} has connected or disconnected`)
+              // console.log(`Player number ${num} has connected or disconnected`)
               playerConnectedOrDisconnected(num)
             })
         
@@ -458,7 +457,7 @@ const MultiBattle = (props) => {
                   infoDisplay.innerHTML = `${enemy} sunk your carrier`
                   cpuCarrierCount = 10
                 }
-                console.log(destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount)
+                // console.log(destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount)
                 if ((destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount) === 50) {
                   infoDisplay.innerHTML = "YOU WIN"
                   gameOver()
@@ -468,7 +467,7 @@ const MultiBattle = (props) => {
                   gameOver()
                 }
             }catch(e){
-                console.log("Error", e);
+                // console.log("Error", e);
             }
         }
       
@@ -483,7 +482,7 @@ const MultiBattle = (props) => {
       
         return ()=>{
           // disconnecting this when it unmounts
-          console.log("Dismounting");
+          // console.log("Dismounting");
           socket.emit('disconnect');
           // disposing instance of the socket var
           socket.off();

@@ -27,7 +27,6 @@ var joinStuff = 0;
 
 const StackedCards = (props) => {
     // const ENDPOINT = "http://localhost:1000";
-    console.log(props)
     useEffect(()=>{
         if(!localStorage.getItem("id")){
             props.history.push("/");
@@ -35,7 +34,7 @@ const StackedCards = (props) => {
         socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
-            console.log("Connected");
+            // console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
 
@@ -71,7 +70,7 @@ const StackedCards = (props) => {
         }
         return ()=>{
             // disconnecting this when it unmounts
-            console.log("Dismounting");
+            // console.log("Dismounting");
             socket.emit('disconnect');
             // disposing instance of the socket var
             socket.off();
@@ -82,9 +81,7 @@ const StackedCards = (props) => {
         if(id === 1){
             props.history.push('/online/battleship');
         }else if(id === 2){
-            console.log("yo", socket);
             socket.emit("createDrawio", { from: localStorage.getItem('id') }, (code)=>{
-                console.log(code);
                 sessionStorage.setItem('game', id);
                 props.history.push(`/drawio/${code}`);
             })

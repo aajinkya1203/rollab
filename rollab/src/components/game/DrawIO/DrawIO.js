@@ -33,7 +33,7 @@ const DrawIO = (props) => {
         socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
-            console.log("Connected");
+            // console.log("Connected");
             socket.emit('newUser', { id: localStorage.getItem('id'), name: JSON.parse(localStorage.getItem("user")).name }, ()=>{})
         });
         socket.on('comm', (data)=>{
@@ -80,7 +80,7 @@ const DrawIO = (props) => {
         })
 
         socket.emit('joinGame', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
-            console.log(resp);
+            // console.log(resp);
             if(resp==609){
                 M.toast({ html: "Invalid game code!" });
                 props.history.push('/game/online');
@@ -171,10 +171,10 @@ const DrawIO = (props) => {
         return ()=>{
             //leaving from ze games
             socket.emit('leaveDrawio', { from: localStorage.getItem('id'), room: props.match.params.rid }, (resp)=>{
-                console.log(resp);
+                // console.log(resp);
             })
             // disconnecting this when it unmounts
-            console.log("Dismounting");
+            // console.log("Dismounting");
             socket.emit('disconnect');
             // disposing instance of the socket var
             socket.off();
@@ -211,7 +211,7 @@ const DrawIO = (props) => {
             current.x = e.clientX||e.touches[0].clientX;
             current.y = e.clientY||e.touches[0].clientY;
         }catch(err){
-            console.log("Out of frame!")
+            // console.log("Out of frame!")
         }
     }
 
@@ -221,7 +221,7 @@ const DrawIO = (props) => {
         try{
             drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);
         }catch(err){
-            console.log("Out of frame!")
+            // console.log("Out of frame!")
         }
     }
 
@@ -232,7 +232,7 @@ const DrawIO = (props) => {
             current.x = e.clientX||e.touches[0].clientX;
             current.y = e.clientY||e.touches[0].clientY;
         }catch(err){
-            console.log("Out of frame!")
+            // console.log("Out of frame!")
         }
     }
 
@@ -258,9 +258,9 @@ const DrawIO = (props) => {
     }
 
     const share = (data) => {
-        console.log("Share called")
+        // console.log("Share called")
         socket.emit('share', { people: data, from: localStorage.getItem("id"), room: props.match.params.rid }, ()=>{
-            console.log("done!");
+            // console.log("done!");
         })
     }
 
@@ -296,7 +296,7 @@ const DrawIO = (props) => {
                     </div>
 
 
-                <div className="game-chaty" style={{height: '100%', width: '350px', float:'right'}}>
+                <div className="game-chaty" style={{height: '90%', width: '350px', float:'right'}}>
                     <div className="card blue-grey darken-1" style={{height: '90%', borderRadius: "12px"}}>
                         <div className="card-content white-text" style={{height: '90%'}}>
                             {

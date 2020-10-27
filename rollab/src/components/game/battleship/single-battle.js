@@ -388,7 +388,7 @@ const Single = (props) => {
                   infoDisplay.innerHTML = `${enemy} sunk your carrier`
                   cpuCarrierCount = 10
                 }
-                console.log(destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount)
+                // console.log(destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount)
                 if ((destroyerCount + submarineCount + cruiserCount + battleshipCount + carrierCount) === 50) {
                   infoDisplay.innerHTML = "YOU WIN"
                   gameOver()
@@ -398,7 +398,7 @@ const Single = (props) => {
                   gameOver()
                 }
             }catch(e){
-                console.log("Error", e);
+                // console.log("Error", e);
             }
         }
       
@@ -412,7 +412,7 @@ const Single = (props) => {
         }
       
         return ()=>{
-            console.log("Mounting")
+            // console.log("Mounting")
             // document.removeEventListener("DOMContentLoaded", allActions, true)
         }
     })
