@@ -53,15 +53,19 @@ mongoose.connection.once('connected', ()=>{
 });
 
 
-
-
-
-
 // graphql route
 app.use('/graphql',graphqlHTTP({
     schema,
     graphiql: true
 }));
+
+if(process.env.NODE_ENV=="production"){
+    app.use(express.static('rollab/build'));
+    const path = require('path');
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'rollab','build','index.html'))
+    })
+}
 
 // listening on port
 PORT = process.env.PORT || 1000;

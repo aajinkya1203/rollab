@@ -26,13 +26,13 @@ var socket;
 var joinStuff = 0;
 
 const StackedCards = (props) => {
-    const ENDPOINT = "http://localhost:1000";
+    // const ENDPOINT = "http://localhost:1000";
     console.log(props)
     useEffect(()=>{
         if(!localStorage.getItem("id")){
             props.history.push("/");
         }
-        socket = socketIOClient(ENDPOINT);
+        socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
             console.log("Connected");

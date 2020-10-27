@@ -16,12 +16,12 @@ var messenger;
 var counter = 0;
 console.log("counter:", counter);
 const Musly = (props) => {
-    const ENDPOINT = "http://localhost:1000";
+    // const ENDPOINT = "http://localhost:1000";
     const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
 
     useEffect(()=>{
         window.$('.modal').modal();
-        socket = socketIOClient(ENDPOINT);
+        socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
             console.log("Connected");

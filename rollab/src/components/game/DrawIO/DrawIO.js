@@ -17,7 +17,7 @@ const DrawIO = (props) => {
     var canvas;
     var colors;
     var context;
-    const ENDPOINT = "http://localhost:1000";
+    // const ENDPOINT = "http://localhost:1000";
     const [people, setPeople] = useState([JSON.parse(localStorage.getItem("user")).name]);
     const [word, setWord] = useState("");
     var current = {
@@ -30,7 +30,7 @@ const DrawIO = (props) => {
         canvas = document.getElementsByClassName('whiteboard')[0];
         colors = document.getElementsByClassName('cy');
         context = canvas.getContext('2d');
-        socket = socketIOClient(ENDPOINT);
+        socket = socketIOClient();
         // on connection
         socket.once('connect',()=>{
             console.log("Connected");
