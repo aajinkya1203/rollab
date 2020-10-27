@@ -45,13 +45,13 @@ const Arena = (props) => {
                 let test = loc.match(re);
                 if(data.bonus[0] === localStorage.getItem("id")){
                     let records = allMessages[data.bonus[1]];
-                    if(records.messages){
+                    if(records && records.messages){
                         records.messages.push(data);
                     }
                     allMessages[data.bonus[1]] = records;
                 }else{
                     let records = allMessages[data.bonus[0]];
-                    if(records.messages){
+                    if(records && records.messages){
                         records.messages.push(data);
                     }
                     allMessages[data.bonus[0]] = records;
@@ -269,7 +269,7 @@ const Arena = (props) => {
                                 "bonus": [localStorage.getItem('id'), props.match.params.id]
                         }
                         let records = allMessages[props.match.params.id];
-                        if(records.messages){
+                        if(records && records.messages){
                             records.messages.push(dataStruc);
                         }
                         allMessages[localStorage.getItem('id')] = records;
