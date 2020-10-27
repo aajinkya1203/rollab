@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ozzia && npm run build --prefix ozzia"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix rollab && npm run build --prefix rollab"
   },
   "keywords": [],
   "author": "",
