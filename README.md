@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aajinkya1203/rollab/master/rollab/public/favicon.ico" width="320" alt="Contro " />
+  <img height='100px' width='100px' src="https://raw.githubusercontent.com/aajinkya1203/rollab/master/rollab/public/favicon.ico" width="320" alt="Contro " />
 </p>
 # rollab
 A new era of communicating!
