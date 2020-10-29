@@ -1,4 +1,9 @@
-# rollab
+<p align="center">
+  <img height='100px' width='100px' src="https://raw.githubusercontent.com/aajinkya1203/rollab/master/rollab/public/favicon.ico" width="320" alt="Contro " />
+</p>
+
+# [rollab](https://rollab.herokuapp.com/)
+
 A new era of communicating!
 
 A platform to communicate with your friends in realtime, while at the same time challenging them to an online game. No friends online? Don't worry, we got you! You can go against a bot too or even chat with the rollab assistant without any of your chats getting stored ever with the bot!
@@ -7,12 +12,11 @@ _Need to have a group discussion / gossip / share some tea with your friends? Cr
 
 _Need to write something really important but need it to get stored? Personally message the friend!_
 
-## Status - Pending
+## Status - Completed
 ---
-- [ ] Integrate a TF-based game
-- [ ] Remove unnecessary ```console.log()```
-- [ ] Make certain pages responsive
-- [ ] Add more features to the dashboard
+- [x] Refactor code
+- [x] Make certain pages responsive
+- [x] Add more features to the dashboard
 
 ## Technologies Used
 ---
