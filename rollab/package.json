@@ -17,7 +17,7 @@
     "lodash-es": "^4.17.15",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.27.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-chartjs-2": "^2.10.0",
